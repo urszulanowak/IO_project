@@ -1,8 +1,101 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #ffffff;
 }
 
-a {
-  color: #00B7FF;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #f4f4f4;
 }
+
+#brand h1 {
+  font-size: 48px;
+  color: #007bff;
+  font-family: 'Trebuchet MS', sans-serif;
+  margin: 0;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  padding: 0 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+nav ul li a.blue-button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+nav ul li a.blue-button:hover {
+  background-color: #0056b3;
+}
+
+main {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+}
+
+#content {
+  width: 70%;
+}
+
+.post {
+  background-color: #fafaf5;
+  border-radius: 10px;
+  padding: 40px;
+  margin-bottom: 20px;
+  border: solid;
+  border-color: #e6e6e6;
+ 
+}
+
+.post-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+aside {
+  width: 25%;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+}
+
+footer {
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.logged-buttons{
+  padding: 10px;
+  padding-left: 30px;
+  margin-top: 10px;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+
