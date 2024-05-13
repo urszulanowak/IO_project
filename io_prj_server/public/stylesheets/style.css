@@ -46,6 +46,18 @@ nav ul li a.blue-button {
   text-align: center;
 }
 
+a.blue-button{
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+a.blue-button:hover{
+  background-color: #0056b3;
+}
+
 nav ul li a.blue-button:hover {
   background-color: #0056b3;
 }
@@ -53,6 +65,12 @@ nav ul li a.blue-button:hover {
 main {
   display: flex;
   justify-content: space-between;
+  padding: 40px;
+}
+
+.faq{
+  display: flex;
+  flex-direction: column;
   padding: 40px;
 }
 
@@ -98,4 +116,114 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 
+.email-box, .topic-box, .tresc-box {
+  background-color: #fafaf5;
+  border-radius: 10px;
+  padding: 40px;
+  margin-bottom: 20px;
+  border: solid;
+  border-color: #e6e6e6;
 
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 130%;
+ 
+}
+
+.question-title {
+  font-weight: bold;
+  margin-bottom: 5px; 
+  position: relative; 
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 130%;
+}
+
+.question-title::after {
+  content: ''; 
+  position: absolute; 
+  bottom: -5px; 
+  left: 0; 
+  width: 100%; 
+  border-bottom: 1px solid #ccc; 
+}
+
+.p{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 130%;
+  text-align: center;
+}
+
+.email-box input,
+.topic-box input,
+.tresc-box textarea {
+  background-color: #fafaf5; 
+  border: none; 
+  border-radius: 10px;
+  padding: 10px; 
+  width: 100%; 
+  box-sizing: border-box;
+  margin-bottom: 10px; 
+}
+
+.email-box input:focus,
+.topic-box input:focus,
+.tresc-box textarea:focus {
+  outline: none; 
+}
+
+#form h1{
+  text-align: center;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 130%;
+}
+
+#form {
+  position: relative;
+}
+
+#form a.blue-button {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#main_about h1 {
+  position: relative; 
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 120%;
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: -0.02em;
+}
+
+#about p{
+  text-align: center;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 130%;
+}
+
+#main_about h1::after {
+  content: '';
+  position: absolute; 
+  bottom: -10px; 
+  left: 0; 
+  width: 100%; 
+  border-bottom: 1px solid #ccc;
+}
