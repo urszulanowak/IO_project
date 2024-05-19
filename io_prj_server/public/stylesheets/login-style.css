@@ -1,0 +1,69 @@
+/* Panel logowania */
+.login-panel {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .login-form {
+    width: 400px; /* Szerokość panelu logowania */
+    background: #EAE8E8;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center; /* Wyśrodkowanie tekstu */
+  }
+  
+  /* Style dla etykiet i pól do wprowadzenia danych */
+  .input-wrapper {
+    margin-bottom: 20px;
+  }
+  
+  .input-wrapper label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000000;
+  }
+  
+  .input-wrapper input {
+    width: calc(100% - 20px); /* Szerokość pól input mniejsza o 20px na padding */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .login-button {
+    width: calc(100% - 40px); /* Szerokość przycisku mniejsza o 40px na padding */
+    margin: 0 auto; /* Wyśrodkowanie przycisku */
+    margin-top: 20px; /* Dodanie odstępu od pól do wprowadzania danych */
+    padding: 10px;
+    background: #46ABF4;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px; /* Zmniejszenie wielkości czcionki */
+    color: #E5E5E5;
+    cursor: pointer;
+  }
+  
+  .login-button:hover {
+    background: #2e85c8;
+  }
+  
+  h2{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 130%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
