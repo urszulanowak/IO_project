@@ -21,14 +21,31 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const appPool = new sql.ConnectionPool(db_cfg)
-appPool.connect().then(pool => {
+// database connection
+const dbPool = new sql.ConnectionPool(db_cfg)
+dbPool.connect().then(pool => {
   app.locals.db = pool;
   console.log('Connected to SQL Server')
 }).catch(err => {
   console.log('Database Connection Failed! Error: ', err)
 })
 
+// user authentication middleware
+const user_auth = function (req, res, next) {
+  const token = req.cookies.jwt_access_token;
+  req.user = null;
+  if (token) {
+    jwt.verify(token, jwt_cfg.ACCESS_TOKEN_SECRET, (err, decoded) => {
+      if (!err) {
+        req.user = decoded;
+      }
+    });
+  }
+  next();
+}
+app.use(user_auth);
+
+// main routes
 routes(app)
 
 // catch 404 and forward to error handler
