@@ -7,7 +7,7 @@
  */
 const user_auth = function (req, res, next) {
     const token = req.cookies.jwt_access_token;
-    req.user = null;
+    req.user = { is_guest: true };
     if (token) {
         req.app.jwt.verify(token, req.app.jwt_cfg.ACCESS_TOKEN_SECRET, (err, user) => {
             if (!err) {

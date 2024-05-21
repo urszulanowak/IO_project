@@ -3,10 +3,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  if (req.user) {
-    res.render('frontpage_user');
-  } else {
+  if (req.user.is_guest) {
     res.render('frontpage_guest');
+  } else {
+    res.render('frontpage_user');
   }
 });
 

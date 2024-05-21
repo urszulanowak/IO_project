@@ -1,8 +1,13 @@
-var jwt = require('jsonwebtoken');
-var jwt_cfg = require('@config/jwt_cfg.json');
-var user_model = require('@models/user');
-
-exports.login = async function (req, res, next) {
+/**
+ * Handles user login.
+ * Stores user data and jwt tokens in cookies.
+ * Responds with status 200 if login is successful.
+ * Responds with status 401 if login fails.
+ * Responds with status 500 if there is a server error.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
+exports.login = async function (req, res) {
     var email = req.body.email;
     var pass = req.body.pass;
     try {
@@ -35,5 +40,11 @@ exports.login = async function (req, res, next) {
     }
 }
 
-exports.register = async function (req, res, next) {
+/**
+ * Handles user registration.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
+exports.register = async function (req, res) {
+    // Add code for user registration here
 }
