@@ -1,3 +1,6 @@
+var jwt = require('jsonwebtoken');
+var jwt_cfg = require('@config/jwt_cfg');
+
 /**
  * Middleware function for user authentication.
  * Checks if the user is logged in before routes are processed.
@@ -9,7 +12,7 @@ const user_auth = function (req, res, next) {
     const token = req.cookies.jwt_access_token;
     req.user = { is_guest: true };
     if (token) {
-        req.app.jwt.verify(token, req.app.jwt_cfg.ACCESS_TOKEN_SECRET, (err, user) => {
+        jwt.verify(token, jwt_cfg.ACCESS_TOKEN_SECRET, (err, user) => {
             if (!err) {
                 req.user = user;
             }

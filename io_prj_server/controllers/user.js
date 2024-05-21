@@ -1,10 +1,17 @@
+var jwt = require('jsonwebtoken');
+var jwt_cfg = require('@config/jwt_cfg');
+var user_model = require('@models/user');
+
 /**
  * Handles user login.
  * Stores user data and jwt tokens in cookies.
  * Responds with status 200 if login is successful.
  * Responds with status 401 if login fails.
  * Responds with status 500 if there is a server error.
+ * 
  * @param {Object} req - The request object.
+ * @param {string} req.body.email - The user's email.
+ * @param {string} req.body.pass - The user's password.
  * @param {Object} res - The response object.
  */
 exports.login = async function (req, res) {
@@ -42,6 +49,7 @@ exports.login = async function (req, res) {
 
 /**
  * Handles user registration.
+ * 
  * @param {Object} req - The request object.
  * @param {Object} res - The response object.
  */
