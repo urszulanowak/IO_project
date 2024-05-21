@@ -10,14 +10,14 @@
 <body>
     <div class="login-panel">
         <div class="login-form">
-            <form>
+            <form method="POST" action="/user/login">
                 <div class="input-wrapper">
-                    <input type="text" id="username" name="username" placeholder="Login">
+                    <input type="text" id="username" name="username" placeholder="Login" required>
                 </div>
                 <div class="input-wrapper">
-                    <input type="password" id="password" name="password" placeholder="Hasło">
+                    <input type="password" id="password" name="password" placeholder="Hasło" required>
                 </div>
-                <button onclick="window.location.href='/'" class="login-button">Zaloguj</button>
+                <button type="submit" class="login-button">Zaloguj</button>
             </form>
         </div>
     </div>
