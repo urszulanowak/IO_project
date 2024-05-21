@@ -15,8 +15,8 @@ class Cache {
         return this.cache[key];
     }
 
-    set(key, value, ttl = 3600) {
-        this.cache[key] = { value, ttl: Date.now() + ttl * 1000 };
+    set(key, value, ttl) {
+        this.cache[key] = { value, ttl: Date.now() + ttl };
     }
 
     del(key) {

@@ -1,7 +1,4 @@
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
 module.exports = function (app) {
-    app.use('/', indexRouter);
-    app.use('/users', usersRouter);
+    app.use('/', require('@routes/index'));
+    app.use('/user', require('@routes/user'));
 }

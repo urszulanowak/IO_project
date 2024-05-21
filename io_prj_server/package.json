@@ -13,7 +13,17 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "http-errors": "~1.6.3",
+    "module-alias": "^2.2.3",
     "morgan": "~1.9.1",
     "mssql": "^10.0.2"
+  },
+  "_moduleAliases": {
+    "@config": "config",
+    "@controllers": "controllers",
+    "@middlewares": "middlewares",
+    "@models": "models",
+    "@routes": "routes",
+    "@services": "services",
+    "@utility": "utility"
   }
 }
