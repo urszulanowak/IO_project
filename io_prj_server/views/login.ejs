@@ -10,6 +10,9 @@
 <body>
     <div class="login-panel">
         <div class="login-form">
+            <% if (error) { %>
+                <div class="error-message"><%= error %></div>
+            <% } %>
             <form method="POST" action="/user/login">
                 <div class="input-wrapper">
                     <input type="text" id="username" name="username" placeholder="Login" required>
