@@ -77,10 +77,14 @@ main {
 
 aside {
   width: 25%;
+  display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 30px;
-  background-color: #d9d9d9;
-  border-radius: 10px;
+  background-color: #f4f4f4;
+  border-radius: 44px;
+  position: relative;
+  height: 664px;
 }
 
 footer {
@@ -312,3 +316,74 @@ nav ul li a:hover {
 }
 
 
+
+
+.project-container {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  width: calc(100% - 40px);
+  position: relative;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-title {
+  margin: 0;
+}
+
+.technologies {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.project-description {
+  margin: 10px 0;
+}
+
+.project-meta {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.project-meta p {
+  margin: 5px 0;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #ddd;
+  margin: 10px 0;
+}
+
+.filter-container {
+  width: 100%;
+  text-align: center;
+}
+
+.filter-container .blue-button {
+  margin-bottom: 20px;
+}
+
+.filter-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px;
+}
+
+.filter-list li {
+  background: #e6e6e6;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
