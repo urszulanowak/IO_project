@@ -22,4 +22,16 @@ router.get('/about', function (req, res, next) {
   res.render('about');
 });
 
+router.get('/project_view', function (req, res, next) {
+  res.render('project_view');
+});
+
+router.get('/project_create', function (req, res, next) {
+  res.render('project_create');
+});
+
+router.get('/project_list', function (req, res, next) {
+  res.render('project_list');
+});
+
 module.exports = router;

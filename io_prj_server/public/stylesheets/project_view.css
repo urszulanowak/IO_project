@@ -1,0 +1,187 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+#project-header h1 {
+    margin: 0;
+}
+
+.apply-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#project-details, #expectations, #authors, #participants, #comments {
+    margin: 20px 0;
+}
+
+#technologies, #links, #interactions {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.tech-button, .link-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.profile {
+    display: inline-block;
+    margin: 10px;
+}
+
+.profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.interaction {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.interaction span {
+    margin-right: 5px;
+}
+
+.comment {
+    border-top: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.comment-interaction {
+    display: flex;
+    align-items: center;
+}
+
+.comment-interaction span {
+    margin-right: 5px;
+}
+
+
+.create_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding: 40px;
+  }
+  
+  #create_form h1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .input-field {
+    width: 60%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  
+  
+  .textarea-field {
+    width: 60%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 130%;
+  }
+  
+  .blue-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .blue-button:hover {
+    background-color: #0056b3;
+  }
+  
+
+  #comment_section {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .comment {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+
+  .user-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    overflow: hidden;
+  }
+
+  .user-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .comment-text {
+    display: flex;
+    align-items: center;
+  }
+
+  .username {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .comment-content {
+    flex: 1;
+  }

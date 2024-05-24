@@ -175,6 +175,12 @@ main {
   padding: 40px;
 }
 
+.create_form{
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+
 #content {
   width: 70%;
 }
@@ -217,21 +223,8 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 
-.email-box, .topic-box, .tresc-box {
-  background-color: #fafaf5;
-  border-radius: 10px;
-  padding: 40px;
-  margin-bottom: 20px;
-  border: solid;
-  border-color: #e6e6e6;
 
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 130%;
- 
-}
+
 
 .question-title {
   font-weight: bold;
@@ -262,23 +255,6 @@ nav ul li a:hover {
   text-align: center;
 }
 
-.email-box input,
-.topic-box input,
-.tresc-box textarea {
-  background-color: #fafaf5; 
-  border: none; 
-  border-radius: 10px;
-  padding: 10px; 
-  width: 100%; 
-  box-sizing: border-box;
-  margin-bottom: 10px; 
-}
-
-.email-box input:focus,
-.topic-box input:focus,
-.tresc-box textarea:focus {
-  outline: none; 
-}
 
 #form h1{
   text-align: center;
@@ -328,3 +304,11 @@ nav ul li a:hover {
   width: 100%; 
   border-bottom: 1px solid #ccc;
 }
+
+.authors img,
+.members img {
+  max-width: 100px;
+  height: auto; 
+}
+
+
