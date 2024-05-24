@@ -10,21 +10,33 @@
 <body>
     <div class="login-panel">
         <div class="login-form">
-            <% if (error) { %>
-                <div class="error-message"><%= error %></div>
-            <% } %>
-            <form method="POST" action="/user/register">
-                <div class="input-wrapper">
-                    <input type="email" id="email" name="email" placeholder="Adres email" required>
+            <% if (typeof error !=='undefined' ) { %>
+                <div class="error-message">
+                    <%= error %>
                 </div>
-                <div class="input-wrapper">
-                    <input type="password" id="password" name="password" placeholder="Hasło" required>
-                </div>
-                <div class="input-wrapper">
-                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Powtórz hasło" required>
-                </div>
-                <button type="submit" class="login-button">Zarejestruj</button>
-            </form>
+                <% } %>
+                    <form method="POST" action="/user/register">
+                        <div class="input-wrapper">
+                            <input type="email" id="email" name="email" placeholder="Adres email" required>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="text" id="name" name="name" placeholder="Nazwa użytkownika" required>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="password" id="pass" name="pass" placeholder="Hasło" required>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="password" id="confirm_pass" name="confirm_pass" placeholder="Powtórz hasło"
+                                required>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="date" id="birth_date" name="birth_date" required>
+                        </div>
+                        <div class="input-wrapper">
+                            <input type="text" id="city" name="gender" placeholder="Płeć" required>
+                        </div>
+                        <button type="submit" class="login-button">Zarejestruj</button>
+                    </form>
         </div>
     </div>
 </body>

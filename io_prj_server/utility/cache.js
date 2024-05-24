@@ -14,6 +14,7 @@ module.exports = class Cache {
 
     get(key) {
         let x = this.cache[key];
+        if (x === undefined) return undefined;
         x.ttl = Date.now() + this.clean_up_interval;
         return x.value;
     }

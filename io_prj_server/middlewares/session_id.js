@@ -25,7 +25,9 @@ const user_auth = function (req, res, next) {
         res.cookie('session_id', req.cookies.session_id, { maxAge: jwt_cfg.ACCESS_TOKEN_TTL, httpOnly: true, secure: true, sameSite: 'Strict' });
         session_cache.set(req.cookies.session_id, {}, jwt_cfg.ACCESS_TOKEN_TTL);
     }
+    req.session_id = req.cookies.session_id;
     req.session = session_cache.get(req.cookies.session_id);
+    req.session_cache = session_cache;
     next();
 }
 
