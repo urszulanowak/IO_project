@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('module-alias/register')
 var user_auth = require('@middlewares/user_auth')
-var session_id = require('@middlewares/session_id')
+var session = require('@middlewares/session')
 var routes = require('./routes')
 
 var app = express();
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(user_auth);
-app.use(session_id);
+app.use(session);
 
 // main routes
 routes(app)

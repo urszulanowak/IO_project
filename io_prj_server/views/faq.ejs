@@ -18,50 +18,67 @@
                 <li><a href="/updates">Update'y</a></li>
                 <li><a href="/about">Informacje</a></li>
                 <li><a href="/faq">Pomoc</a></li>
-                <li><a href="/login" class="blue-button">Zaloguj się</a></li>
-                <li><a href="/register" class="blue-button">Zarejestruj się</a></li>
+                <% if (user.is_guest) { %>
+                    <li> <a href="/user/login" class="blue-button">Zaloguj się</a></li>
+                    <li> <a href="/user/register" class="blue-button">Zarejestruj się</a></li>
+                    <% } else { %>
+                        <li><a href="/profil" class="blue-button">Profil</a></li>
+                        <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+                        <% } %>
             </ul>
         </nav>
     </header>
 
-    <main class="faq">
-        <section id="questions">
-            <div class="question-container">
-                <div class="question-title">Question 1</div>
-                <div class="question">
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae, nisi.</p>
-                </div>
-            </div>
-            <div class="question-container">
-                <div class="question-title">Question 2</div>
-                <div class="question">
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae, nisi.</p>
-                </div>
-            </div>
-            <div class="question-container">
-                <div class="question-title">Question 3</div>
-                <div class="question">
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae, nisi.</p>
-                </div>
-            </div>
-        </section>
-        <section id="form">
-            <h1>Napisz do nas!</h1>
-            <div class="email-box">
-                <label for="email">Twój email:</label><br>
-                <input type="email" id="email" name="email">
-            </div>
-            <div class="topic-box">
-                <label for="topic">Temat:</label><br>
-                <input type="text" id="topic" name="topic">
-            </div>
-            <div class="tresc-box">
-                <label for="message">Treść wiadomości:</label><br>
-                <textarea id="message" name="message"></textarea>
-            </div>
-            <a href="/send" class="blue-button">Wyślij</a>
-        </section>
-    </main>
+    <% if (!user.is_guest) { %>
+        <div class="logged-buttons">
+            <nav>
+                <ul>
+                    <li><a href="/add-project" class="blue-button">Dodaj projekt</a></li>
+                    <li><a href="/my-projects" class="blue-button">Moje projekty</a></li>
+                    <li><a href="/followed-projects" class="blue-button">Śledzone projekty</a></li>
+                </ul>
+            </nav>
+        </div>
+        <% } %>
+
+            <main class="faq">
+                <section id="questions">
+                    <div class="question-container">
+                        <div class="question-title">Question 1</div>
+                        <div class="question">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae, nisi.</p>
+                        </div>
+                    </div>
+                    <div class="question-container">
+                        <div class="question-title">Question 2</div>
+                        <div class="question">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae, nisi.</p>
+                        </div>
+                    </div>
+                    <div class="question-container">
+                        <div class="question-title">Question 3</div>
+                        <div class="question">
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae, nisi.</p>
+                        </div>
+                    </div>
+                </section>
+                <section id="form">
+                    <h1>Napisz do nas!</h1>
+                    <div class="email-box">
+                        <label for="email">Twój email:</label><br>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    <div class="topic-box">
+                        <label for="topic">Temat:</label><br>
+                        <input type="text" id="topic" name="topic">
+                    </div>
+                    <div class="tresc-box">
+                        <label for="message">Treść wiadomości:</label><br>
+                        <textarea id="message" name="message"></textarea>
+                    </div>
+                    <a href="/send" class="blue-button">Wyślij</a>
+                </section>
+            </main>
 </body>
 
 </html>

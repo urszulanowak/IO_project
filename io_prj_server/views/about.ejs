@@ -18,24 +18,44 @@
                 <li><a href="/updates">Update'y</a></li>
                 <li><a href="/about">Informacje</a></li>
                 <li><a href="/faq">Pomoc</a></li>
-                <li><a href="/login" class="blue-button">Zaloguj się</a></li>
-                <li><a href="/register" class="blue-button">Zarejestruj się</a></li>
+                <% if (user.is_guest) { %>
+                    <li> <a href="/user/login" class="blue-button">Zaloguj się</a></li>
+                    <li> <a href="/user/register" class="blue-button">Zarejestruj się</a></li>
+                    <% } else { %>
+                        <li><a href="/profil" class="blue-button">Profil</a></li>
+                        <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+                        <% } %>
             </ul>
         </nav>
     </header>
 
-    <main id="main_about">
-        <section id="about">
-            <h1>O nas</h1>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis, vitae praesentium consectetur deserunt
-                reiciendis illum?
-                Neque rem quod fuga ipsum totam, nihil enim dolorem? Quod reprehenderit deleniti rem atque beatae.
-                Provident facilis eos et voluptates quas? Asperiores architecto aliquam labore excepturi sint, nemo
-                officiis
-                quasi aut quia, voluptatem perferendis repudiandae!
-            </p>
-        </section>
-    </main>
+    <% if (!user.is_guest) { %>
+        <div class="logged-buttons">
+            <nav>
+                <ul>
+                    <li><a href="/add-project" class="blue-button">Dodaj projekt</a></li>
+                    <li><a href="/my-projects" class="blue-button">Moje projekty</a></li>
+                    <li><a href="/followed-projects" class="blue-button">Śledzone projekty</a></li>
+                </ul>
+            </nav>
+        </div>
+        <% } %>
+
+            <main id="main_about">
+                <section id="about">
+                    <h1>O nas</h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis, vitae praesentium consectetur
+                        deserunt
+                        reiciendis illum?
+                        Neque rem quod fuga ipsum totam, nihil enim dolorem? Quod reprehenderit deleniti rem atque
+                        beatae.
+                        Provident facilis eos et voluptates quas? Asperiores architecto aliquam labore excepturi sint,
+                        nemo
+                        officiis
+                        quasi aut quia, voluptatem perferendis repudiandae!
+                    </p>
+                </section>
+            </main>
 
 </body>
 
