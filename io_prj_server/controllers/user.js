@@ -19,9 +19,7 @@ exports.login = function (req, res) {
     var pass = req.body.pass;
 
     user_model.login(email, pass).then(user => {
-        res.cookie('user',
-            JSON.stringify(user),
-            { maxAge: jwt_cfg.ACCESS_TOKEN_TTL, httpOnly: true, secure: true, sameSite: 'Strict' });
+        res.cookie('logged_in', 'true', { maxAge: jwt_cfg.ACCESS_TOKEN_TTL, httpOnly: false, secure: true, sameSite: 'Strict' });
         let jwt_access_token = jwt.sign(
             user,
             jwt_cfg.ACCESS_TOKEN_SECRET,
@@ -115,6 +113,17 @@ exports.register = function (req, res) {
 }
 
 /**
+ * Clears the cookies related to user session and authentication.
+ * @param {Object} res - The response object.
+ */
+function clearCookies(res) {
+    res.clearCookie('session_id');
+    res.clearCookie('logged_in');
+    res.clearCookie('jwt_access_token');
+    res.clearCookie('jwt_refresh_token');
+}
+
+/**
  * Handles user logout.
  * Clears user data and jwt tokens from cookies. Deletes session on server.
  * Responds with status 200.
@@ -123,10 +132,48 @@ exports.register = function (req, res) {
  * @param {Object} res - The response object.
  */
 exports.logout = function (req, res) {
-    res.clearCookie('user');
-    res.clearCookie('session_id');
-    res.clearCookie('jwt_access_token');
-    res.clearCookie('jwt_refresh_token');
+    clearCookies(res);
     req.session_cache.del(req.session_id);
     res.status(200).redirect('/');
+}
+
+/**
+ * Refreshes the JWT access token.
+ * Responds with status 200 if the token is refreshed successfully.
+ * Responds with status 401 if the token is missing.
+ * Responds with status 403 if the token is invalid.
+ * Responds with status 500 if there is a server error.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
+exports.refresh_jwt = function (req, res) {
+    try {
+        var refresh_token = req.cookies.jwt_refresh_token;
+        if (refresh_token === undefined) {
+            clearCookies(res);
+            return res.status(401).send('no token');
+        }
+        jwt.verify(refresh_token, jwt_cfg.REFRESH_TOKEN_SECRET, (err, user) => {
+            if (err) {
+                clearCookies(res);
+                return res.status(403).send('invalid token');
+            }
+            let jwt_access_token = jwt.sign(
+                user,
+                jwt_cfg.ACCESS_TOKEN_SECRET,
+            );
+            res.cookie('jwt_access_token',
+                jwt_access_token,
+                { maxAge: jwt_cfg.ACCESS_TOKEN_TTL, httpOnly: true, secure: true, sameSite: 'Strict' });
+            return res.status(200).send('ok');
+        });
+    } catch (err) {
+        console.log('refresh_jwt error: ', err);
+        return res.status(500).send('server error');
+    }
+}
+
+exports.refresh_jwt_fail = function (req, res) {
+    return res.status(200).render('login', { error: 'Proszę zalogować się ponownie. Sesja wygasła.' });
 }

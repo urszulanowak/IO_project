@@ -21,4 +21,8 @@ router.post('/register', user_controller.register);
 // Wylogowanie
 router.get('/logout', user_controller.logout);
 
+// Odświeżenie JWT
+router.post('/refresh_jwt', user_controller.refresh_jwt);
+router.get('/login_expired_token', user_controller.refresh_jwt_fail);
+
 module.exports = router;

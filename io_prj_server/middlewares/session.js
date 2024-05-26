@@ -20,7 +20,7 @@ function next_session_id() {
  * @param {Function} next - The next middleware function.
  */
 const user_auth = function (req, res, next) {
-    if (req.cookies.session_id === undefined) {
+    if (req.cookies.session_id === undefined || !session_cache.exists(req.cookies.session_id)) {
         req.cookies.session_id = next_session_id();
         res.cookie('session_id', req.cookies.session_id, { maxAge: jwt_cfg.ACCESS_TOKEN_TTL, httpOnly: true, secure: true, sameSite: 'Strict' });
         session_cache.set(req.cookies.session_id, {}, jwt_cfg.ACCESS_TOKEN_TTL);
