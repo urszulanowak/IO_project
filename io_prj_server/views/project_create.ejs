@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Strona Główna</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/project_create.css' />
+   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header>
+    <div id="brand">
+      <h1>MatchMates</h1>
+    </div>
+    <nav>        
+        <li><a href="/project_list">Projekty</a></li>
+        <li><a href="/update">Update'y</a></li>
+        <li><a href="/about">Informacje</a></li>
+        <li><a href="/faq">Pomoc</a></li>
+        <li><a href="/profil" class="blue-button">Profil</a></li>
+        <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+      </ul>
+    </nav>
+  </header>
+  <section id="form" class="create_form">
+    <h1>Stwórz projekt</h1>
+    <label for="title">Tytuł:</label><br>
+    <div class="title-box">
+      <textarea id="title" name="title" class="input-field" rows="1" maxlength="50"></textarea>
+    </div>
+    <label for="short-desc">Krótki opis projektu:</label><br>
+    <div class="short-desc-box">
+      <textarea id="short-desc" name="short-desc" class="input-field" rows="1" maxlength="300"></textarea>
+    </div>
+    <label for="expectations">Oczekiwania:</label><br>
+    <div class="expectations-box">
+      <textarea id="expectations" name="expectations" class="input-field" rows="1" maxlength="300"></textarea>
+    </div>
+    <label for="detailed-desc">Szczegółowy opis projektu:</label><br>
+    <div class="detailed-desc-box">
+      <textarea id="detailed-desc" name="detailed-desc" class="input-field" rows="1" maxlength="2000"></textarea>
+    </div>
+    <label for="technology">Dodaj technologię do projektu:</label><br>
+    <select id="add_technology_box" class="databox" multiple="multiple">
+      <option value="Python">Python</option>
+      <option value="Java">Java</option>
+    </select>
+    <label for="user" style="margin-top: 15px;">Dodaj użytkownika do projektu:</label><br>
+    <select id="add_user_box" class="databox" multiple="multiple" >
+      <option value="User 1">User 1</option>
+      <option value="User 2">User 2</option>
+    </select>
+  </section>
+  <a href="/publish" class="large-blue-button">Publikuj Projekt</a>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#add_technology_box').select2({
+        placeholder: 'Wybierz technologie',
+        allowClear: true
+      });
+      $('#add_user_box').select2({
+        placeholder: 'Wybierz użytkowników',
+        allowClear: true
+      });
+    });
+  </script>
+
+<script src="https://cdn.jsdelivr.net/npm/autosize@5.0.1/dist/autosize.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    autosize(document.querySelectorAll('textarea.input-field'));
+
+    document.querySelectorAll('textarea.input-field').forEach(function(textarea) {
+      textarea.style.maxHeight = '100px'; 
+    });
+
+
+    document.querySelectorAll('textarea.input-field').forEach(function(textarea) {
+      var maxLength = parseInt(textarea.getAttribute('maxlength'));
+      if (maxLength) {
+        textarea.addEventListener('input', function() {
+          if (textarea.value.length > maxLength) {
+            textarea.value = textarea.value.slice(0, maxLength);
+          }
+        });
+      }
+    });
+  });
+</script>
+
+
+</body>
+</html>

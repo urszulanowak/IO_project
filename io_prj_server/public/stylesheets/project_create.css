@@ -1,0 +1,159 @@
+.create_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+}
+
+.project-title {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title-box,
+.short-desc-box,
+.expectations-box
+ {
+  background-color: #fafaf5;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: solid;
+  border-color: #e6e6e6;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.detailed-desc-box
+ {
+  background-color: #fafaf5;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: solid;
+  border-color: #e6e6e6;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+label {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.title-box input,
+.short-desc-box input,
+.expectations-box input,
+.detailed-desc-box input
+ {
+  background-color: #fafaf5;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.title-box input:focus,
+.short-desc-box input:focus,
+.expectations-box input:focus,
+.detailed-desc-box input:focus
+ {
+  outline: none;
+}
+
+#form h1 {
+  text-align: center;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 130%;
+  margin-bottom: 20px;
+}
+
+
+
+a.blue-button:hover {
+  background-color: #0056b3;
+}
+
+a.large-blue-button {
+  display: block;
+  background-color: dodgerblue;
+  color: white;
+  padding: 15px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  text-align: center;
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}
+
+a.large-blue-button:hover {
+  background-color: #0056b3;
+}
+
+.databox {
+  background-color: #fafaf5;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: solid;
+  border-color: #e6e6e6;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input-field {
+  width: 100%;
+  box-sizing: border-box;
+  resize: none; 
+  overflow: hidden; 
+}
+
+.input-field {
+  width: 100%;
+  box-sizing: border-box;
+  resize: none; 
+  overflow: hidden; 
+  border: none;
+  background: transparent;
+  font-family: inherit; 
+  font-size: inherit; 
+  padding: 0; 
+  margin: 0; 
+}
+
+.input-field:focus {
+  outline: none; 
+  border-color: transparent;
+  box-shadow: none; 
+}
+
+.title-box,
+.short-desc-box,
+.expectations-box,
+.detailed-desc-box {
+  background-color: #f0f0f0; 
+  padding: 10px; 
+  border-radius: 5px; 
+}
