@@ -32,20 +32,17 @@
   <main>
     <section id="content">
       <div class="about">
-        <h1 class="project-title" style="font-size: 32px;">Tytuł projektu</h1>
+        <h1 class="project-title" style="font-size: 32px;">
+          <%= project.data.title %>
+        </h1>
         <h2 style="font-size: 24px;">Opis</h2>
         <div class="description">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor eget velit malesuada, sit amet
-            pharetra est volutpat.</p>
+          <%= project.data.description %>
         </div>
         <h2 style="font-size: 24px;">Technologie</h2>
         <div class="technologies">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor eget velit malesuada, sit amet
-            pharetra est volutpat.</p>
-        </div>
-        <h2 style="font-size: 24px;">Oczekiwania</h2>
-        <div class="expectations">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor eget velit malesuada, sit amet
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor eget velit malesuada, sit
+            amet
             pharetra est volutpat.</p>
         </div>
         <div id="authors">
@@ -131,39 +128,22 @@
   </div>
 
   <div id="comment_section">
-    <div class="comment">
-      <div class="user-photo">
-        <img src="/images/placeholder.jpg" alt="User 1">
+    <% project.comments.forEach(comment=> { %>
+      <div class="comment">
+        <div class="user-photo">
+          <img src="/images/placeholder.jpg" alt="User 1">
+        </div>
+        <div class="comment-text">
+          <div class="username">
+            <%= comment.name %>
+          </div>
+          <div class="comment-content">
+            <%= comment.content %>
+          </div>
+        </div>
       </div>
-      <div class="comment-text">
-        <div class="username">User 1:</div>
-        <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent
-          libero.</div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="user-photo">
-        <img src="/images/placeholder.jpg" alt="User 2">
-      </div>
-      <div class="comment-text">
-        <div class="username">User 2:</div>
-        <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent
-          libero.</div>
-      </div>
-    </div>
-    <div class="comment">
-      <div class="user-photo">
-        <img src="/images/placeholder.jpg" alt="User 3">
-      </div>
-      <div class="comment-text">
-        <div class="username">User 3:</div>
-        <div class="comment-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent
-          libero.</div>
-      </div>
-    </div>
+      <% }) %>
   </div>
-
-
 </body>
 
 </html>

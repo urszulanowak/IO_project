@@ -4,7 +4,6 @@ const JWT_REFRESH_INTERVAL = 1000 * 60 * 5; // 5 minutes
 
 function refresh_jwt() {
     if (getCookie("logged_in") === undefined) {
-        remove_local_storage();
         return;
     }
     fetch("user/refresh_jwt", { method: "POST" }).then((res) => {

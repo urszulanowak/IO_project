@@ -140,7 +140,7 @@ exports.logout = function (req, res) {
 /**
  * Refreshes the JWT access token.
  * Responds with status 200 if the token is refreshed successfully.
- * Responds with status 401 if the token is missing.
+ * Responds with status 403 if the token is missing.
  * Responds with status 403 if the token is invalid.
  * Responds with status 500 if there is a server error.
  * 
@@ -152,7 +152,7 @@ exports.refresh_jwt = function (req, res) {
         var refresh_token = req.cookies.jwt_refresh_token;
         if (refresh_token === undefined) {
             clearCookies(res);
-            return res.status(401).send('no token');
+            return res.status(403).send('no token');
         }
         jwt.verify(refresh_token, jwt_cfg.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err) {

@@ -9,6 +9,7 @@
   <link rel='stylesheet' href='/stylesheets/project_create.css' />
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <script type="module" src="/javascripts/refresh_jwt.js"></script>
+  <script type="module" src="/javascripts/project_publish.js"></script>
 </head>
 
 <body>
@@ -49,17 +50,13 @@
         <div class="title-box">
           <textarea id="title" name="title" class="input-field" rows="1" maxlength="50"></textarea>
         </div>
-        <label for="short-desc">Krótki opis projektu:</label><br>
-        <div class="short-desc-box">
-          <textarea id="short-desc" name="short-desc" class="input-field" rows="1" maxlength="300"></textarea>
-        </div>
         <label for="expectations">Oczekiwania:</label><br>
         <div class="expectations-box">
           <textarea id="expectations" name="expectations" class="input-field" rows="1" maxlength="300"></textarea>
         </div>
         <label for="detailed-desc">Szczegółowy opis projektu:</label><br>
         <div class="detailed-desc-box">
-          <textarea id="detailed-desc" name="detailed-desc" class="input-field" rows="1" maxlength="2000"></textarea>
+          <textarea id="description" name="description" class="input-field" rows="1" maxlength="2000"></textarea>
         </div>
         <label for="technology">Dodaj technologię do projektu:</label><br>
         <select id="add_technology_box" class="databox" multiple="multiple">
@@ -72,7 +69,9 @@
           <option value="User 2">User 2</option>
         </select>
       </section>
-      <a href="/publish" class="large-blue-button">Publikuj Projekt</a>
+      <button class="large-blue-button" onclick="project_publish()">Publikuj Projekt</button>
+      <div class="error-message" id="error">
+      </div>
 
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
