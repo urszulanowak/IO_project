@@ -1,4 +1,6 @@
 var project_model = require('@models/project');
+var recommend_model = require('@models/recommend');
+var ejs = require('ejs');
 
 
 exports.get_project = function (req, res) {
@@ -17,6 +19,31 @@ exports.get_project = function (req, res) {
         }
     });
 };
+
+exports.get_project_previews = function (req, res) {
+
+    if (req.session.seen_projects === undefined) {
+        req.session.seen_projects = [];
+    }
+    var seen_projects = req.session.seen_projects;
+
+    recommend_model.recommend(5, req.user ? req.user.user_id : null, seen_projects).then(recommended_projects => {
+        if (recommended_projects.length == 0) {
+            req.session.seen_projects = [];
+            res.status(200).send();
+        } else {
+            req.session.seen_projects = seen_projects.concat(recommended_projects);
+            project_model.get_project_previews(recommended_projects).then(project_previews => {
+                ejs.renderFile('views/project_previews.ejs', { project_previews: project_previews }).then(html => {
+                    res.status(200).send(html);
+                });
+            });
+        }
+    }).catch(err => {
+        console.log('Get project previews error: ', err);
+        res.status(500);
+    });
+}
 
 exports.publish = function (req, res) {
     var user = req.user;

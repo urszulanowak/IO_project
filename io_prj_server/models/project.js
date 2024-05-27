@@ -22,6 +22,15 @@ exports.get_project = async function (project_id) {
     return project;
 }
 
+exports.get_project_previews = async function (project_ids) {
+    return await db.request()
+        .input('project_ids', project_ids.join(','))
+        .query("SELECT project_id, title, SUBSTRING(description, 1, 100) AS description FROM [dbo].[project] WHERE project_id IN  (SELECT value FROM STRING_SPLIT(@project_ids, ','))")
+        .then(result => {
+            return result.recordset;
+        });
+}
+
 exports.publish = async function (user_id, title, description) {
     if (title.length < 8) {
         throw new Error('title too short');

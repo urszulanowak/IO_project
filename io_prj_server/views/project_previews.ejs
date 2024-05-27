@@ -1,0 +1,12 @@
+<% project_previews.forEach(project=> { %>
+    <div class="project-container" onclick="window.location.href='/project/id/<%= project.project_id %>'">
+        <div class="project-title">
+            <%= project.title %>
+        </div>
+        <div class="post">
+            <p>
+                <%= project.description %>
+            </p>
+        </div>
+    </div>
+    <% }); %>
