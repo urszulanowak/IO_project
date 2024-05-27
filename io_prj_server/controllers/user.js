@@ -41,11 +41,11 @@ exports.login = function (req, res) {
     }).catch(err => {
         switch (err.message) {
             case 'invalid email or password':
-                res.status(401).render('login', { error: 'Login Failed! Invalid Email or Password!' });
+                res.status(401).render('login', { error: 'Błąd logowania! Niewłaściwy email lub hasło.' });
                 break;
             default:
                 console.log('Login error: ', err);
-                res.status(500).render('login', { error: 'Login Failed! Server error.' });
+                res.status(500).render('login', { error: 'Błąd logowania! Server error.' });
                 break;
         }
     });
@@ -76,7 +76,7 @@ exports.register = function (req, res) {
 
     // Sprawdzanie zgodności haseł
     if (pass !== confirm_pass) {
-        return res.status(400).render('register', { error: 'Passwords do not match!' });
+        return res.status(400).render('register', { error: 'Hasła nie są takie same!' });
     }
 
     user_model.register(email, name, pass, birth_date, gender).then(() => {
@@ -84,29 +84,29 @@ exports.register = function (req, res) {
     }).catch(err => {
         switch (err.message) {
             case 'email already exists':
-                res.status(400).render('register', { error: 'Registration Failed! Email already exists!' });
+                res.status(400).render('register', { error: 'Błąd rejestracji! Email jest już w użyciu.' });
                 break;
             case 'name already exists':
-                res.status(400).render('register', { error: 'Registration Failed! Name already exists!' });
+                res.status(400).render('register', { error: 'Błąd rejestracji! Użytkownik jest już w bazie.' });
                 break;
             case 'email too short':
-                res.status(400).render('register', { error: 'Registration Failed! Email too short!' });
+                res.status(400).render('register', { error: 'Błąd rejestracji! Za krótki email.' });
                 break;
             case 'name too short':
-                res.status(400).render('register', { error: 'Registration Failed! Name too short!' });
+                res.status(400).render('register', { error: 'Błąd rejestracji! Za krótkia nazwa użytkownika.' });
                 break;
             case 'pass too short':
-                res.status(400).render('register', { error: 'Registration Failed! Password too short!' });
+                res.status(400).render('register', { error: 'Błąd rejestracji! Za krótkie hasło.' });
                 break;
             case 'value too long':
-                res.status(400).render('register', { error: 'Registration Failed! Value too long!' });
+                res.status(400).render('register', { error: 'Błąd rejestracji! Za duża wartość.' });
                 break;
             case 'user age':
-                res.status(400).render('register', { error: 'Registration Failed! User age is less than 16 years!' });
+                res.status(400).render('register', { error: 'Błąd rejestracji! Musisz mieć powyżej 16 lat, aby móc się zarejestrować.' });
                 break;
             default:
                 console.log('Registration error: ', err);
-                res.status(500).render('register', { error: 'Registration Failed! Server error.' });
+                res.status(500).render('register', { error: 'Błąd rejestracji! Server error.' });
                 break;
         }
     });
