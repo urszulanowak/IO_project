@@ -8,14 +8,14 @@ function project_publish() {
         },
         body: JSON.stringify({ title: title, description: description })
     }).then(res => {
-        if (res.status == 200) {
-            return res.text();
-        } else {
-            throw new Error(res.text());
+        if (!res.ok) {
+            throw new Error(res.statusText);
         }
+        return res.text();
     }).then(id => {
         window.location.href = `/project/id/${id}`;
     }).catch(err => {
+        console.log(err);
         document.getElementById('error').innerText = err.message;
     });
 }

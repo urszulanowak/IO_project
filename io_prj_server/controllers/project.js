@@ -21,7 +21,8 @@ exports.get_project = function (req, res) {
 exports.publish = function (req, res) {
     var user = req.user;
     if (!user || user.is_guest) {
-        res.status(401).send('Unauthorized');
+        res.statusMessage = 'Unauthorized';
+        res.status(401).send();
         return;
     }
     var title = req.body.title;
@@ -31,14 +32,17 @@ exports.publish = function (req, res) {
     }).catch(err => {
         switch (err.message) {
             case 'title too short':
-                res.status(400).send('Title is too short!');
+                res.statusMessage = 'Title is too short!';
+                res.status(400).send();
                 break;
             case 'description too short':
-                res.status(400).send('Description is too short!');
+                res.statusMessage = 'Description is too short!';
+                res.status(400).send();
                 break;
             default:
                 console.log('Publish project error: ', err);
-                res.status(500).send('Server error.');
+                res.statusMessage = 'Server error.';
+                res.status(500).send();
                 break;
         }
     });
