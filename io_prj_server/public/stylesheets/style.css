@@ -21,6 +21,11 @@ header {
   margin: 0;
 }
 
+#brand a{
+  text-decoration: none;
+  color: inherit;
+}
+
 nav ul {
   display: flex;
   list-style-type: none;
@@ -226,9 +231,6 @@ footer {
 nav ul li a:hover {
   text-decoration: underline;
 }
-
-
-
 
 .question-title {
   font-weight: bold;
