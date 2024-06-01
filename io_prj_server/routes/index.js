@@ -18,4 +18,8 @@ router.get('/about', function (req, res, next) {
   res.render('about', { user: req.user });
 });
 
+router.get('/my-projects', function (req, res, next) {
+  res.render('my_projects', { user: req.user });
+});
+
 module.exports = router;

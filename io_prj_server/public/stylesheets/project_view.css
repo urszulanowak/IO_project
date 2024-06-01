@@ -185,3 +185,9 @@ body {
   .comment-content {
     flex: 1;
   }
+
+  .title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }

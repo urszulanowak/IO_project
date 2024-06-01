@@ -10,9 +10,8 @@ router.get('/create', function (req, res, next) {
     res.render('project_create', { user: req.user });
 });
 
+router.get('/get_my_projects', project_controller.get_my_project_previews);
+
 router.post('/publish', project_controller.publish);
-
-
-
 
 module.exports = router;

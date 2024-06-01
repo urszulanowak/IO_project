@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Strona Główna</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script type="module" src="/javascripts/refresh_jwt.js"></script>
+  <script type="module" src="/javascripts/display_my_projects.js"></script>
+</head>
+
+<body>
+  <header>
+    <div id="brand">
+      <h1><a href="/">MatchMates</a></h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/">Projekty</a></li>
+        <li><a href="/about">Informacje</a></li>
+        <li><a href="/faq">Pomoc</a></li>
+        <% if (user.is_guest) { %>
+          <li> <a href="/user/login" class="blue-button">Zaloguj się</a></li>
+          <li> <a href="/user/register" class="blue-button">Zarejestruj się</a></li>
+          <% } else { %>
+            <li><a href="/profil" class="blue-button">Profil</a></li>
+            <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+            <% } %>
+      </ul>
+    </nav>
+  </header>
+
+  <% if (!user.is_guest) { %>
+    <div class="logged-buttons">
+      <nav>
+        <ul>
+          <li><a href="/project/create" class="blue-button">Dodaj projekt</a></li>
+          <li><a href="/my-projects" class="blue-button">Moje projekty</a></li>
+          <li><a href="/followed-projects" class="blue-button">Śledzone projekty</a></li>
+        </ul>
+      </nav>
+    </div>
+    <% } %>
+
+      <main>
+        <section id="content">
+            
+        </section>
+        <aside>
+        </aside>
+      </main>
+</body>
+
+</html>

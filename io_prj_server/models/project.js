@@ -31,6 +31,16 @@ exports.get_project_previews = async function (project_ids) {
         });
 }
 
+exports.get_project_previews_by_user_id = async function (user_id) {
+    return await db.request()
+        .input('user_id', user_id)
+        .query("SELECT project_id, title, SUBSTRING(description, 1, 100) AS description FROM [dbo].[project] WHERE user_id = @user_id")
+        .then(result => {
+            return result.recordset;
+        });
+}
+
+
 exports.publish = async function (user_id, title, description) {
     if (title.length < 8) {
         throw new Error('title too short');
