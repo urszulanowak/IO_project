@@ -32,23 +32,23 @@
   <main>
     <section id="content">
       <div class="about">
-        <h1 class="project-title" style="font-size: 32px;">
-          <%= project.data.title %>
-        </h1>
+        <div class="title-container">
+          <h1 class="project-title" style="font-size: 32px;">
+            <%= project.data.title %>
+          </h1>
+          <button class="blue-button" style="font-size: 20px; padding: 10px 20px;">Dołącz</button>
+        </div>
         <h2 style="font-size: 24px;">Opis</h2>
         <div class="description">
           <%= project.data.description %>
         </div>
         <h2 style="font-size: 24px;">Technologie</h2>
         <div class="technologies">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor eget velit malesuada, sit
-            amet
-            pharetra est volutpat.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor eget velit malesuada, sit amet pharetra est volutpat.</p>
         </div>
         <div id="authors">
-          <h2 style="font-size: 24px;">Autorzy</h2>
+          <h2 style="font-size: 24px;">Autor</h2>
           <div class="authors">
-            <img src="/images/placeholder.jpg">
             <img src="/images/placeholder.jpg">
           </div>
         </div>
@@ -60,7 +60,6 @@
           </div>
         </div>
       </div>
-
     </section>
 
     <aside>

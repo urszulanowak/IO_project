@@ -90,9 +90,9 @@ a.blue-button:hover {
   background-color: #0056b3;
 }
 
-a.large-blue-button {
+.large-blue-button {
   display: block;
-  background-color: dodgerblue;
+  background-color: #007bff;
   color: white;
   padding: 15px 15px;
   border-radius: 5px;
@@ -104,7 +104,7 @@ a.large-blue-button {
   width: 20%;
 }
 
-a.large-blue-button:hover {
+.large-blue-button:hover {
   background-color: #0056b3;
 }
 
@@ -140,7 +140,8 @@ a.large-blue-button:hover {
   font-family: inherit; 
   font-size: inherit; 
   padding: 0; 
-  margin: 0; 
+  margin: 0;
+  height: auto; 
 }
 
 .input-field:focus {
@@ -157,3 +158,6 @@ a.large-blue-button:hover {
   padding: 10px; 
   border-radius: 5px; 
 }
+
+
+
