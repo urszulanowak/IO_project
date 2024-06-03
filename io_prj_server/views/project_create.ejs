@@ -62,11 +62,6 @@
           <option value="Python">Python</option>
           <option value="Java">Java</option>
         </select>
-        <label for="user" style="margin-top: 15px;">Dodaj użytkownika do projektu:</label><br>
-        <select id="add_user_box" class="databox" multiple="multiple">
-          <option value="User 1">User 1</option>
-          <option value="User 2">User 2</option>
-        </select>
       </section>
       <button class="large-blue-button" onclick="project_publish()">Publikuj Projekt</button>
       <div class="error-message" id="error">
@@ -78,10 +73,6 @@
         $(document).ready(function () {
           $('#add_technology_box').select2({
             placeholder: 'Wybierz technologie',
-            allowClear: true
-          });
-          $('#add_user_box').select2({
-            placeholder: 'Wybierz użytkowników',
             allowClear: true
           });
         });
