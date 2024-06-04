@@ -102,7 +102,8 @@ exports.publish = async function (user_id, title, description) {
  * @param {number} project_id - The ID of the project to send the join request for.
  * @param {string} message - The message accompanying the join request.
  * @returns {Promise<void>} - A promise that resolves when the join request is sent.
- * @throws {Error} - If the message is too short.
+ * @throws {Error('message to short')} - If the message is too short.
+ * @throws {Error('message to long')} - If the message is too long.
  * @throws {Error('already member')} - If the user is already a member of the project.
  * @throws {Error('request denied')} - If the user's previous join request for the project was denied.
  * @throws {Error('request pending')} - If the user already has a pending join request for the project.
@@ -110,6 +111,9 @@ exports.publish = async function (user_id, title, description) {
 exports.join_request = async function (user_id, project_id, message) {
     if (message.length < 50) {
         throw new Error('message too short');
+    }
+    if (message.length > 256) {
+        throw new Error('message too long');
     }
     var tran = db.pool.transaction();
     return await tran.begin().then(async () => {
@@ -136,6 +140,22 @@ exports.join_request = async function (user_id, project_id, message) {
             .input('user_id', user_id)
             .input('project_id', project_id)
             .query('INSERT INTO [dbo].[project_member] (project_id, user_id) VALUES (@project_id, @user_id)')
+            .catch(err => {
+                tran.rollback();
+                throw err;
+            });
+        await tran.request()
+            .input('from_user_id', user_id)
+            .input('from_project_id', project_id)
+            .input('message', message)
+            .query(`INSERT INTO [dbo].[notification] (notification_type_id, user_id, from_user_id, project_id, message) 
+                    VALUES (
+                        (SELECT notification_type_id FROM [dbo].[notification_type]
+                            WHERE name = 'join_request'),
+                        (SELECT user_id FROM [dbo].[project_member]
+                            WHERE project_id = @from_project_id AND creator = 1),
+                        @from_user_id, @from_project_id, @message
+                    )`)
             .catch(err => {
                 tran.rollback();
                 throw err;

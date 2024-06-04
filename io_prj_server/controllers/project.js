@@ -109,6 +109,10 @@ exports.join_request = function (req, res) {
                 res.statusMessage = 'Message is too short!';
                 res.status(400).send();
                 break;
+            case 'message too long':
+                res.statusMessage = 'Message is too long!';
+                res.status(400).send();
+                break;
             case 'already member':
                 res.statusMessage = 'Already a member!';
                 res.status(400).send();
