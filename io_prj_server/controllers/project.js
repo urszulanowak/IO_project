@@ -20,6 +20,23 @@ exports.get_project = function (req, res) {
     });
 };
 
+exports.join_project = function (req, res) {
+    var project_id = req.params.id;
+    project_model.get_project(project_id).then(project => {
+        res.render('project_join', { project: project });
+    }).catch(err => {
+        switch (err.message) {
+            case 'project not found':
+                res.status(404);
+                break;
+            default:
+                console.log('Join project error: ', err);
+                res.status(500);
+                break;
+        }
+    });
+};
+
 exports.get_project_previews = function (req, res) {
 
     if (req.session.seen_projects === undefined) {

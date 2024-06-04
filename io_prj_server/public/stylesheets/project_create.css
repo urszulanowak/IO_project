@@ -123,12 +123,7 @@ a.blue-button:hover {
   margin-right: auto;
 }
 
-.input-field {
-  width: 100%;
-  box-sizing: border-box;
-  resize: none; 
-  overflow: hidden; 
-}
+
 
 .input-field {
   width: 100%;

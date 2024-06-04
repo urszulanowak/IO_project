@@ -45,7 +45,7 @@ exports.get_project_previews = async function (project_ids) {
 exports.get_project_previews_by_user_id = async function (user_id) {
     return await db.request()
         .input('user_id', user_id)
-        .query("SELECT project_id, title, SUBSTRING(description, 1, 100) AS description FROM [dbo].[project] WHERE user_id = @user_id")
+        .query("SELECT p.project_id, p.title, SUBSTRING(p.description, 1, 100) AS description FROM [dbo].[project] p JOIN [dbo].[project_member] m ON p.project_id = m.project_id WHERE m.user_id = @user_id AND m.creator = 1")
         .then(result => {
             return result.recordset;
         });
