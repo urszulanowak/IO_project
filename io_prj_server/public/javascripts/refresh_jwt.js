@@ -6,7 +6,7 @@ function refresh_jwt() {
     if (getCookie("logged_in") === undefined) {
         return;
     }
-    fetch("user/refresh_jwt", { method: "POST" }).then((res) => {
+    fetch("/user/refresh_jwt", { method: "POST" }).then((res) => {
         if (res.status === 200) {
             return;
         } else if (res.status === 403) {

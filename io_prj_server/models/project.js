@@ -102,8 +102,8 @@ exports.publish = async function (user_id, title, description) {
  * @returns {Promise<void>} - A promise that resolves when the join request is sent.
  * @throws {Error} - If the message is too short.
  * @throws {Error('already member')} - If the user is already a member of the project.
- * @throws {Error('request pending')} - If the user already has a pending join request for the project.
  * @throws {Error('request denied')} - If the user's previous join request for the project was denied.
+ * @throws {Error('request pending')} - If the user already has a pending join request for the project.
  */
 exports.join_request = async function (user_id, project_id, message) {
     if (message.length < 50) {

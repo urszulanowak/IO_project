@@ -105,12 +105,20 @@ exports.join_request = function (req, res) {
         res.status(200).send();
     }).catch(err => {
         switch (err.message) {
-            case 'project not found':
-                res.statusMessage = 'Project not found.';
-                res.status(404).send();
+            case 'message too short':
+                res.statusMessage = 'Message is too short!';
+                res.status(400).send();
                 break;
-            case 'already joined':
-                res.statusMessage = 'Already joined.';
+            case 'already member':
+                res.statusMessage = 'Already a member!';
+                res.status(400).send();
+                break;
+            case 'request denied':
+                res.statusMessage = 'Request denied!';
+                res.status(400).send();
+                break;
+            case 'request pending':
+                res.statusMessage = 'Request pending!';
                 res.status(400).send();
                 break;
             default:
