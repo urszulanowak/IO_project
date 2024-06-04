@@ -113,7 +113,7 @@ exports.join_request = function (req, res) {
         res.status(401).send();
         return;
     }
-    var project_id = req.params.id;
+    var project_id = req.body.project_id;
     var message = req.body.message;
     project_model.join_request(user.user_id, project_id, message).then(() => {
         res.status(200).send();

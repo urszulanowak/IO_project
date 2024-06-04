@@ -148,7 +148,7 @@ exports.join_request = async function (user_id, project_id, message) {
             .input('from_user_id', user_id)
             .input('from_project_id', project_id)
             .input('message', message)
-            .query(`INSERT INTO [dbo].[notification] (notification_type_id, user_id, from_user_id, project_id, message) 
+            .query(`INSERT INTO [dbo].[notification] (notification_type_id, user_id, from_user_id, from_project_id, message) 
                     VALUES (
                         (SELECT notification_type_id FROM [dbo].[notification_type]
                             WHERE name = 'join_request'),
