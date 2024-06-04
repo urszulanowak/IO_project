@@ -7,7 +7,7 @@
     "debug": "node --inspect ./bin/www"
   },
   "dependencies": {
-    "@tensorflow/tfjs-node": "^0.1.11",
+    "@tensorflow/tfjs-node": "^0.1.21",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^3.1.10",
