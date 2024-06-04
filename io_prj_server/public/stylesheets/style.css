@@ -72,6 +72,9 @@ main {
   margin-bottom: 20px;
   border: solid;
   border-color: #e6e6e6;
+  word-wrap: break-word; 
+ overflow-wrap: break-word; 
+white-space: normal; 
  
 }
 

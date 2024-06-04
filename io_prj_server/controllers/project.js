@@ -20,6 +20,23 @@ exports.get_project = function (req, res) {
     });
 };
 
+exports.join_project = function (req, res) {
+    var project_id = req.params.id;
+    project_model.get_project(project_id).then(project => {
+        res.render('project_join', { project: project });
+    }).catch(err => {
+        switch (err.message) {
+            case 'project not found':
+                res.status(404);
+                break;
+            default:
+                console.log('Join project error: ', err);
+                res.status(500);
+                break;
+        }
+    });
+};
+
 exports.get_project_previews = function (req, res) {
 
     if (req.session.seen_projects === undefined) {
@@ -76,17 +93,14 @@ exports.publish = function (req, res) {
     }).catch(err => {
         switch (err.message) {
             case 'title too short':
-                res.statusMessage = 'Title is too short!';
-                res.status(400).send();
+                res.status(400).send('Tytuł jest zbyt krótki!');
                 break;
             case 'description too short':
-                res.statusMessage = 'Description is too short!';
-                res.status(400).send();
+                res.status(400).send('Opis jest zbyt krótki!');
                 break;
             default:
                 console.log('Publish project error: ', err);
-                res.statusMessage = 'Server error.';
-                res.status(500).send();
+                res.status(500).send('Błąd serwera.');
                 break;
         }
     });
@@ -99,36 +113,30 @@ exports.join_request = function (req, res) {
         res.status(401).send();
         return;
     }
-    var project_id = req.params.id;
+    var project_id = req.body.project_id;
     var message = req.body.message;
     project_model.join_request(user.user_id, project_id, message).then(() => {
         res.status(200).send();
     }).catch(err => {
         switch (err.message) {
             case 'message too short':
-                res.statusMessage = 'Message is too short!';
-                res.status(400).send();
+                res.status(400).send('Wiadomość jest zbyt krótka!');
                 break;
             case 'message too long':
-                res.statusMessage = 'Message is too long!';
-                res.status(400).send();
+                res.status(400).send('Wiadomość jest zbyt długa!');
                 break;
             case 'already member':
-                res.statusMessage = 'Already a member!';
-                res.status(400).send();
+                res.status(400).send('Jesteś już członkiem tego projektu!');
                 break;
             case 'request denied':
-                res.statusMessage = 'Request denied!';
-                res.status(400).send();
+                res.status(400).send('Twoje zgłoszenie zostało odrzucone!');
                 break;
             case 'request pending':
-                res.statusMessage = 'Request pending!';
-                res.status(400).send();
+                res.status(400).send('Zgłoszenie w trakcie rozpatrywania!');
                 break;
             default:
                 console.log('Join request error: ', err);
-                res.statusMessage = 'Server error.';
-                res.status(500).send();
+                res.status(500).send('Błąd serwera.');
                 break;
         }
     });

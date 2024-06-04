@@ -7,9 +7,9 @@ function project_publish() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ title: title, description: description })
-    }).then(res => {
+    }).then(async res => {
         if (!res.ok) {
-            throw new Error(res.statusText);
+            throw new Error(await res.text());
         }
         return res.text();
     }).then(id => {

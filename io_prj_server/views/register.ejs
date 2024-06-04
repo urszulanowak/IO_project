@@ -7,39 +7,51 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
     <link rel='stylesheet' href='/stylesheets/login-style.css' />
     <script type="module" src="/javascripts/refresh_jwt.js"></script>
+    <script type="module" src="/javascripts/register.js"></script>
 </head>
 
 <body>
+    <header>
+        <div id="brand">
+          <h1><a href="/">MatchMates</a></h1>
+        </div>
+        <nav>
+            <ul>
+                <li> <a href="/user/login" class="blue-button">Zaloguj się</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="login-panel">
         <div class="login-form">
             <% if (typeof error !=='undefined' ) { %>
                 <div class="error-message">
                     <%= error %>
                 </div>
-                <% } %>
-                    <form method="POST" action="/user/register">
-                        <div class="input-wrapper">
-                            <input type="email" id="email" name="email" placeholder="Adres email" required>
-                        </div>
-                        <div class="input-wrapper">
-                            <input type="text" id="name" name="name" placeholder="Nazwa użytkownika" required>
-                        </div>
-                        <div class="input-wrapper">
-                            <input type="password" id="pass" name="pass" placeholder="Hasło" required>
-                        </div>
-                        <div class="input-wrapper">
-                            <input type="password" id="confirm_pass" name="confirm_pass" placeholder="Powtórz hasło"
-                                required>
-                        </div>
-                        <div class="input-wrapper">
-                            <label for="birth_date">Data urodzenia:</label>
-                            <input type="date" id="birth_date" name="birth_date" required>
-                        </div>
-                        <div class="input-wrapper">
-                            <input type="text" id="city" name="gender" placeholder="Płeć" required>
-                        </div>
-                        <button type="submit" class="login-button">Zarejestruj</button>
-                    </form>
+            <% } %>
+            <div id="error-message" class="error-message" style="display: none;"></div>
+            <form id="register-form">
+                <div class="input-wrapper">
+                    <input type="email" id="email" name="email" placeholder="Adres email" required>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="name" name="name" placeholder="Nazwa użytkownika" required>
+                </div>
+                <div class="input-wrapper">
+                    <input type="password" id="pass" name="pass" placeholder="Hasło" required>
+                </div>
+                <div class="input-wrapper">
+                    <input type="password" id="confirm_pass" name="confirm_pass" placeholder="Powtórz hasło"
+                        required>
+                </div>
+                <div class="input-wrapper">
+                    <label for="birth_date">Data urodzenia:</label>
+                    <input type="date" id="birth_date" name="birth_date" required>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="gender" name="gender" placeholder="Płeć" required>
+                </div>
+                <button id="register-button" type="submit" class="login-button">Zarejestruj</button>
+            </form>
         </div>
     </div>
 </body>

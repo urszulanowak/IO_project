@@ -3,16 +3,14 @@ var jwt = require('jsonwebtoken');
 var jwt_cfg = require('@config/jwt_cfg');
 
 /**
- * Handles user login.
+ *  Handles user login.
  * Stores user data and jwt tokens in cookies.
  * Responds with status 200 if login is successful.
  * Responds with status 401 if login fails.
  * Responds with status 500 if there is a server error.
  * 
- * @param {Object} req - The request object.
- * @param {string} req.body.email - The user's email.
- * @param {string} req.body.pass - The user's password.
- * @param {Object} res - The response object.
+ * @param {Object} req - the request object 
+ * @param {Object} res - the response object 
  */
 exports.login = function (req, res) {
     var email = req.body.email;
@@ -37,19 +35,20 @@ exports.login = function (req, res) {
             jwt_refresh_token,
             { maxAge: jwt_cfg.REFRESH_TOKEN_TTL, httpOnly: true, secure: true, sameSite: 'Strict' });
         req.session.jwt_refresh_token = jwt_refresh_token;
-        res.status(200).redirect('/');
+        res.status(200).json({ success: true, redirect: '/' });
     }).catch(err => {
         switch (err.message) {
             case 'invalid email or password':
-                res.status(401).render('login', { error: 'Błąd logowania! Niewłaściwy email lub hasło.' });
+                res.status(401).send('Błąd logowania! Nieprawidłowy email lub hasło.');
                 break;
             default:
                 console.log('Login error: ', err);
-                res.status(500).render('login', { error: 'Błąd logowania! Server error.' });
+                res.status(500).send('Server error.');
                 break;
         }
     });
 }
+
 
 /**
  * Handles user registration.
@@ -74,43 +73,43 @@ exports.register = function (req, res) {
     var birth_date = req.body.birth_date;
     var gender = req.body.gender;
 
-    // Sprawdzanie zgodności haseł
     if (pass !== confirm_pass) {
-        return res.status(400).render('register', { error: 'Hasła nie są takie same!' });
+        return res.status(400).send('Passwords do not match.');
     }
 
     user_model.register(email, name, pass, birth_date, gender).then(() => {
-        res.status(200).redirect('/user/login')
+        res.status(200).json({ success: true, redirect: '/user/login' });
     }).catch(err => {
         switch (err.message) {
             case 'email already exists':
-                res.status(400).render('register', { error: 'Błąd rejestracji! Email jest już w użyciu.' });
+                res.status(400).send('Błąd rejestracji! Email jest już w użyciu.');
                 break;
             case 'name already exists':
-                res.status(400).render('register', { error: 'Błąd rejestracji! Użytkownik jest już w bazie.' });
+                res.status(400).send('Błąd rejestracji! Użytkownik jest już w bazie.');
                 break;
             case 'email too short':
-                res.status(400).render('register', { error: 'Błąd rejestracji! Za krótki email.' });
+                res.status(400).send('Błąd rejestracji! Za krótki email.');
                 break;
             case 'name too short':
-                res.status(400).render('register', { error: 'Błąd rejestracji! Za krótkia nazwa użytkownika.' });
+                res.status(400).send('Błąd rejestracji! Za krótkia nazwa użytkownika.');
                 break;
             case 'pass too short':
-                res.status(400).render('register', { error: 'Błąd rejestracji! Za krótkie hasło.' });
+                res.status(400).send('Błąd rejestracji! Za krótkie hasło.');
                 break;
             case 'value too long':
-                res.status(400).render('register', { error: 'Błąd rejestracji! Za duża wartość.' });
+                res.status(400).send('Błąd rejestracji! Za długa wartość.');
                 break;
             case 'user age':
-                res.status(400).render('register', { error: 'Błąd rejestracji! Musisz mieć powyżej 16 lat, aby móc się zarejestrować.' });
+                res.status(400).send('Błąd rejestracji! Musisz mieć powyżej 16 lat, aby móc się zarejestrować.');
                 break;
             default:
                 console.log('Registration error: ', err);
-                res.status(500).render('register', { error: 'Błąd rejestracji! Server error.' });
+                res.status(500).send('Server error.');
                 break;
         }
     });
 }
+
 
 /**
  * Clears the cookies related to user session and authentication.

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularz</title>
+    <link rel="stylesheet" href="/stylesheets/project_join.css">
+    <script src="/javascripts/project_join.js"></script>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Dołączasz do projektu <%=project.data.title%></h1>
+        <h2>Napisz coś o sobie!</h2>
+        <div id="txt-container">
+            <textarea id="info" ></textarea>
+        </div>
+        <button type="button" class="submit-button">Wyślij</button>
+    </div>
+    <script>
+        window.projectId = "<%= project.data.project_id %>";
+    </script>
+</body>
+</html>
