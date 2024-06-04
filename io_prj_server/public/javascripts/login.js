@@ -13,17 +13,14 @@ document.getElementById('login-button').addEventListener('click', function (even
             email: email,
             pass: pass
         })
-    })
-    .then(response => {
+    }).then(async response => {
         if (!response.ok) {
-            throw new Error('Błąd logowania! ' + response.statusText);
+            throw new Error(await response.text());
         }
         return response.json();
-    })
-    .then(data => {
+    }).then(data => {
         window.location.href = '/'; // Przekierowanie po udanym zalogowaniu
-    })
-    .catch(error => {
+    }).catch(error => {
         document.getElementById('error-message').innerText = error.message;
         document.getElementById('error-message').style.display = 'block';
     });

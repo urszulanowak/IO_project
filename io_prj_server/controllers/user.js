@@ -39,11 +39,11 @@ exports.login = function (req, res) {
     }).catch(err => {
         switch (err.message) {
             case 'invalid email or password':
-                res.status(401).json({ success: false, message: 'Błąd logowania! Nieprawidłowy email lub hasło.' });
+                res.status(401).send('Błąd logowania! Nieprawidłowy email lub hasło.');
                 break;
             default:
                 console.log('Login error: ', err);
-                res.status(500).json({ success: false, message: 'Server error.' });
+                res.status(500).send('Server error.');
                 break;
         }
     });
@@ -74,7 +74,7 @@ exports.register = function (req, res) {
     var gender = req.body.gender;
 
     if (pass !== confirm_pass) {
-        return res.status(400).json({ success: false, message: 'Passwords do not match.' });
+        return res.status(400).send('Passwords do not match.');
     }
 
     user_model.register(email, name, pass, birth_date, gender).then(() => {
@@ -82,29 +82,29 @@ exports.register = function (req, res) {
     }).catch(err => {
         switch (err.message) {
             case 'email already exists':
-                res.status(400).json({ success: false, message: 'Błąd rejestracji! Email jest już w użyciu.' });
+                res.status(400).send('Błąd rejestracji! Email jest już w użyciu.');
                 break;
             case 'name already exists':
-                res.status(400).json({ success: false, message: 'Błąd rejestracji! Użytkownik jest już w bazie.' });
+                res.status(400).send('Błąd rejestracji! Użytkownik jest już w bazie.');
                 break;
             case 'email too short':
-                res.status(400).json({ success: false, message: 'Błąd rejestracji! Za krótki email.' });
+                res.status(400).send('Błąd rejestracji! Za krótki email.');
                 break;
             case 'name too short':
-                res.status(400).json({ success: false, message: 'Błąd rejestracji! Za krótkia nazwa użytkownika.' });
+                res.status(400).send('Błąd rejestracji! Za krótkia nazwa użytkownika.');
                 break;
             case 'pass too short':
-                res.status(400).json({ success: false, message: 'Błąd rejestracji! Za krótkie hasło.' });
+                res.status(400).send('Błąd rejestracji! Za krótkie hasło.');
                 break;
             case 'value too long':
-                res.status(400).json({ success: false, message: 'Błąd rejestracji! Za duża wartość.' });
+                res.status(400).send('Błąd rejestracji! Za długa wartość.');
                 break;
             case 'user age':
-                res.status(400).json({ success: false, message: 'Błąd rejestracji! Musisz mieć powyżej 16 lat, aby móc się zarejestrować.' });
+                res.status(400).send('Błąd rejestracji! Musisz mieć powyżej 16 lat, aby móc się zarejestrować.');
                 break;
             default:
                 console.log('Registration error: ', err);
-                res.status(500).json({ success: false, message: 'Server error.' });
+                res.status(500).send('Server error.');
                 break;
         }
     });

@@ -27,17 +27,14 @@ document.getElementById('register-button').addEventListener('click', function (e
             birth_date: birthDate,
             gender: gender
         })
-    })
-    .then(response => {
+    }).then(async response => {
         if (!response.ok) {
-            throw new Error('Błąd rejestracji! ' + response.statusText);
+            throw new Error(await response.text());
         }
         return response.json();
-    })
-    .then(data => {
+    }).then(data => {
         window.location.href = '/user/login'; // Przekierowanie po udanej rejestracji
-    })
-    .catch(error => {
+    }).catch(error => {
         document.getElementById('error-message').innerText = error.message;
         document.getElementById('error-message').style.display = 'block';
     });

@@ -76,17 +76,14 @@ exports.publish = function (req, res) {
     }).catch(err => {
         switch (err.message) {
             case 'title too short':
-                res.statusMessage = 'Title is too short!';
-                res.status(400).send();
+                res.status(400).send('Tytuł jest zbyt krótki!');
                 break;
             case 'description too short':
-                res.statusMessage = 'Description is too short!';
-                res.status(400).send();
+                res.status(400).send('Opis jest zbyt krótki!');
                 break;
             default:
                 console.log('Publish project error: ', err);
-                res.statusMessage = 'Server error.';
-                res.status(500).send();
+                res.status(500).send('Błąd serwera.');
                 break;
         }
     });
@@ -106,29 +103,23 @@ exports.join_request = function (req, res) {
     }).catch(err => {
         switch (err.message) {
             case 'message too short':
-                res.statusMessage = 'Message is too short!';
-                res.status(400).send();
+                res.status(400).send('Wiadomość jest zbyt krótka!');
                 break;
             case 'message too long':
-                res.statusMessage = 'Message is too long!';
-                res.status(400).send();
+                res.status(400).send('Wiadomość jest zbyt długa!');
                 break;
             case 'already member':
-                res.statusMessage = 'Already a member!';
-                res.status(400).send();
+                res.status(400).send('Jesteś już członkiem tego projektu!');
                 break;
             case 'request denied':
-                res.statusMessage = 'Request denied!';
-                res.status(400).send();
+                res.status(400).send('Twoje zgłoszenie zostało odrzucone!');
                 break;
             case 'request pending':
-                res.statusMessage = 'Request pending!';
-                res.status(400).send();
+                res.status(400).send('Zgłoszenie w trakcie rozpatrywania!');
                 break;
             default:
                 console.log('Join request error: ', err);
-                res.statusMessage = 'Server error.';
-                res.status(500).send();
+                res.status(500).send('Błąd serwera.');
                 break;
         }
     });
