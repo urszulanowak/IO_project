@@ -1,0 +1,67 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.form-container {
+    text-align: center;
+}
+
+#txt-container
+ {
+  background-color: #fafaf5;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: solid;
+  border-color: #e6e6e6;
+  width: fit-content;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#info {
+    width: 500px;
+    height: 500px;
+    box-sizing: border-box;
+    resize: none; 
+    overflow: hidden; 
+    border: none;
+    background: transparent;
+    font-family: inherit; 
+    font-size: inherit; 
+    height: inherit; 
+}
+
+
+#info:focus{
+    outline: none; 
+    border-color: transparent;
+    box-shadow: none; 
+}
+
+
+
+button.submit-button {
+    margin-top: 20px;
+    padding: 15px 30px; /* Bigger button */
+    font-size: 18px; /* Larger font size */
+    cursor: pointer;
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+button.submit-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
