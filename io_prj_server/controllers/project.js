@@ -74,3 +74,33 @@ exports.publish = function (req, res) {
         }
     });
 }
+
+exports.join_request = function (req, res) {
+    var user = req.user;
+    if (!user || user.is_guest) {
+        res.statusMessage = 'Unauthorized';
+        res.status(401).send();
+        return;
+    }
+    var project_id = req.params.id;
+    var message = req.body.message;
+    project_model.join_request(user.user_id, project_id, message).then(() => {
+        res.status(200).send();
+    }).catch(err => {
+        switch (err.message) {
+            case 'project not found':
+                res.statusMessage = 'Project not found.';
+                res.status(404).send();
+                break;
+            case 'already joined':
+                res.statusMessage = 'Already joined.';
+                res.status(400).send();
+                break;
+            default:
+                console.log('Join request error: ', err);
+                res.statusMessage = 'Server error.';
+                res.status(500).send();
+                break;
+        }
+    });
+}
