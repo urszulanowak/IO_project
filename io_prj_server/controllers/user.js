@@ -176,3 +176,21 @@ exports.refresh_jwt = function (req, res) {
 exports.refresh_jwt_fail = function (req, res) {
     return res.status(200).render('login', { error: 'Proszę zalogować się ponownie. Sesja wygasła.' });
 }
+
+exports.profile = function (req, res, next) {
+    if (req.user && !req.user.is_guest) {
+        res.render('profile', {
+            user: {
+                profilePicture: req.user.profilePicture || '/path/to/default/profile.jpg',
+                name: req.user.name,
+                about: req.user.about || 'Tutaj dodaj opis o sobie...',
+                preferredTechnologies: req.user.preferredTechnologies || 'Technologie...',
+                ownProjects: req.user.ownProjects || 'Tutaj dodaj projekty autorskie...',
+                participatedProjects: req.user.participatedProjects || 'Tutaj dodaj projekty, w których uczestniczysz...'
+            }
+        });
+    } else {
+        res.redirect('/user/login');
+    }
+};
+
