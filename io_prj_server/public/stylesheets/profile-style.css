@@ -12,6 +12,7 @@ body {
 
 .profile-main {
     flex: 1;
+    margin-left: 50px;
 }
 
 .profile-header {
@@ -82,7 +83,21 @@ body {
     margin-left: 20px;
 }
 
+aside {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background-color: #f4f4f4;
+  border-radius: 44px;
+  position: relative;
+  height: 664px;
+}
 
+#content {
+  width: 70%;
+}
 
 
 
