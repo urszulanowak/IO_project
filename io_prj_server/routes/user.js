@@ -25,4 +25,6 @@ router.get('/logout', user_controller.logout);
 router.post('/refresh_jwt', user_controller.refresh_jwt);
 router.get('/login_expired_token', user_controller.refresh_jwt_fail);
 
+router.get('/profile', user_controller.profile);
+
 module.exports = router;
