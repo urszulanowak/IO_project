@@ -1,5 +1,4 @@
 var project_model = require('@models/project');
-var project_tag_model = require('@models/project_tag');
 var recommend_model = require('@models/recommend');
 var ejs = require('ejs');
 
