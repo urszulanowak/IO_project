@@ -24,14 +24,14 @@ exports.add_project_tags = async function (tran, project_id, tags) {
  */
 exports.get_all_tags = async function () {
     return await db.request()
-        .query(`SELECT t.tag_id, t.tag_name, c.tag_category_id AS category_id, c.name AS category_name
+        .query(`SELECT t.tag_id, t.name AS tag_name, c.tag_category_id AS category_id, c.name AS category_name
                 FROM [dbo].[tag] t
-                JOIN [dbo].[tag_category] c ON t.tag_category_id = c.tag_category_id`)
+                JOIN [dbo].[tag_category] c ON t.tag_category_id = c.tag_category_id
+                ORDER BY c.tag_category_id, t.name`)
         .then(result => {
             return result.recordset;
         });
 }
-
 /**
  * Retrieves tags for the specified project IDs.
  * @param {number[]} project_ids - An array of project IDs.

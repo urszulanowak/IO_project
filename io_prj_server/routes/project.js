@@ -8,9 +8,7 @@ router.get('/get_project_previews', project_controller.get_project_previews);
 
 router.get('/get_my_projects', project_controller.get_my_project_previews);
 
-router.get('/create', function (req, res, next) {
-    res.render('project_create', { user: req.user });
-});
+router.get('/create', project_controller.project_create);
 
 router.get('/join/:id', project_controller.join_project);
 
