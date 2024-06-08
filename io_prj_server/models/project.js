@@ -1,4 +1,5 @@
 var db = require('@utility/database');
+var tag_model = require('@models/project_tag');
 
 /**
  * Retrieves a project by its ID.
@@ -24,7 +25,10 @@ exports.get_project = async function (project_id) {
         .then(result => {
             project.comments = result.recordset;
         });
-    await Promise.all([data_promise, comments_promise]);
+    var tags_promise = tag_model.get_project_tags([project_id]).then(tags => {
+        project.tags = tags;
+    });
+    await Promise.all([data_promise, comments_promise, tags_promise]);
     return project;
 }
 
@@ -34,23 +38,38 @@ exports.get_project = async function (project_id) {
  * @returns {Promise<Object[]>} - A promise that resolves to an array of project preview objects.
  */
 exports.get_project_previews = async function (project_ids) {
-    return await db.request()
+    var project_previews = null;
+    await db.request()
         .input('project_ids', project_ids.join(','))
         .query("SELECT project_id, title, SUBSTRING(description, 1, 256) AS description FROM [dbo].[project] WHERE project_id IN  (SELECT value FROM STRING_SPLIT(@project_ids, ','))")
         .then(result => {
-            return result.recordset;
+            project_previews = result.recordset;
         });
+    await tag_model.get_project_tags(project_ids).then(tags => {
+        project_previews.forEach(project => {
+            project.tags = tags.filter(tag => tag.project_id == project.project_id);
+        });
+    });
+    return project_previews;
 }
 
 exports.get_project_previews_by_user_id = async function (user_id) {
-    return await db.request()
+    var project_previews = null;
+    await db.request()
         .input('user_id', user_id)
         .query(`SELECT p.project_id, p.title, SUBSTRING(p.description, 1, 256) AS description
                 FROM [dbo].[project] p JOIN [dbo].[project_member] m ON p.project_id = m.project_id
                 WHERE m.user_id = @user_id AND m.creator = 1`)
         .then(result => {
-            return result.recordset;
+            project_previews = result.recordset;
         });
+    var project_ids = project_previews.map(project => project.project_id);
+    await tag_model.get_project_tags(project_ids).then(tags => {
+        project_previews.forEach(project => {
+            project.tags = tags.filter(tag => tag.project_id == project.project_id);
+        });
+    });
+    return project_previews;
 }
 
 /**
@@ -83,6 +102,7 @@ exports.publish = async function (user_id, title, description) {
                 tran.rollback();
                 throw err;
             });
+        await tag_model.add_project_tags(tran, project_id, tags);
         await tran.request()
             .input('user_id', user_id)
             .input('project_id', project_id)

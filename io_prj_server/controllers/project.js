@@ -1,4 +1,5 @@
 var project_model = require('@models/project');
+var project_tag_model = require('@models/project_tag');
 var recommend_model = require('@models/recommend');
 var ejs = require('ejs');
 
@@ -6,7 +7,7 @@ var ejs = require('ejs');
 exports.get_project = function (req, res) {
     var project_id = req.params.id;
     project_model.get_project(project_id).then(project => {
-        res.render('project_view', { user: req.user, project: project });
+        res.render('project_view', { user: req.user, project: project, tags: project.tags });
     }).catch(err => {
         switch (err.message) {
             case 'project not found':
@@ -14,23 +15,6 @@ exports.get_project = function (req, res) {
                 break;
             default:
                 console.log('Get project error: ', err);
-                res.status(500);
-                break;
-        }
-    });
-};
-
-exports.join_project = function (req, res) {
-    var project_id = req.params.id;
-    project_model.get_project(project_id).then(project => {
-        res.render('project_join', { project: project });
-    }).catch(err => {
-        switch (err.message) {
-            case 'project not found':
-                res.status(404);
-                break;
-            default:
-                console.log('Join project error: ', err);
                 res.status(500);
                 break;
         }
@@ -62,7 +46,6 @@ exports.get_project_previews = function (req, res) {
     });
 }
 
-
 exports.get_my_project_previews = function (req, res) {
     var user = req.user;
     project_model.get_project_previews_by_user_id(user.user_id)
@@ -77,6 +60,23 @@ exports.get_my_project_previews = function (req, res) {
         });
 };
 
+exports.join_project = function (req, res) {
+    var project_id = req.params.id;
+    project_model.get_project(project_id).then(project => {
+        res.render('project_join', { project: project });
+    }).catch(err => {
+        switch (err.message) {
+            case 'project not found':
+                res.status(404);
+                break;
+            default:
+                console.log('Join project error: ', err);
+                res.status(500);
+                break;
+        }
+    });
+};
+
 
 
 exports.publish = function (req, res) {
@@ -88,7 +88,8 @@ exports.publish = function (req, res) {
     }
     var title = req.body.title;
     var description = req.body.description;
-    project_model.publish(user.user_id, title, description).then(id => {
+    var tags = req.body.tags;
+    project_model.publish(user.user_id, title, description, tags).then(id => {
         res.status(200).send(id);
     }).catch(err => {
         switch (err.message) {
