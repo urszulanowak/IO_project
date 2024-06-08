@@ -27,21 +27,34 @@
           <li> <a href="/user/login" class="blue-button">Zaloguj się</a></li>
           <li> <a href="/user/register" class="blue-button">Zarejestruj się</a></li>
           <% } else { %>
-            <li><a href="/profil" class="blue-button">Profil</a></li>
+            <li><a href="/profile" class="blue-button">Profil</a></li>
             <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
             <% } %>
       </ul>
     </nav>
   </header>
+  <% if (!user.is_guest) { %>
+    <div class="logged-buttons">
+      <nav>
+        <ul>
+          <li><a href="/project/create" class="blue-button">Dodaj projekt</a></li>
+          <li><a href="/my-projects" class="blue-button">Moje projekty</a></li>
+          <li><a href="/followed-projects" class="blue-button">Śledzone projekty</a></li>
+        </ul>
+      </nav>
+    </div>
+    <% } %>
   <main>
     <section id="content">
+      <div id = "join-button-container">
+       <button class="blue-button" onclick="window.location.href='/project/join/<%=project.data.project_id %>'"
+            style="font-size: 20px; padding: 10px 20px;">Dołącz</button>
+            </div>
       <div class="about">
         <div class="title-container">
           <h1 class="project-title" style="font-size: 32px;">
             <%= project.data.title %>
           </h1>
-          <button class="blue-button" onclick="window.location.href='/project/join/<%=project.data.project_id %>'"
-            style="font-size: 20px; padding: 10px 20px;">Dołącz</button>
         </div>
         <h2 style="font-size: 24px;">Opis</h2>
         <div class="description">

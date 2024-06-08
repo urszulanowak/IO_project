@@ -185,7 +185,24 @@ body {
   }
 
   .title-container {
-    display: flex;
-    align-items: center;
+    
     justify-content: space-between;
+  }
+
+  .project-title{
+    word-wrap: break-word; 
+     overflow-wrap: break-word; 
+       white-space: normal; 
+  }
+
+  .description {
+    word-wrap: break-word; 
+            overflow-wrap: break-word; 
+            white-space: normal;
+  }
+
+
+  #join-button-container {
+    justify-content: right;
+    margin-bottom: 30px;
   }
