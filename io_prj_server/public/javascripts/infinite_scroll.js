@@ -10,7 +10,7 @@ document.addEventListener('scroll', async function () {
 function display_projects_if_empty_space() {
     let content = document.getElementById('content');
     let content_bottom = content.getBoundingClientRect().bottom;
-    if (content_bottom <= window.innerHeight + 20) {
+    if (content_bottom <= window.innerHeight + 300) {
         display_projects();
     }
 }

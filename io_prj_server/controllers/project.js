@@ -1,6 +1,7 @@
 var project_model = require('@models/project');
 var recommend_model = require('@models/recommend');
 var ejs = require('ejs');
+const { get_project } = require('../models/project');
 
 
 exports.get_project = function (req, res) {
@@ -20,8 +21,7 @@ exports.get_project = function (req, res) {
     });
 };
 
-exports.get_project_previews = function (req, res) {
-
+function get_project_previews(req, res) {
     if (req.session.seen_projects === undefined) {
         req.session.seen_projects = [];
     }
@@ -30,7 +30,7 @@ exports.get_project_previews = function (req, res) {
     recommend_model.recommend(5, req.user ? req.user.user_id : null, seen_projects).then(recommended_projects => {
         if (recommended_projects.length == 0) {
             req.session.seen_projects = [];
-            res.status(200).send();
+            get_project_previews(req, res);
         } else {
             req.session.seen_projects = seen_projects.concat(recommended_projects);
             project_model.get_project_previews(recommended_projects).then(project_previews => {
@@ -44,6 +44,7 @@ exports.get_project_previews = function (req, res) {
         res.status(500);
     });
 }
+exports.get_project_previews = get_project_previews;
 
 exports.get_my_project_previews = function (req, res) {
     var user = req.user;
