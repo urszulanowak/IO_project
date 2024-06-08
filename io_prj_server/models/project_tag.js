@@ -32,7 +32,6 @@ exports.get_all_tags = async function () {
             return result.recordset;
         });
 }
-
 /**
  * Retrieves tags for the specified project IDs.
  * @param {number[]} project_ids - An array of project IDs.

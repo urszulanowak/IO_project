@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
   <meta charset="UTF-8">
-  <title>Strona Główna</title>
+  <title>Stwórz Projekt</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.png">
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='stylesheet' href='/stylesheets/project_create.css' />
@@ -11,7 +10,6 @@
   <script type="module" src="/javascripts/refresh_jwt.js"></script>
   <script type="module" src="/javascripts/project_publish.js"></script>
 </head>
-
 <body>
   <header>
     <div id="brand">
@@ -23,12 +21,12 @@
         <li><a href="/about">Informacje</a></li>
         <li><a href="/faq">Pomoc</a></li>
         <% if (user.is_guest) { %>
-          <li> <a href="/user/login" class="blue-button">Zaloguj się</a></li>
-          <li> <a href="/user/register" class="blue-button">Zarejestruj się</a></li>
-          <% } else { %>
-            <li><a href="/profil" class="blue-button">Profil</a></li>
-            <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
-            <% } %>
+          <li><a href="/user/login" class="blue-button">Zaloguj się</a></li>
+          <li><a href="/user/register" class="blue-button">Zarejestruj się</a></li>
+        <% } else { %>
+          <li><a href="/profile" class="blue-button">Profil</a></li>
+          <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+        <% } %>
       </ul>
     </nav>
   </header>
@@ -42,66 +40,86 @@
         </ul>
       </nav>
     </div>
-    <% } %>
-      <section id="form" class="create_form">
-        <h1>Stwórz projekt</h1>
-        <label for="title">Tytuł:</label><br>
-        <div class="title-box">
-          <textarea id="title" name="title" class="input-field" rows="1" maxlength="50"></textarea>
-        </div>
-        <label for="expectations">Oczekiwania:</label><br>
-        <div class="expectations-box">
-          <textarea id="expectations" name="expectations" class="input-field" rows="1" maxlength="300"></textarea>
-        </div>
-        <label for="detailed-desc">Szczegółowy opis projektu:</label><br>
-        <div class="detailed-desc-box">
-          <textarea id="description" name="description" class="input-field" rows="1" maxlength="2000"></textarea>
-        </div>
-        <label for="technology">Dodaj technologię do projektu:</label><br>
-        <select id="add_technology_box" class="databox" multiple="multiple">
-          <option value="Python">Python</option>
-          <option value="Java">Java</option>
-        </select>
-      </section>
-      <button class="large-blue-button" onclick="project_publish()">Publikuj Projekt</button>
-      <div class="error-message" id="error">
-      </div>
+  <% } %>
+  <section id="form" class="create_form">
+    <h1>Stwórz projekt</h1>
+    <label for="title">Tytuł:</label><br>
+    <div class="title-box">
+      <textarea id="title" name="title" class="input-field" rows="1" maxlength="50"></textarea>
+    </div>
+    <label for="expectations">Oczekiwania:</label><br>
+    <div class="expectations-box">
+      <textarea id="expectations" name="expectations" class="input-field" rows="1" maxlength="300"></textarea>
+    </div>
+    <label for="detailed-desc">Szczegółowy opis projektu:</label><br>
+    <div class="detailed-desc-box">
+      <textarea id="description" name="description" class="input-field" rows="1" maxlength="2000"></textarea>
+    </div>
 
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-      <script>
-        $(document).ready(function () {
-          $('#add_technology_box').select2({
-            placeholder: 'Wybierz technologie',
-            allowClear: true
-          });
-        });
-      </script>
+    <label for="language">Dodaj język programowania:</label><br>
+    <select id="language" class="databox" multiple="multiple">
+        <% tags.language.forEach(tag => { %>
+          <option value="<%= tag.tag_id %>"><%= tag.tag_name %></option>
+        <% }) %>
+    </select><br>
 
-      <script src="https://cdn.jsdelivr.net/npm/autosize@5.0.1/dist/autosize.min.js"></script>
-      <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          autosize(document.querySelectorAll('textarea.input-field'));
+    <label for="technology">Dodaj technologię:</label><br>
+    <select id="technology" class="databox" multiple="multiple">
+        <% tags.technology.forEach(tag => { %>
+          <option value="<%= tag.tag_id %>"><%= tag.tag_name %></option>
+        <% }) %>
 
-          document.querySelectorAll('textarea.input-field').forEach(function (textarea) {
-            textarea.style.maxHeight = '100px';
-          });
+    </select><br>
 
+    <label for="license">Dodaj licencję:</label><br>
+    <select id="license" class="databox" multiple="multiple">
+        <% tags.license.forEach(tag => { %>
+          <option value="<%= tag.tag_id %>"><%= tag.tag_name %></option>
+        <% }) %>
+    </select>
+  </section>
+  <button class="large-blue-button" onclick="project_publish()">Publikuj projekt</button>
+  <div class="error-message" id="error"></div>
 
-          document.querySelectorAll('textarea.input-field').forEach(function (textarea) {
-            var maxLength = parseInt(textarea.getAttribute('maxlength'));
-            if (maxLength) {
-              textarea.addEventListener('input', function () {
-                if (textarea.value.length > maxLength) {
-                  textarea.value = textarea.value.slice(0, maxLength);
-                }
-              });
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#language').select2({
+        placeholder: 'Wybierz język programowania',
+        allowClear: true
+      });
+      $('#technology').select2({
+        placeholder: 'Wybierz technologię',
+        allowClear: true
+      });
+      $('#license').select2({
+        placeholder: 'Wybierz licencję',
+        allowClear: true
+      });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/autosize@5.0.1/dist/autosize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      autosize(document.querySelectorAll('textarea.input-field'));
+
+      document.querySelectorAll('textarea.input-field').forEach(function (textarea) {
+        textarea.style.maxHeight = '100px';
+      });
+
+      document.querySelectorAll('textarea.input-field').forEach(function (textarea) {
+        var maxLength = parseInt(textarea.getAttribute('maxlength'));
+        if (maxLength) {
+          textarea.addEventListener('input', function () {
+            if (textarea.value.length > maxLength) {
+              textarea.value = textarea.value.slice(0, maxLength);
             }
           });
-        });
-      </script>
-
-
+        }
+      });
+    });
+  </script>
 </body>
-
 </html>

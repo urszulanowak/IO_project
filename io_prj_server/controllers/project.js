@@ -142,3 +142,35 @@ exports.join_request = function (req, res) {
         }
     });
 }
+
+exports.project_create = async function (req, res) {
+    try {
+        const tags = await project_tag_model.get_all_tags();
+
+        const categorizedTags = {
+            language: [],
+            technology: [],
+            license: []
+        };
+
+    tags.forEach(tag => {
+    switch (tag.category_id) {
+    case 1:
+        categorizedTags.language.push(tag);
+        break;
+    case 2:
+        categorizedTags.technology.push(tag);
+        break;
+    case 3:
+        categorizedTags.license.push(tag);
+        break;
+    }
+    });
+
+        res.render('project_create', { user: req.user, tags: categorizedTags });
+    } catch (err) {
+        console.log('Get all tags error: ', err);
+        res.status(500).send('Server error.');
+    }
+};
+

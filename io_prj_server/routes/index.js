@@ -22,4 +22,8 @@ router.get('/my-projects', function (req, res, next) {
   res.render('my_projects', { user: req.user });
 });
 
+router.get('/profile', function(req, res, next){
+  res.render('profile', {user: req.user });
+})
+
 module.exports = router;

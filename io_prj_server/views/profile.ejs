@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Użytkownika</title>
+    <link rel='stylesheet' href='/stylesheets/profile-style.css' />
+    <script type="module" src="/javascripts/refresh_jwt.js"></script>
+    <script type="module" src="/javascripts/infinite_scroll.js"></script>
+</head>
+<body>
+    <header>
+      <div id="brand">
+        <h1><a href="/">MatchMates</a></h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/">Projekty</a></li>
+          <li><a href="/about">Informacje</a></li>
+          <li><a href="/faq">Pomoc</a></li>
+          <% if (user.is_guest) { %>
+            <li> <a href="/user/login" class="blue-button">Zaloguj się</a></li>
+            <li> <a href="/user/register" class="blue-button">Zarejestruj się</a></li>
+            <% } else { %>
+              <li><a href="/profile" class="blue-button">Profil</a></li>
+              <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+              <% } %>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="profile-container">
+          <div class="profile-main">
+              <div class="profile-header">
+                  <img src="/images/pfp.png" alt="Zdjęcie profilowe" class="profile-picture">
+                  <div class="profile-info">
+                      <h2><%= user.name %></h2>
+                  </div>
+                  <button class="message-button">Napisz</button>
+              </div>
+              <div class="profile-content">
+                  <section class="about-me">
+                      <h3>O mnie</h3>
+                      <div class="line"></div>
+                      <p><%= user.about %></p>
+                  </section>
+                  <section class="preferred-technologies">
+                      <h3>Preferowane technologie</h3>
+                      <div class="line"></div>
+                      <p><%= user.preferredTechnologies %></p>
+                  </section>
+                  <section class="own-projects">
+                      <h3>Projekty autorskie</h3>
+                      <div class="line"></div>
+                      <p><%= user.ownProjects %></p>
+                  </section>
+                  <section class="participated-projects">
+                      <h3>Projekty w których uczestniczę</h3>
+                      <div class="line"></div>
+                      <p><%= user.participatedProjects %></p>
+                  </section>
+              </div>
+          </div>
+          <aside>
+              <div class="sidebar-placeholder"></div>
+          </aside>
+      </div>
+  </main>
+</body>      

@@ -26,10 +26,10 @@
         <% if (user.is_guest) { %>
           <li> <a href="/user/login" class="blue-button">Zaloguj się</a></li>
           <li> <a href="/user/register" class="blue-button">Zarejestruj się</a></li>
-          <% } else { %>
-            <li><a href="/profil" class="blue-button">Profil</a></li>
-            <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
-            <% } %>
+        <% } else { %>
+          <li><a href="/profil" class="blue-button">Profil</a></li>
+          <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+        <% } %>
       </ul>
     </nav>
   </header>
@@ -40,7 +40,7 @@
           <h1 class="project-title" style="font-size: 32px;">
             <%= project.data.title %>
           </h1>
-          <button class="blue-button" onclick="window.location.href='/project/join/<%=project.data.project_id %>'"
+          <button class="blue-button" onclick="window.location.href='/project/join/<%= project.data.project_id %>'"
             style="font-size: 20px; padding: 10px 20px;">Dołącz</button>
         </div>
         <h2 style="font-size: 24px;">Opis</h2>
@@ -52,6 +52,38 @@
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor eget velit malesuada, sit amet
             pharetra est volutpat.</p>
         </div>
+
+        <h2 style="font-size: 24px;">Tagi</h2>
+        <div class="tags">
+          <h3>Języki Programowania</h3>
+          <% if (project.tags && project.tags.filter(tag => tag.category_id === 1).length > 0) { %>
+            <span class="tag">
+              <%= project.tags.filter(tag => tag.category_id === 1).map(tag => tag.tag_name).join(', ') %>
+            </span>
+          <% } else { %>
+            <p>Brak języków programowania</p>
+          <% } %>
+        
+          <h3>Technologie</h3>
+          <% if (project.tags && project.tags.filter(tag => tag.category_id === 2).length > 0) { %>
+            <span class="tag">
+              <%= project.tags.filter(tag => tag.category_id === 2).map(tag => tag.tag_name).join(', ') %>
+            </span>
+          <% } else { %>
+            <p>Brak technologii</p>
+          <% } %>
+        
+          <h3>Licencje</h3>
+          <% if (project.tags && project.tags.filter(tag => tag.category_id === 3).length > 0) { %>
+            <span class="tag">
+              <%= project.tags.filter(tag => tag.category_id === 3).map(tag => tag.tag_name).join(', ') %>
+            </span>
+          <% } else { %>
+            <p>Brak licencji</p>
+          <% } %>
+        </div>
+        
+
         <div id="authors">
           <h2 style="font-size: 24px;">Autor</h2>
           <div class="authors">
@@ -133,7 +165,7 @@
   </div>
 
   <div id="comment_section">
-    <% project.comments.forEach(comment=> { %>
+    <% project.comments.forEach(comment => { %>
       <div class="comment">
         <div class="user-photo">
           <img src="/images/placeholder.jpg" alt="User 1">
@@ -147,7 +179,7 @@
           </div>
         </div>
       </div>
-      <% }) %>
+    <% }) %>
   </div>
 </body>
 
