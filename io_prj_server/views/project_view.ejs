@@ -33,6 +33,17 @@
       </ul>
     </nav>
   </header>
+  <% if (!user.is_guest) { %>
+    <div class="logged-buttons">
+      <nav>
+        <ul>
+          <li><a href="/project/create" class="blue-button">Dodaj projekt</a></li>
+          <li><a href="/my-projects" class="blue-button">Moje projekty</a></li>
+          <li><a href="/followed-projects" class="blue-button">Śledzone projekty</a></li>
+        </ul>
+      </nav>
+    </div>
+    <% } %>
   <main>
     <section id="content">
       <div class="about">
@@ -149,6 +160,11 @@
       </div>
       <% }) %>
   </div>
+  <script>
+    <% 
+    console.log(project, user)
+    %>
+    </script>
 </body>
 
 </html>
