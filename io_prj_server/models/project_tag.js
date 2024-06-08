@@ -1,5 +1,12 @@
 var db = require('@utility/database');
 
+/**
+ * Adds project tags to the database.
+ * @param {Object} tran - The transaction object.
+ * @param {number} project_id - The ID of the project.
+ * @param {number[]} tags - An array of tag IDs.
+ * @returns {Promise<void>} - A promise that resolves when the operation is complete.
+ */
 exports.add_project_tags = async function (tran, project_id, tags) {
     var project_tag_tab = new db.sql.Table('project_tag');
     project_tag_tab.create = true;
@@ -11,6 +18,10 @@ exports.add_project_tags = async function (tran, project_id, tags) {
     await tran.request().bulk(project_tag_tab);
 };
 
+/**
+ * Retrieves all tags from the database.
+ * @returns {Promise<Object[]>} - A promise that resolves with an array of tag objects.
+ */
 exports.get_all_tags = async function () {
     return await db.request()
         .query(`SELECT t.tag_id, t.tag_name, c.tag_category_id AS category_id, c.name AS category_name
@@ -21,6 +32,11 @@ exports.get_all_tags = async function () {
         });
 }
 
+/**
+ * Retrieves tags for the specified project IDs.
+ * @param {number[]} project_ids - An array of project IDs.
+ * @returns {Promise<Object[]>} - A promise that resolves with an array of tag objects.
+ */
 exports.get_project_tags = async function (project_ids) {
     var project_ids_tab = new db.sql.Table('#project_ids');
     project_ids_tab.create = true;

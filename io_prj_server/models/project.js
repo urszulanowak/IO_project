@@ -77,11 +77,12 @@ exports.get_project_previews_by_user_id = async function (user_id) {
  * @param {number} user_id - The ID of the user publishing the project.
  * @param {string} title - The title of the project.
  * @param {string} description - The description of the project.
+ * @param {number[]} tags - An array of tag IDs for the project.
  * @returns {Promise<number>} - A promise that resolves to the ID of the newly published project.
  * @throws {Error('title to short')} - If the title is too short.
  * @throws {Error('description to short')} - If the description is too short.
  */
-exports.publish = async function (user_id, title, description) {
+exports.publish = async function (user_id, title, description, tags) {
     if (title.length < 8) {
         throw new Error('title too short');
     }
