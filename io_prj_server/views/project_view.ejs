@@ -46,13 +46,15 @@
     <% } %>
   <main>
     <section id="content">
+      <div id = "join-button-container">
+       <button class="blue-button" onclick="window.location.href='/project/join/<%=project.data.project_id %>'"
+            style="font-size: 20px; padding: 10px 20px;">Dołącz</button>
+            </div>
       <div class="about">
         <div class="title-container">
           <h1 class="project-title" style="font-size: 32px;">
             <%= project.data.title %>
           </h1>
-          <button class="blue-button" onclick="window.location.href='/project/join/<%=project.data.project_id %>'"
-            style="font-size: 20px; padding: 10px 20px;">Dołącz</button>
         </div>
         <h2 style="font-size: 24px;">Opis</h2>
         <div class="description">
@@ -160,11 +162,6 @@
       </div>
       <% }) %>
   </div>
-  <script>
-    <% 
-    console.log(project, user)
-    %>
-    </script>
 </body>
 
 </html>
