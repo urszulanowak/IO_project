@@ -27,7 +27,7 @@ exports.get_all_tags = async function () {
         .query(`SELECT t.tag_id, t.name AS tag_name, c.tag_category_id AS category_id, c.name AS category_name
                 FROM [dbo].[tag] t
                 JOIN [dbo].[tag_category] c ON t.tag_category_id = c.tag_category_id
-                ORDER BY c.tag_category_id, t.tag_name`)
+                ORDER BY c.tag_category_id, t.name`)
         .then(result => {
             return result.recordset;
         });
@@ -53,7 +53,7 @@ exports.get_project_tags = async function (project_ids) {
                         JOIN [dbo].[tag] t ON pt.tag_id = t.tag_id
                         JOIN [dbo].[tag_category] c ON t.tag_category_id = c.tag_category_id
                         WHERE pt.project_id IN (SELECT project_id FROM #project_ids)
-                        ORDER BY c.tag_category_id, t.tag_name`)
+                        ORDER BY c.tag_category_id, t.name`)
                 .then(result => {
                     resolve(result.recordset);
                 });
