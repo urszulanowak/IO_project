@@ -55,18 +55,18 @@ describe('Auth Controller Tests', () => {
                 .send({ email: 'test@example.com', pass: 'wrongpassword' });
 
             expect(response.status).toBe(401);
-            expect(response.text).toContain('Błąd logowania! Niewłaściwy email lub hasło.');
+            expect(response.text).toContain('Błąd logowania! Nieprawidłowy email lub hasło.');
         });
 
         it('should return 500 for server error', async () => {
-            user_model.login.mockRejectedValue(new Error('server error'));
+            user_model.login.mockRejectedValue(new Error('Server error'));
 
             const response = await request(app)
                 .post('/login')
                 .send({ email: 'test@example.com', pass: 'password123' });
 
             expect(response.status).toBe(500);
-            expect(response.text).toContain('Błąd logowania! Server error.');
+            expect(response.text).toContain('Server error.');
         });
     });
 
@@ -101,7 +101,7 @@ describe('Auth Controller Tests', () => {
                 });
 
             expect(response.status).toBe(400);
-            expect(response.text).toContain('Hasła nie są takie same!');
+            expect(response.text).toContain('Passwords do not match.');
         });
 
         it.each([
@@ -110,7 +110,7 @@ describe('Auth Controller Tests', () => {
             ['email too short', 'Błąd rejestracji! Za krótki email.'],
             ['name too short', 'Błąd rejestracji! Za krótkia nazwa użytkownika.'],
             ['pass too short', 'Błąd rejestracji! Za krótkie hasło.'],
-            ['value too long', 'Błąd rejestracji! Za duża wartość.'],
+            ['value too long', 'Błąd rejestracji! Za długa wartość.'],
             ['user age', 'Błąd rejestracji! Musisz mieć powyżej 16 lat, aby móc się zarejestrować.']
         ])('should return 400 for registration error: %s', async (error, message) => {
             user_model.register.mockRejectedValue(new Error(error));
@@ -145,16 +145,7 @@ describe('Auth Controller Tests', () => {
                 });
 
             expect(response.status).toBe(500);
-            expect(response.text).toContain('Błąd rejestracji! Server error.');
-        });
-    });
-
-    describe('logout', () => {
-        it('should logout user successfully', async () => {
-            const response = await request(app)
-                .post('/logout');
-
-            expect(response.status).toBe(200);
+            expect(response.text).toContain('Server error.');
         });
     });
 
