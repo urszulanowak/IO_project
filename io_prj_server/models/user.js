@@ -8,7 +8,7 @@ var db = require('@utility/database');
  * @throws {Error('invalid email or password')} - If email and password don't match.
  */
 exports.login = async function (email, pass) {
-    return await db.request()
+    return await db.Request()
         .input('email', email)
         .input('pass', pass)
         .query('SELECT * FROM [dbo].[user] WHERE email = @email AND pass = @pass')
@@ -45,7 +45,7 @@ exports.login = async function (email, pass) {
  * @throws {Error('user age')} - If user age is less than 16 years.
  */
 exports.register = async function (email, name, pass, birth_date, gender) {
-    await db.request()
+    await db.Request()
         .input('email', email)
         .input('name', name)
         .input('pass', pass)

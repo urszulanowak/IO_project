@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var user_controller = require('@controllers/user');
-var notification_model = require('@models/notification');
+var notification_controller = require('@controllers/notification');
 
 // Wyświetlanie formularza logowania
 router.get('/login', function (req, res, next) {
@@ -26,6 +26,6 @@ router.get('/logout', user_controller.logout);
 router.post('/refresh_jwt', user_controller.refresh_jwt);
 router.get('/login_expired_token', user_controller.refresh_jwt_fail);
 router.get('/profile', user_controller.profile);
-router.get('/notification', notification_model.get_user_notifications);
+router.get('/notification', notification_controller.get_user_notifications);
 
 module.exports = router;

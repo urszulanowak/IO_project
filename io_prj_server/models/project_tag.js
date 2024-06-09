@@ -23,7 +23,7 @@ exports.add_project_tags = async function (tran, project_id, tags) {
  * @returns {Promise<Object[]>} - A promise that resolves with an array of tag objects.
  */
 exports.get_all_tags = async function () {
-    return await db.request()
+    return await db.Request()
         .query(`SELECT t.tag_id, t.name AS tag_name, c.tag_category_id AS category_id, c.name AS category_name
                 FROM [dbo].[tag] t
                 JOIN [dbo].[tag_category] c ON t.tag_category_id = c.tag_category_id
@@ -38,24 +38,31 @@ exports.get_all_tags = async function () {
  * @returns {Promise<Object[]>} - A promise that resolves with an array of tag objects.
  */
 exports.get_project_tags = async function (project_ids) {
-    var project_ids_tab = new db.sql.Table('#project_ids');
-    project_ids_tab.create = true;
-    project_ids_tab.columns.add('project_id', db.sql.BigInt, { nullable: false });
-    project_ids.forEach(project_id => {
-        project_ids_tab.rows.add(project_id);
-    });
-    var request = db.request();
+    if (project_ids.length == 0) {
+        return [];
+    }
     var tags = new Promise((resolve, reject) => {
-        request.bulk(project_ids_tab, async (err, rowCount) => {
-            request.query(`SELECT pt.project_id, t.tag_id, t.name AS tag_name, c.tag_category_id AS category_id, c.name AS category_name
+        var tran = db.Transaction();
+        tran.begin().then(() => {
+            var project_ids_tab = new db.sql.Table('#project_ids');
+            project_ids_tab.create = true;
+            project_ids_tab.columns.add('project_id', db.sql.BigInt, { nullable: false });
+            project_ids.forEach(project_id => {
+                project_ids_tab.rows.add(project_id);
+            });
+            tran.request().bulk(project_ids_tab, () => {
+                tran.request().query(`SELECT pt.project_id, t.tag_id, t.name AS tag_name, c.tag_category_id AS category_id, c.name AS category_name
                         FROM [dbo].[project_tag] pt
                         JOIN [dbo].[tag] t ON pt.tag_id = t.tag_id
                         JOIN [dbo].[tag_category] c ON t.tag_category_id = c.tag_category_id
                         WHERE pt.project_id IN (SELECT project_id FROM #project_ids)
-                        ORDER BY c.tag_category_id, t.name`)
-                .then(result => {
-                    resolve(result.recordset);
-                });
+                        ORDER BY c.tag_category_id, t.name;
+                        DROP TABLE #project_ids;`)
+                    .then(result => {
+                        resolve(result.recordset);
+                        tran.commit();
+                    });
+            });
         });
     });
     return await tags;

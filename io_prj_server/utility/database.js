@@ -8,8 +8,14 @@ try {
         console.log('Connected to SQL Server');
         module.exports.pool = pool;
         module.exports.sql = sql;
-        module.exports.request = function () {
+        module.exports.Request = function () {
             return new sql.Request(pool);
+        }
+        module.exports.Transaction = function () {
+            return new sql.Transaction(pool);
+        }
+        module.exports.PreparedStatement = function () {
+            return new sql.PreparedStatement(pool);
         }
     });
 } catch (err) {

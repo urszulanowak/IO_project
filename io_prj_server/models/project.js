@@ -9,7 +9,7 @@ var tag_model = require('@models/project_tag');
  */
 exports.get_project = async function (project_id) {
     var project = {}
-    var data_promise = db.request()
+    var data_promise = db.Request()
         .input('project_id', project_id)
         .query('SELECT * FROM [dbo].[project] WHERE project_id = @project_id')
         .then(result => {
@@ -19,7 +19,7 @@ exports.get_project = async function (project_id) {
                 project.data = result.recordset[0];
             }
         });
-    var comments_promise = db.request()
+    var comments_promise = db.Request()
         .input('project_id', project_id)
         .query('SELECT * FROM [dbo].[project_comment] c JOIN [dbo].[user] u ON c.user_id = u.user_id WHERE project_id = @project_id ORDER BY c.create_date DESC')
         .then(result => {
@@ -39,7 +39,7 @@ exports.get_project = async function (project_id) {
  */
 exports.get_project_previews = async function (project_ids) {
     var project_previews = null;
-    await db.request()
+    await db.Request()
         .input('project_ids', project_ids.join(','))
         .query("SELECT project_id, title, SUBSTRING(description, 1, 256) AS description FROM [dbo].[project] WHERE project_id IN  (SELECT value FROM STRING_SPLIT(@project_ids, ','))")
         .then(result => {
@@ -55,7 +55,7 @@ exports.get_project_previews = async function (project_ids) {
 
 exports.get_project_previews_by_user_id = async function (user_id) {
     var project_previews = null;
-    await db.request()
+    await db.Request()
         .input('user_id', user_id)
         .query(`SELECT p.project_id, p.title, SUBSTRING(p.description, 1, 256) AS description
                 FROM [dbo].[project] p JOIN [dbo].[project_member] m ON p.project_id = m.project_id
@@ -136,7 +136,7 @@ exports.join_request = async function (user_id, project_id, message) {
     if (message.length > 256) {
         throw new Error('message too long');
     }
-    var tran = db.pool.transaction();
+    var tran = db.Transaction();
     return await tran.begin().then(async () => {
         await tran.request()
             .input('user_id', user_id)

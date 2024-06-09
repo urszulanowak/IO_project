@@ -2,7 +2,7 @@ var db = require('@utility/database');
 
 exports.get_user_notifications = async function (user_id) {
     var seen_time = new Date().toISOString();
-    var notifications = await db.request()
+    var notifications = await db.Request()
         .input('user_id', user_id)
         .query(`SELECT  n.notification_id, n.create_date, n.seen, 
                         t.name AS notification_type_name,
@@ -18,7 +18,7 @@ exports.get_user_notifications = async function (user_id) {
         .then(result => {
             return result.recordset;
         });
-    await db.request()
+    await db.Request()
         .input('user_id', user_id)
         .input('seen_time', seen_time)
         .query(`UPDATE [dbo].[notification]

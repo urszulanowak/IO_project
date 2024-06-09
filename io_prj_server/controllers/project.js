@@ -1,5 +1,6 @@
 var project_model = require('@models/project');
 var recommend_model = require('@models/recommend');
+var project_tag_model = require('@models/project_tag');
 var ejs = require('ejs');
 const { get_project } = require('../models/project');
 
@@ -153,19 +154,19 @@ exports.project_create = async function (req, res) {
             license: []
         };
 
-    tags.forEach(tag => {
-    switch (tag.category_id) {
-    case 1:
-        categorizedTags.language.push(tag);
-        break;
-    case 2:
-        categorizedTags.technology.push(tag);
-        break;
-    case 3:
-        categorizedTags.license.push(tag);
-        break;
-    }
-    });
+        tags.forEach(tag => {
+            switch (tag.category_id) {
+                case 1:
+                    categorizedTags.language.push(tag);
+                    break;
+                case 2:
+                    categorizedTags.technology.push(tag);
+                    break;
+                case 3:
+                    categorizedTags.license.push(tag);
+                    break;
+            }
+        });
 
         res.render('project_create', { user: req.user, tags: categorizedTags });
     } catch (err) {
