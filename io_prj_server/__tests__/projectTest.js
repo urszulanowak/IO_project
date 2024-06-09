@@ -1,122 +1,212 @@
-// __tests__/project.test.js
-
-jest.mock('@utility/database');
-
+const { get_project, get_project_previews, get_project_previews_by_user_id, publish, join_request } = require('../models/project'); // Zaktualizuj ścieżkę do swojego modułu
 const db = require('@utility/database');
-const { get_project, get_project_previews, publish } = require('../models/project.js');
+const tag_model = require('@models/project_tag');
 
-describe('get_project', () => {
-    beforeEach(() => {
-        db.request.mockReset();
+// Mockowanie funkcji wewnątrz bloku jest.mock
+jest.mock('@utility/database', () => {
+    const mockInput = jest.fn().mockReturnThis();
+    const mockQuery = jest.fn();
+    const mockBegin = jest.fn().mockReturnThis();
+    const mockCommit = jest.fn().mockResolvedValue();
+    const mockRollback = jest.fn().mockResolvedValue();
+    const mockTransaction = jest.fn().mockReturnValue({
+        begin: jest.fn().mockReturnThis(),
+        commit: jest.fn().mockReturnThis(),
+        rollback: jest.fn().mockReturnThis(),
+        request: mockRequest,
     });
 
-    it('should return project data and comments', async () => {
-        const mockProject = [{ project_id: 1, title: 'Test Project' }];
-        const mockComments = [{ comment_id: 1, text: 'Great project!', user_id: 1 }];
-        db.request
-            .mockReturnValueOnce({
-                input: jest.fn().mockReturnThis(),
-                query: jest.fn().mockResolvedValue({ recordset: mockProject })
-            })
-            .mockReturnValueOnce({
-                input: jest.fn().mockReturnThis(),
-                query: jest.fn().mockResolvedValue({ recordset: mockComments })
-            });
-
-        const result = await get_project(1);
-        expect(result).toEqual({
-            data: mockProject[0],
-            comments: mockComments
-        });
-    });
-
-    it('should throw an error if project is not found', async () => {
-        db.request
-            .mockReturnValueOnce({
-                input: jest.fn().mockReturnThis(),
-                query: jest.fn().mockResolvedValue({ recordset: [{}] })
-            });
-
-        await expect(get_project(0)).rejects.toThrow('project not found');
-    });
-
-    it('should handle database errors gracefully', async () => {
-        db.request
-            .mockReturnValueOnce({
-                input: jest.fn().mockReturnThis(),
-                query: jest.fn().mockRejectedValue(new Error('Database error'))
-            });
-
-        await expect(get_project(0)).rejects.toThrow('Database error');
-    });
+    return {
+        Request: jest.fn(() => ({
+            input: mockInput,
+            query: mockQuery,
+        })),
+        pool: {
+            transaction: mockTransaction
+        },
+        Transaction: mockTransaction
+    };
 });
 
-describe('get_project_previews', () => {
+jest.mock('@models/project_tag', () => ({
+    get_project_tags: jest.fn(),
+    add_project_tags: jest.fn()
+}));
+
+describe('Project Management', () => {
     beforeEach(() => {
-        db.request.mockReset();
+        jest.clearAllMocks();
     });
 
-    it('should return project previews', async () => {
-        const mockPreviews = [{ project_id: 1, title: 'Test Project', description: 'Test description' }];
-        db.request.mockReturnValue({
-            input: jest.fn().mockReturnThis(),
-            query: jest.fn().mockResolvedValue({ recordset: mockPreviews })
+    describe('get_project', () => {
+        it('should retrieve project data, comments and tags', async () => {
+            const mockProjectData = { project_id: 1, title: 'Test Project' };
+            const mockComments = [{ comment: 'Test Comment', user_id: 1, name: 'Test User' }];
+            const mockTags = [{ tag_id: 1, project_id: 1, name: 'Test Tag' }];
+
+            db.Request().query
+                .mockResolvedValueOnce({ recordset: [mockProjectData] }) // Project data
+                .mockResolvedValueOnce({ recordset: mockComments }); // Comments
+
+            tag_model.get_project_tags.mockResolvedValue(mockTags);
+
+            const result = await get_project(1);
+
+            expect(result).toEqual({
+                data: mockProjectData,
+                comments: mockComments,
+                tags: mockTags
+            });
         });
 
-        const result = await get_project_previews([1, 2, 3]);
-        expect(result).toEqual(mockPreviews);
+        it('should throw error if project not found', async () => {
+            db.Request().query.mockResolvedValueOnce({ recordset: [] });
+
+            await expect(get_project(1)).rejects.toThrow('project not found');
+        });
     });
 
-    it('should return an empty array when no projects are found', async () => {
-        db.request.mockReturnValue({
-            input: jest.fn().mockReturnThis(),
-            query: jest.fn().mockResolvedValue({ recordset: [] })
+    describe('get_project_previews', () => {
+        it('should retrieve project previews and tags', async () => {
+            const mockPreviews = [
+                { project_id: 1, title: 'Test Project', description: 'Test Description' }
+            ];
+            const mockTags = [{ tag_id: 1, project_id: 1, name: 'Test Tag' }];
+
+            db.Request().query.mockResolvedValueOnce({ recordset: mockPreviews });
+            tag_model.get_project_tags.mockResolvedValue(mockTags);
+
+            const result = await get_project_previews([1]);
+
+            expect(result).toEqual([
+                {
+                    project_id: 1,
+                    title: 'Test Project',
+                    description: 'Test Description',
+                    tags: mockTags
+                }
+            ]);
+        });
+    });
+
+    describe('get_project_previews_by_user_id', () => {
+        it('should retrieve project previews by user ID and tags', async () => {
+            const mockPreviews = [
+                { project_id: 1, title: 'Test Project', description: 'Test Description' }
+            ];
+            const mockTags = [{ tag_id: 1, project_id: 1, name: 'Test Tag' }];
+
+            db.Request().query.mockResolvedValueOnce({ recordset: mockPreviews });
+            tag_model.get_project_tags.mockResolvedValue(mockTags);
+
+            const result = await get_project_previews_by_user_id(1);
+
+            expect(result).toEqual([
+                {
+                    project_id: 1,
+                    title: 'Test Project',
+                    description: 'Test Description',
+                    tags: mockTags
+                }
+            ]);
+        });
+    });
+
+    describe('publish', () => {
+        it('should publish a new project', async () => {
+            const user_id = 1;
+            const title = 'Test Project';
+            const description = 'This is a test project description that is sufficiently long.';
+            const tags = [1, 2, 3];
+            const mockProjectId = 1;
+
+            db.pool.transaction().begin.mockResolvedValueOnce();
+            db.Request().query
+                .mockResolvedValueOnce({ recordset: [{ project_id: mockProjectId }] }) // Project insert
+                .mockResolvedValueOnce({}); // Member insert
+            tag_model.add_project_tags.mockResolvedValueOnce();
+            db.pool.transaction().commit.mockResolvedValueOnce();
+
+            const result = await publish(user_id, title, description, tags);
+
+            expect(result).toBe(mockProjectId);
         });
 
-        const result = await get_project_previews([1, 2, 3]);
-        expect(result).toEqual([]);
-    });
-
-    it('should handle database errors gracefully', async () => {
-        db.request.mockReturnValue({
-            input: jest.fn().mockReturnThis(),
-            query: jest.fn().mockRejectedValue(new Error('Database error'))
+        it('should throw error if title is too short', async () => {
+            await expect(publish(1, 'Short', 'Valid description', [1, 2, 3])).rejects.toThrow('title too short');
         });
 
-        await expect(get_project_previews([1, 2, 3])).rejects.toThrow('Database error');
-    });
-});
-
-describe('publish', () => {
-    beforeEach(() => {
-        db.request.mockReset();
+        it('should throw error if description is too short', async () => {
+            await expect(publish(1, 'Valid Title', 'Short', [1, 2, 3])).rejects.toThrow('description too short');
+        });
     });
 
-    it('should publish a project successfully', async () => {
-        const mockResult = [{ project_id: 1 }];
-        db.request.mockReturnValue({
-            input: jest.fn().mockReturnThis(),
-            query: jest.fn().mockResolvedValue({ recordset: mockResult })
+    describe('join_request', () => {
+        it('should send join request successfully', async () => {
+            const mockUserId = 1;
+            const mockProjectId = 1;
+            const mockMessage = 'Join request message';
+
+            db.Transaction().request()
+                .mockResolvedValueOnce({ recordset: [] }) // Simulate user not being a member
+                .mockResolvedValueOnce({}); // Simulate successful insert
+
+            await join_request(mockUserId, mockProjectId, mockMessage);
+
+            // Check if the request was made with the correct parameters
+            expect(db.Transaction().request).toHaveBeenCalledWith();
+            expect(db.Transaction().request().input).toHaveBeenCalledWith('user_id', mockUserId);
+            expect(db.Transaction().request().input).toHaveBeenCalledWith('project_id', mockProjectId);
+            expect(db.Transaction().request().input).toHaveBeenCalledWith('message', mockMessage);
         });
 
-        const result = await publish(1, 'Test Project', 'This is a test project description that is long enough xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.');
-        expect(result).toBe(1);
-    });
+        it('should throw error if user is already a member', async () => {
+            const mockUserId = 1;
+            const mockProjectId = 1;
+            const mockMessage = 'Join request message';
 
-    it('should throw an error if title is too short', async () => {
-        await expect(publish(1, 'Short', 'This is a test project description that is long enough.')).rejects.toThrow('title too short');
-    });
+            db.Transaction().request()
+                .mockResolvedValueOnce({ recordset: [{ creator: 1 }] }); // Simulate user is already a member
 
-    it('should throw an error if description is too short', async () => {
-        await expect(publish(1, 'Test Project', 'Too short')).rejects.toThrow('description too short');
-    });
-
-    it('should handle database errors gracefully', async () => {
-        db.request.mockReturnValue({
-            input: jest.fn().mockReturnThis(),
-            query: jest.fn().mockRejectedValue(new Error('Database error'))
+            await expect(join_request(mockUserId, mockProjectId, mockMessage)).rejects.toThrow('already member');
         });
 
-        await expect(publish(0, 'Test Project', 'This is a test project description that is long enoughssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss.')).rejects.toThrow('Database error');
+        it('should throw error if user is banned from the project', async () => {
+            const mockUserId = 1;
+            const mockProjectId = 1;
+            const mockMessage = 'Join request message';
+
+            db.Transaction().request()
+                .mockResolvedValueOnce({ recordset: [{ baned: 1 }] }); // Simulate user is banned from the project
+
+            await expect(join_request(mockUserId, mockProjectId, mockMessage)).rejects.toThrow('request denied');
+        });
+
+        it('should throw error if user has pending request', async () => {
+            const mockUserId = 1;
+            const mockProjectId = 1;
+            const mockMessage = 'Join request message';
+
+            db.Transaction().request()
+                .mockResolvedValueOnce({ recordset: [{ creator: 0, accepted: 0, baned: 0 }] }); // Simulate user has pending request
+
+            await expect(join_request(mockUserId, mockProjectId, mockMessage)).rejects.toThrow('request pending');
+        });
+
+        it('should throw error if message is too short', async () => {
+            const mockUserId = 1;
+            const mockProjectId = 1;
+            const mockMessage = 'short'; // Message is too short
+
+            await expect(join_request(mockUserId, mockProjectId, mockMessage)).rejects.toThrow('message too short');
+        });
+
+        it('should throw error if message is too long', async () => {
+            const mockUserId = 1;
+            const mockProjectId = 1;
+            const mockMessage = 'a'.repeat(300); // Message is too long
+
+            await expect(join_request(mockUserId, mockProjectId, mockMessage)).rejects.toThrow('message too long');
+        });
     });
 });
