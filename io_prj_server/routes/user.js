@@ -25,7 +25,13 @@ router.get('/logout', user_controller.logout);
 // Odświeżenie JWT
 router.post('/refresh_jwt', user_controller.refresh_jwt);
 router.get('/login_expired_token', user_controller.refresh_jwt_fail);
+<<<<<<< Updated upstream
 router.get('/profile', user_controller.profile);
 router.get('/notification', notification_controller.get_user_notifications);
+=======
+
+// Trasa do powiadomień użytkownika
+router.get('/notifications', notification_controller.get_user_notifications);
+>>>>>>> Stashed changes
 
 module.exports = router;
