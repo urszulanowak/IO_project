@@ -30,6 +30,6 @@ router.get('/login_expired_token', user_controller.refresh_jwt_fail);
 router.get('/profile', user_controller.profile);
 
 //obsługa powiadomień
-router.get('/notification', notification_controller.get_user_notifications);
+router.get('/notifications', notification_controller.get_user_notifications);
 
 module.exports = router;
