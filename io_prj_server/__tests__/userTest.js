@@ -1,7 +1,7 @@
-const { login, register } = require('../models/user'); // Zaktualizuj ścieżkę do swojego modułu
+const { login, register } = require('../models/user');
 const db = require('@utility/database');
 
-// Tworzymy mocki dla metod używanych w db.Request
+
 const mockInput = jest.fn().mockReturnThis();
 const mockQuery = jest.fn();
 

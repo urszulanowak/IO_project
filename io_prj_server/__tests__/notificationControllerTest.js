@@ -1,11 +1,8 @@
-// notifications.test.js
-
 const request = require('supertest');
 const ejs = require('ejs');
 const notification_model = require('@models/notification');
-const app = require('../app'); // Załóżmy, że nasza aplikacja Express jest eksportowana jako `app`
+const app = require('../app');
 
-// Mockowanie funkcji get_user_notifications z notification_model
 jest.mock('@models/notification', () => ({
     get_user_notifications: jest.fn()
 }));
@@ -16,7 +13,7 @@ describe('GET /user/notification', () => {
         const user_id = 1;
         const mockUser = {
             user_id: user_id,
-            is_guest: false // Ustawienie, że użytkownik jest zalogowany
+            is_guest: false
         };
         const mockNotifications = [
             {
@@ -33,7 +30,6 @@ describe('GET /user/notification', () => {
             }
         ];
 
-        // Mockowanie funkcji get_user_notifications
         notification_model.get_user_notifications.mockResolvedValue(mockNotifications);
 
         // Symulacja zapytania HTTP z zalogowanym użytkownikiem

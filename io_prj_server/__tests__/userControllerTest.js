@@ -1,4 +1,3 @@
-// __tests__/authController.test.js
 
 jest.mock('@models/user');
 jest.mock('jsonwebtoken');

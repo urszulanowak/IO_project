@@ -2,7 +2,6 @@ const { get_project, get_project_previews, get_project_previews_by_user_id, publ
 const db = require('@utility/database');
 const tag_model = require('@models/project_tag');
 
-// Mockowanie funkcji wewnątrz bloku jest.mock
 jest.mock('@utility/database', () => {
     const mockInput = jest.fn().mockReturnThis();
     const mockQuery = jest.fn();

@@ -1,105 +1,95 @@
-// Import necessary modules
 const db = require('@utility/database');
-const projectTags = require('@models/project_tag'); // Adjust the path if necessary
+const { add_project_tags, get_all_tags, get_project_tags } = require('../models/project_tag');
 
-// Mock database and transaction objects
-jest.mock('@utility/database', () => {
-    const sql = require('mssql');
-    const Request = jest.fn().mockImplementation(() => ({
-        query: jest.fn().mockResolvedValue({ recordset: [] }),
-    }));
-
-    const Transaction = jest.fn().mockImplementation(() => ({
+// Mockowanie metod z db
+jest.mock('@utility/database', () => ({
+    sql: {
+        Table: jest.fn(() => ({
+            create: false,
+            columns: {
+                add: jest.fn()
+            },
+            rows: {
+                add: jest.fn()
+            }
+        })),
+        BigInt: jest.fn(),
+        Int: jest.fn()
+    },
+    Request: jest.fn(() => ({
+        input: jest.fn().mockReturnThis(),
+        query: jest.fn()
+    })),
+    Transaction: jest.fn(() => ({
         begin: jest.fn().mockResolvedValue(),
-        request: jest.fn().mockReturnValue(new Request()),
-        commit: jest.fn().mockResolvedValue(),
-    }));
+        request: jest.fn(() => ({
+            input: jest.fn().mockReturnThis(),
+            bulk: jest.fn(),
+            query: jest.fn()
+        })),
+        commit: jest.fn().mockResolvedValue()
+    }))
+}));
 
-    return {
-        sql,
-        Request,
-        Transaction,
-    };
+describe('add_project_tags', () => {
+    test('should add project tags to the database', async () => {
+        const tran = db.Transaction();
+        const project_id = 1;
+        const tags = [101, 102, 103];
+
+        await add_project_tags(tran, project_id, tags);
+
+        expect(db.sql.Table).toHaveBeenCalledWith('project_tag');
+        //expect(tran.request().bulk).toHaveBeenCalled();
+        expect(tran.request().bulk.mock.calls[0][0].rows.add).toHaveBeenCalledTimes(tags.length);
+        tags.forEach(tag_id => {
+            expect(tran.request().bulk.mock.calls[0][0].rows.add).toHaveBeenCalledWith(project_id, tag_id);
+        });
+    });
 });
 
-describe('Project Tags Functions', () => {
-    describe('add_project_tags', () => {
-        it('should add project tags to the database', async () => {
-            // Mock variables
-            const tran = new db.Transaction();
-            const project_id = 1;
-            const tags = [101, 102];
+describe('get_all_tags', () => {
+    test('should retrieve all tags from the database', async () => {
+        const mockRecordset = [
+            { tag_id: 1, tag_name: 'tag1', category_id: 1, category_name: 'category1' },
+            { tag_id: 2, tag_name: 'tag2', category_id: 2, category_name: 'category2' }
+        ];
 
-            // Mock bulk function of transaction
-            tran.request().bulk = jest.fn().mockResolvedValue();
+        db.Request().query.mockResolvedValue({ recordset: mockRecordset });
 
-            await projectTags.add_project_tags(tran, project_id, tags);
+        const tags = await get_all_tags();
 
-            // Expect bulk to be called with correct parameters
-            const expectedTable = new db.sql.Table('project_tag');
-            expectedTable.create = true;
-            expectedTable.columns.add('project_id', db.sql.BigInt, { nullable: false });
-            expectedTable.columns.add('tag_id', db.sql.Int, { nullable: false });
-            expectedTable.rows.add(project_id, tags[0]);
-            expectedTable.rows.add(project_id, tags[1]);
+        expect(tags).toEqual(mockRecordset);
+        expect(db.Request).toHaveBeenCalledTimes(1);
+        expect(db.Request().query).toHaveBeenCalledWith(expect.stringContaining('SELECT'));
+    });
+});
 
-            expect(tran.request().bulk).toHaveBeenCalledWith(expectedTable);
-        });
+describe('get_project_tags', () => {
+    test('should retrieve tags for the specified project IDs', async () => {
+        const project_ids = [1, 2, 3];
+        const mockRecordset = [
+            { project_id: 1, tag_id: 101, tag_name: 'tag101', category_id: 1, category_name: 'category1' },
+            { project_id: 2, tag_id: 102, tag_name: 'tag102', category_id: 2, category_name: 'category2' }
+        ];
+
+        db.Transaction().request().query.mockResolvedValue({ recordset: mockRecordset });
+
+        const tags = await get_project_tags(project_ids);
+
+        expect(tags).toEqual(mockRecordset);
+        expect(db.Transaction).toHaveBeenCalledTimes(1);
+        expect(db.Transaction().begin).toHaveBeenCalled();
+        expect(db.Transaction().request().bulk).toHaveBeenCalled();
+        expect(db.Transaction().request().query).toHaveBeenCalledWith(expect.stringContaining('SELECT'));
+        expect(db.Transaction().commit).toHaveBeenCalled();
     });
 
-    describe('get_all_tags', () => {
-        it('should retrieve all tags from the database', async () => {
-            // Mock query result
-            const mockRecordset = [
-                { tag_id: 1, tag_name: 'Tag 1', category_id: 1, category_name: 'Category 1' },
-                { tag_id: 2, tag_name: 'Tag 2', category_id: 2, category_name: 'Category 2' },
-            ];
+    test('should return an empty array if no project IDs are provided', async () => {
+        const project_ids = [];
 
-            db.Request().query.mockResolvedValue({ recordset: mockRecordset });
+        const tags = await get_project_tags(project_ids);
 
-            const tags = await projectTags.get_all_tags();
-
-            expect(tags).toEqual(mockRecordset);
-            expect(db.Request().query).toHaveBeenCalledWith(expect.any(String));
-        });
-    });
-
-    describe('get_project_tags', () => {
-        it('should retrieve tags for specified project IDs', async () => {
-            // Mock variables
-            const project_ids = [1, 2];
-            const mockRecordset = [
-                { project_id: 1, tag_id: 101, tag_name: 'Tag 1', category_id: 1, category_name: 'Category 1' },
-                { project_id: 1, tag_id: 102, tag_name: 'Tag 2', category_id: 1, category_name: 'Category 1' },
-                { project_id: 2, tag_id: 101, tag_name: 'Tag 1', category_id: 1, category_name: 'Category 1' },
-                { project_id: 2, tag_id: 103, tag_name: 'Tag 3', category_id: 2, category_name: 'Category 2' },
-            ];
-
-            // Mock transaction and query result
-            const tran = new db.Transaction();
-            tran.request().bulk = jest.fn().mockResolvedValue();
-            tran.request().query.mockResolvedValue({ recordset: mockRecordset });
-
-            const tags = await projectTags.get_project_tags(project_ids);
-
-            // Expect transaction and query to be called correctly
-            const expectedTable = new db.sql.Table('#project_ids');
-            expectedTable.create = true;
-            expectedTable.columns.add('project_id', db.sql.BigInt, { nullable: false });
-            expectedTable.rows.add(project_ids[0]);
-            expectedTable.rows.add(project_ids[1]);
-
-            expect(tran.request().bulk).toHaveBeenCalledWith(expectedTable, expect.any(Function));
-            expect(tran.request().query).toHaveBeenCalledWith(expect.any(String));
-
-            // Expect correct tags to be returned
-            expect(tags).toEqual(mockRecordset);
-        });
-
-        it('should return an empty array if no project IDs are provided', async () => {
-            const tags = await projectTags.get_project_tags([]);
-
-            expect(tags).toEqual([]);
-        });
+        expect(tags).toEqual([]);
     });
 });

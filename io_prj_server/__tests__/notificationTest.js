@@ -1,11 +1,8 @@
-// Import modułów do testowania
 const db = require('@utility/database');
 const { get_user_notifications } = require('../models/notification');
 
 describe('get_user_notifications', () => {
-    // Przygotowanie mocka bazy danych przed każdym testem
     beforeEach(() => {
-        // Resetujemy wszelkie mocki przed każdym testem
         jest.clearAllMocks();
     });
 

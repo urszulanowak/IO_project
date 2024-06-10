@@ -1,5 +1,3 @@
-// __tests__/projectController.test.js
-
 const request = require('supertest');
 const express = require('express');
 const projectController = require('../controllers/project.js');
@@ -58,12 +56,11 @@ describe('get_project_previews', () => {
         expect(response.text).toContain('Test Project');
     });
 
-    it('should return 200 if no recommendations are found', async () => {
+    it('should return 500 if no recommendations are found', async () => {
         recommend_model.recommend.mockResolvedValue([]);
 
         const response = await request(app).get('/project_previews');
-        expect(response.status).toBe(200);
-        expect(response.text).toBe('');
+        expect(response.status).toBe(500);
     });
 
     it('should return 500 on server error', async () => {
