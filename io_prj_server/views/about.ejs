@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script type="module" src="/javascripts/refresh_jwt.js"></script>
+    <script src="/javascripts/notifications.js"></script>
 </head>
 
 <body>
@@ -25,6 +26,7 @@
                     <% } else { %>
                         <li><a href="/profile" class="blue-button">Profil</a></li>
                         <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+                        <li> <a href="#" onclick="toggleNotifications()"><img src="/images/bell.png" alt="bell" class="notification-bell"></a></li>
                         <% } %>
             </ul>
         </nav>
