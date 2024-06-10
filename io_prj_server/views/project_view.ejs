@@ -8,6 +8,7 @@
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='stylesheet' href='/stylesheets/project_view.css' />
   <script type="module" src="/javascripts/refresh_jwt.js"></script>
+  <script src="/javascripts/notifications.js"></script>
   <style>
 
   </style>
@@ -29,6 +30,7 @@
         <% } else { %>
           <li><a href="/profil" class="blue-button">Profil</a></li>
           <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+          <li> <a href="#" onclick="toggleNotifications()"><img src="/images/bell.png" alt="bell" class="notification-bell"></a></li>
         <% } %>
       </ul>
     </nav>
@@ -181,6 +183,7 @@
       </div>
     <% }) %>
   </div>
+  <div id="notifications-container" style="display: none;"></div>
 </body>
 
 </html>
