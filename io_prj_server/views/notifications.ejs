@@ -1,12 +1,15 @@
 <div class="notification">
-    <p id="notification-text">tekst powiadomienia</p>
-    <button>Więcej...</button>
+    <div class="notification-text">
+        <%= notifications %> 
+    </div>
+    <button class="more"><a>Więcej...</a></button>
+    <button onclick="toggleNotifications()">Zamknij</button>
 </div>
 
 <style>
 .notification {
     position: absolute;
-    width: 700px;
+    width: 500px;
     height: 106px;
     background: #F4F4F4;
     border-radius: 21px;
@@ -14,6 +17,7 @@
 
 .notification p {
     margin: 0;
+    padding: 10px;
 }
 
 .notification button {
@@ -28,7 +32,22 @@
     cursor: pointer;
 }
 
+.more{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+}
+
 .notification button:hover {
     background-color: #0056b3;
 }
+
+
 </style>
