@@ -6,7 +6,7 @@ exports.get_user_notifications = async function (user_id) {
         .input('user_id', user_id)
         .query(`SELECT  n.notification_id, n.create_date, n.seen, 
                         t.name AS notification_type_name,
-                        u.user_id AS from_user_id, u.name AS from_user_name, u.from_user_is_admin, 
+                        u.user_id AS from_user_id, u.name AS from_user_name, u.is_admin AS from_user_is_admin, 
                         p.project_id AS from_project_id, p.title AS from_project_title,
                         n.message
                 FROM [dbo].[notification] n

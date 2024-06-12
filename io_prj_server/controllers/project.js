@@ -9,14 +9,15 @@ exports.get_project = function (req, res) {
     var project_id = req.params.id;
     project_model.get_project(project_id).then(project => {
         res.render('project_view', { user: req.user, project: project, tags: project.tags });
+        res.status(200).send();
     }).catch(err => {
         switch (err.message) {
             case 'project not found':
-                res.status(404);
+                res.status(404).send();
                 break;
             default:
                 console.log('Get project error: ', err);
-                res.status(500);
+                res.status(500).send('server error');
                 break;
         }
     });
@@ -35,14 +36,14 @@ function get_project_previews(req, res) {
         } else {
             req.session.seen_projects = seen_projects.concat(recommended_projects);
             project_model.get_project_previews(recommended_projects).then(project_previews => {
-                ejs.renderFile('views/project_previews.ejs', { project_previews: project_previews }).then(html => {
+                ejs.renderFile('../views/project_previews.ejs', { project_previews: project_previews }).then(html => {
                     res.status(200).send(html);
                 });
             });
         }
     }).catch(err => {
         console.log('Get project previews error: ', err);
-        res.status(500);
+        res.status(500).send("server error");
     });
 }
 exports.get_project_previews = get_project_previews;
@@ -51,13 +52,13 @@ exports.get_my_project_previews = function (req, res) {
     var user = req.user;
     project_model.get_project_previews_by_user_id(user.user_id)
         .then(project_previews => {
-            ejs.renderFile('views/project_previews.ejs', { project_previews: project_previews }).then(html => {
+            ejs.renderFile('../views/project_previews.ejs', { project_previews: project_previews }).then(html => {
                 res.status(200).send(html);
             });
         })
         .catch(err => {
             console.log('Get my projects error: ', err);
-            res.status(500);
+            res.status(500).send('server error');
         });
 };
 
@@ -65,14 +66,15 @@ exports.join_project = function (req, res) {
     var project_id = req.params.id;
     project_model.get_project(project_id).then(project => {
         res.render('project_join', { project: project });
+        res.status(200).send();
     }).catch(err => {
         switch (err.message) {
             case 'project not found':
-                res.status(404);
+                res.status(404).send();
                 break;
             default:
                 console.log('Join project error: ', err);
-                res.status(500);
+                res.status(500).send('server error');
                 break;
         }
     });
@@ -91,7 +93,7 @@ exports.publish = function (req, res) {
     var description = req.body.description;
     var tags = req.body.tags;
     project_model.publish(user.user_id, title, description, tags).then(id => {
-        res.status(200).send(id);
+        res.status(200).send();
     }).catch(err => {
         switch (err.message) {
             case 'title too short':
@@ -102,7 +104,7 @@ exports.publish = function (req, res) {
                 break;
             default:
                 console.log('Publish project error: ', err);
-                res.status(500).send('Błąd serwera.');
+                res.status(500).send('server error');
                 break;
         }
     });
@@ -138,7 +140,7 @@ exports.join_request = function (req, res) {
                 break;
             default:
                 console.log('Join request error: ', err);
-                res.status(500).send('Błąd serwera.');
+                res.status(500).send('server error');
                 break;
         }
     });
@@ -169,9 +171,9 @@ exports.project_create = async function (req, res) {
         });
 
         res.render('project_create', { user: req.user, tags: categorizedTags });
+        res.status(200).send();
     } catch (err) {
         console.log('Get all tags error: ', err);
-        res.status(500).send('Server error.');
+        res.status(500).send('server error');
     }
 };
-

@@ -10,7 +10,7 @@ exports.get_user_notifications = function (req, res) {
     }
     notification_model.get_user_notifications(user.user_id)
         .then(notifications => {
-            ejs.renderFile('views/notifications.ejs', { notifications: notifications }).then(html => {
+            ejs.renderFile('../views/notifications.ejs', { notifications: notifications }).then(html => {
                 res.status(200).send(html);
             });
         })
