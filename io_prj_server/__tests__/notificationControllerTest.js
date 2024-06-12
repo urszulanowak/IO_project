@@ -7,7 +7,7 @@ jest.mock('@models/notification', () => ({
     get_user_notifications: jest.fn()
 }));
 
-describe('GET /user/notification', () => {
+describe('GET /user/notifications', () => {
     test('should return HTML with user notifications', async () => {
         // Dane testowe
         const user_id = 1;
@@ -34,7 +34,7 @@ describe('GET /user/notification', () => {
 
         // Symulacja zapytania HTTP z zalogowanym użytkownikiem
         const res = await request(app)
-            .get('/user/notification')
+            .get('/user/notifications')
             .set('Accept', 'text/html')
             .set('Cookie', ['user=' + JSON.stringify(mockUser)]); // Przekazanie danych użytkownika jako ciasteczko
 
@@ -54,7 +54,7 @@ describe('GET /user/notification', () => {
 
     test('should return 401 Unauthorized if user is not logged in', async () => {
         const res = await request(app)
-            .get('/user/notification')
+            .get('/user/notifications')
             .set('Accept', 'text/html');
 
         expect(res.status).toEqual(401);
@@ -65,7 +65,7 @@ describe('GET /user/notification', () => {
         notification_model.get_user_notifications.mockRejectedValue(new Error('Database connection failed'));
 
         const res = await request(app)
-            .get('/user/notification')
+            .get('/user/notifications')
             .set('Accept', 'text/html');
 
         expect(res.status).toEqual(500);
