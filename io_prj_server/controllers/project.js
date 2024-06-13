@@ -35,7 +35,7 @@ function get_project_previews(req, res) {
         } else {
             req.session.seen_projects = seen_projects.concat(recommended_projects);
             project_model.get_project_previews(recommended_projects).then(project_previews => {
-                ejs.renderFile('../views/project_previews.ejs', { project_previews: project_previews }).then(html => {
+                ejs.renderFile('views/project_previews.ejs', { project_previews: project_previews }).then(html => {
                     res.status(200).send(html);
                 });
             });
@@ -51,7 +51,7 @@ exports.get_my_project_previews = function (req, res) {
     var user = req.user;
     project_model.get_project_previews_by_user_id(user.user_id)
         .then(project_previews => {
-            ejs.renderFile('../views/project_previews.ejs', { project_previews: project_previews }).then(html => {
+            ejs.renderFile('views/project_previews.ejs', { project_previews: project_previews }).then(html => {
                 res.status(200).send(html);
             });
         })
