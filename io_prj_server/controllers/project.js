@@ -175,3 +175,21 @@ exports.project_create = async function (req, res) {
     }
 };
 
+exports.get_project_notifications = async function (req, res) {
+    try {
+        var project_id = req.params.project_id;
+        var user = req.user;
+
+        if (!user || user.is_guest) {
+            res.statusMessage = 'Unauthorized';
+            res.status(401).send();
+            return;
+        }
+
+        var notifications = await notification_model.get_project_notifications(project_id, user.user_id);
+        res.render('project_notifications', { user: user, project_id: project_id, notifications: notifications });
+    } catch (err) {
+        console.log('Get project notifications error: ', err);
+        res.status(500).send('Internal Server Error');
+    }
+};

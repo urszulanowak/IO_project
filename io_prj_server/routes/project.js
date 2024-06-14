@@ -16,4 +16,6 @@ router.post('/join', project_controller.join_request);
 
 router.post('/publish', project_controller.publish);
 
+router.get('/notifications/:project_id', project_controller.get_project_notifications);
+
 module.exports = router;
