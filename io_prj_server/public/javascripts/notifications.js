@@ -1,25 +1,23 @@
 function toggleNotifications() {
-  var notificationsContainer = document.getElementById('notifications-container');
-  var isVisible = notificationsContainer.style.display === 'block';
-  notificationsContainer.style.display = isVisible ? 'none' : 'block';
-  if (isVisible && notificationsContainer.innerHTML.trim() === '') {
-    loadNotifications();
+  const notificationsContainer = document.getElementById('notifications-container');
+  if (notificationsContainer.style.display === 'none' || notificationsContainer.style.display === '') {
+      notificationsContainer.style.display = 'block';
+      fetchNotifications();
+  } else {
+      notificationsContainer.style.display = 'none';
   }
 }
 
-function loadNotifications() {
-  fetch('/user/notifications')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+async function fetchNotifications() {
+  try {
+      const response = await fetch('/user/notifications');
+      if (response.ok) {
+          const notifications = await response.text();
+          document.getElementById('notifications-container').innerHTML = notifications;
+      } else {
+          console.error('Failed to fetch notifications');
       }
-      return response.text();
-    })
-    .then(html => {
-      var notificationsContainer = document.getElementById('notifications-container');
-      notificationsContainer.innerHTML = html;
-    })
-    .catch(error => {
-      console.error('Fetch error:', error);
-    });
+  } catch (error) {
+      console.error('Error fetching notifications:', error);
+  }
 }

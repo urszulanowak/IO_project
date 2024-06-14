@@ -9,6 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <script type="module" src="/javascripts/refresh_jwt.js"></script>
   <script type="module" src="/javascripts/project_publish.js"></script>
+  <script src="/javascripts/notifications.js"></script>
 </head>
 <body>
   <header>
@@ -26,6 +27,7 @@
         <% } else { %>
           <li><a href="/profile" class="blue-button">Profil</a></li>
           <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+          <li> <a href="#" onclick="toggleNotifications()"><img src="/images/bell.png" alt="bell" class="notification-bell"></a></li>
         <% } %>
       </ul>
     </nav>

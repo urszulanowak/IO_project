@@ -455,3 +455,8 @@ label {
   margin-right: auto;
   height: fit-content;
 }
+
+.notification-bell{
+  width: 24px;
+  height: auto;
+}
