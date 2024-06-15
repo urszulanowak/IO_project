@@ -181,12 +181,10 @@ exports.profile = function (req, res, next) {
     if (req.user && !req.user.is_guest) {
         res.render('profile', {
             user: {
-                profilePicture: req.user.profilePicture || '/path/to/default/profile.jpg',
                 name: req.user.name,
-                about: req.user.about || 'Tutaj dodaj opis o sobie...',
-                preferredTechnologies: req.user.preferredTechnologies || 'Technologie...',
-                ownProjects: req.user.ownProjects || 'Tutaj dodaj projekty autorskie...',
-                participatedProjects: req.user.participatedProjects || 'Tutaj dodaj projekty, w których uczestniczysz...'
+                join_date: req.user.join_date, 
+                ownProjects: req.user.ownProjects,
+                participatedProjects: req.user.participatedProjects
             }
         });
     } else {

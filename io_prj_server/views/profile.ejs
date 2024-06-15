@@ -38,18 +38,17 @@
                   <div class="profile-info">
                       <h2><%= user.name %></h2>
                   </div>
-                  <button class="message-button">Napisz</button>
               </div>
               <div class="profile-content">
-                  <section class="about-me">
-                      <h3>O mnie</h3>
+                  <section class="join-date">
+                      <h3>Data dołączenia</h3>
                       <div class="line"></div>
-                      <p><%= user.about %></p>
+                      <p><%= user.join_date %></p>
                   </section>
-                  <section class="preferred-technologies">
-                      <h3>Preferowane technologie</h3>
-                      <div class="line"></div>
-                      <p><%= user.preferredTechnologies %></p>
+                  <section class="email">
+                    <h3>Email Użytkownika</h3>
+                    <div class="line"></div>
+                    <p><%= user.email %></p>
                   </section>
                   <section class="own-projects">
                       <h3>Projekty autorskie</h3>
