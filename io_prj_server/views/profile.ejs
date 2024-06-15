@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='/stylesheets/profile-style.css' />
     <script type="module" src="/javascripts/refresh_jwt.js"></script>
     <script type="module" src="/javascripts/infinite_scroll.js"></script>
+    <script type="module" src="/javascripts/display_my_projects.js"></script>
     <script src="/javascripts/notifications.js"></script>
 </head>
 <body>
@@ -49,16 +50,6 @@
                     <h3>Email Użytkownika</h3>
                     <div class="line"></div>
                     <p><%= user.email %></p>
-                  </section>
-                  <section class="own-projects">
-                      <h3>Projekty autorskie</h3>
-                      <div class="line"></div>
-                      <p><%= user.ownProjects %></p>
-                  </section>
-                  <section class="participated-projects">
-                      <h3>Projekty w których uczestniczę</h3>
-                      <div class="line"></div>
-                      <p><%= user.participatedProjects %></p>
                   </section>
               </div>
           </div>
