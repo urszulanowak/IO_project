@@ -87,20 +87,14 @@
         </div>
 
 
-        <div id="authors">
-          <h2 style="font-size: 24px;">Autor</h2>
-          <div class="authors">
-            <img src="/images/placeholder.jpg">
-          </div>
-        </div>
         <div id="members">
-          <h2 style="font-size: 24px;">Członkowie</h2>
-          <div class="members">
-            <img src="/images/placeholder.jpg">
-            <img src="/images/placeholder.jpg">
-          </div>
+          <% project.members.forEach(member=> { %>
+            <div class="member">
+              <%= member.name %>
+                <%= member.creator %>
+            </div>
+            <% }); %>
         </div>
-      </div>
     </section>
 
     <aside>
