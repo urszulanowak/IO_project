@@ -9,11 +9,20 @@ body, html {
 }
 
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
   background-color: #f4f4f4;
+}
+
+body {
+  padding-top: 80px; 
 }
 
 #brand h1 {
@@ -60,7 +69,7 @@ nav ul li a.blue-button:hover {
 main {
   display: flex;
   justify-content: space-between;
-  padding: 40px;
+  padding: 80px 40px;
 }
 
 #content {
@@ -103,9 +112,10 @@ footer {
 }
 
 .logged-buttons{
+  position: fixed;
   padding: 10px;
   padding-left: 30px;
-  margin-top: 10px;
+  margin-top: 100px;
 }
 
 nav ul li a:hover {
@@ -215,6 +225,7 @@ main {
 }
 
 aside {
+  margin-top: 100px;
   width: 25%;
   flex-direction: column;
   padding: 30px;
@@ -225,12 +236,6 @@ aside {
 footer {
   padding: 20px;
   background-color: #f4f4f4;
-}
-
-.logged-buttons{
-  padding: 10px;
-  padding-left: 30px;
-  margin-top: 10px;
 }
 
 nav ul li a:hover {
