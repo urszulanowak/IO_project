@@ -20,6 +20,7 @@ async function authorize(user_id, room_id) {
             }
         });
 }
+exports.authorize = authorize;
 
 exports.add_user_to_room = async function (tran, user_id, room_id) {
     return tran.Request()
