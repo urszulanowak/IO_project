@@ -1,3 +1,5 @@
+var project_model = require('@models/project');
+
 exports.join_project = function (req, res) {
     var project_id = req.params.id;
     project_model.get_project(project_id).then(project => {

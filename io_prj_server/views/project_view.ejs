@@ -10,14 +10,39 @@
   <script type="module" src="/javascripts/refresh_jwt.js"></script>
   <script src="/javascripts/notifications.js"></script>
   <style>
-    .member { 
+    .member {
       margin-bottom: 10px;
       padding: 10px;
       border: 1px solid #ddd;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
     .creator {
-      background-color: #f0f8ff;
+      background-color: #e6f7ff;
       font-weight: bold;
+      border-color: #b3d8ff;
+    }
+    .member img, .creator img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .member-info, .creator-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .member-info span, .creator-info span {
+      font-size: 12px;
+      color: #555;
+    }
+    .member-info .name, .creator-info .name {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
     }
   </style>
 </head>
@@ -50,7 +75,9 @@
           <h1 class="project-title" style="font-size: 32px;">
             <%= project.data.title %>
           </h1>
-          <button class="blue-button" onclick="window.location.href='/project/join/<%= project.data.project_id %>'" style="font-size: 20px; padding: 10px 20px;">Dołącz</button>
+          <% if (!project.members.find(member => member.creator && member.user_id === user.user_id)) { %>
+            <button class="blue-button" onclick="window.location.href='/project/join/<%= project.data.project_id %>'" style="font-size: 20px; padding: 10px 20px;">Dołącz</button>
+          <% } %>
         </div>
         <h2 style="font-size: 24px;">Opis</h2>
         <div class="description">
@@ -105,7 +132,6 @@
             <p>Brak</p>
           <% } %>
         </div>
-        
 
         <h2 style="font-size: 24px;">Członkowie</h2>
         <div id="members">
@@ -126,13 +152,9 @@
             <p>Brak</p>
           <% } %>
         </div>
-        
-        
       </div>
     </section>
-    <script>
-      <% console.log(project.members) %>
-    </script>
+
     <aside>
     </aside>
   </main>

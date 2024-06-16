@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const button = document.querySelector('.submit-button');
     const message_box = document.getElementById('info');
     const project_id = window.projectId;
+    const error_div = document.getElementById('error');
 
     button.addEventListener('click', function () {
         const message = message_box.value;
@@ -18,9 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }).then(() => {
             alert('Podanie wysłane!');
-            window.location.href = `/project/id/${projectId}`;
+            window.location.href = `/project/id/${project_id}`;
         }).catch(err => {
-            console.log(err);
+            error_div.textContent = err.message;
         });
     });
 });
