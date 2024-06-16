@@ -13,12 +13,20 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #f4f4f4;
   z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
+  background-color: #f4f4f4;
+}
+
+header nav{
+  padding-right: 50px;
+}
+
+body {
+  padding-top: 80px; 
 }
 
 #brand h1 {
@@ -28,7 +36,7 @@ header {
   margin: 0;
 }
 
-#brand a {
+#brand a{
   text-decoration: none;
   color: inherit;
 }
@@ -65,12 +73,12 @@ nav ul li a.blue-button:hover {
 main {
   display: flex;
   justify-content: space-between;
-  padding: 40px;
-  margin-top: 100px; /* margin-top ustawiłem na 100px, aby treść nie była zakrywana przez nagłówek */
+  padding: 80px 40px;
 }
 
 #content {
   width: 70%;
+  margin-top: 110px;
 }
 
 .post {
@@ -80,9 +88,10 @@ main {
   margin-bottom: 20px;
   border: solid;
   border-color: #e6e6e6;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
+  word-wrap: break-word; 
+ overflow-wrap: break-word; 
+white-space: normal; 
+ 
 }
 
 .post-title {
@@ -98,6 +107,8 @@ aside {
   padding: 30px;
   background-color: #f4f4f4;
   border-radius: 44px;
+  position: relative;
+  height: 664px;
 }
 
 footer {
@@ -105,10 +116,133 @@ footer {
   background-color: #f4f4f4;
 }
 
-.logged-buttons {
+.logged-buttons{
+  position: fixed;
   padding: 10px;
   padding-left: 30px;
-  margin-top: 10px;
+  margin-top: 100px;
+  
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #ffffff;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #f4f4f4;
+}
+
+#brand h1 {
+  font-size: 48px;
+  color: #007bff;
+  font-family: 'Trebuchet MS', sans-serif;
+  margin: 0;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  padding: 0 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+nav ul li a.blue-button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+a.blue-button{
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+a.blue-button:hover{
+  background-color: #0056b3;
+}
+
+nav ul li a.blue-button:hover {
+  background-color: #0056b3;
+}
+
+main {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+}
+
+.faq{
+  display: flex;
+  margin-top: 100px;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.create_form{
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+
+#content {
+  width: 70%;
+}
+
+.post {
+  background-color: #fafaf5;
+  border-radius: 10px;
+  padding: 40px;
+  margin-bottom: 20px;
+  border: solid;
+  border-color: #e6e6e6;
+ 
+}
+
+.post-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+aside {
+  margin-top: 100px;
+  width: 25%;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+}
+
+footer {
+  padding: 20px;
+  background-color: #f4f4f4;
 }
 
 nav ul li a:hover {
@@ -117,8 +251,8 @@ nav ul li a:hover {
 
 .question-title {
   font-weight: bold;
-  margin-bottom: 5px;
-  position: relative;
+  margin-bottom: 5px; 
+  position: relative; 
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -127,15 +261,15 @@ nav ul li a:hover {
 }
 
 .question-title::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 100%;
-  border-bottom: 1px solid #ccc;
+  content: ''; 
+  position: absolute; 
+  bottom: -5px; 
+  left: 0; 
+  width: 100%; 
+  border-bottom: 1px solid #ccc; 
 }
 
-.p {
+.p{
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -144,7 +278,8 @@ nav ul li a:hover {
   text-align: center;
 }
 
-#form h1 {
+
+#form h1{
   text-align: center;
   font-family: 'Inter';
   font-style: normal;
@@ -164,7 +299,7 @@ nav ul li a:hover {
 }
 
 #main_about h1 {
-  position: relative;
+  position: relative; 
   font-family: 'Newsreader';
   font-style: normal;
   font-weight: 400;
@@ -175,7 +310,7 @@ nav ul li a:hover {
   letter-spacing: -0.02em;
 }
 
-#about p {
+#about p{
   text-align: center;
   font-family: 'Inter';
   font-style: normal;
@@ -186,18 +321,21 @@ nav ul li a:hover {
 
 #main_about h1::after {
   content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 100%;
+  position: absolute; 
+  bottom: -10px; 
+  left: 0; 
+  width: 100%; 
   border-bottom: 1px solid #ccc;
 }
 
 .authors img,
 .members img {
   max-width: 100px;
-  height: auto;
+  height: auto; 
 }
+
+
+
 
 .project-container {
   border: 1px solid #ddd;
@@ -269,8 +407,9 @@ hr {
   text-align: center;
 }
 
-#email,
-#topic {
+
+#email, #topic
+ {
   background-color: #fafaf5;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -285,7 +424,8 @@ hr {
   resize: none;
 }
 
-#message {
+#message
+{
   background-color: #fafaf5;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -300,7 +440,9 @@ hr {
   resize: none;
 }
 
-.label {
+
+
+label {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -308,7 +450,8 @@ hr {
 }
 
 .email-box,
-.topic-box {
+.topic-box
+{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -317,7 +460,8 @@ hr {
   height: fit-content;
 }
 
-.tresc-box {
+.tresc-box
+{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -326,7 +470,7 @@ hr {
   height: fit-content;
 }
 
-.notification-bell {
+.notification-bell{
   width: 24px;
   height: auto;
 }
