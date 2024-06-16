@@ -1,53 +1,17 @@
-<div class="notification">
-    <div class="notification-text">
-        <%= notifications %> 
+<% if(notifications.length> 0) {
+    notifications.forEach(n => { %>
+    <div class="notification">
+        <div class="notification-text">
+            <%= n.message %>
+        </div>
+        <button class="more"><a href="/project/id/<%= p.project_id %>">Więcej...</a></button>
+        <button onclick="toggleNotifications()">Zamknij</button>
     </div>
-    <button class="more"><a>Więcej...</a></button>
-    <button onclick="toggleNotifications()">Zamknij</button>
-</div>
-
-<style>
-.notification {
-    position: absolute;
-    width: 500px;
-    height: 106px;
-    background: #F4F4F4;
-    border-radius: 21px;
-}
-
-.notification p {
-    margin: 0;
-    padding: 10px;
-}
-
-.notification button {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.more{
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100px;
-}
-
-.notification button:hover {
-    background-color: #0056b3;
-}
-
-
-</style>
+    <% })} else { %>
+        <div class="notification">
+            <div class="notification-text">
+                Brak powiadomień
+            </div>
+            <button onclick="toggleNotifications()">Zamknij</button>
+        </div>
+        <% } %>

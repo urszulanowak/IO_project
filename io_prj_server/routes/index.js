@@ -26,4 +26,8 @@ router.get('/profile', function(req, res, next){
   res.render('profile', {user: req.user });
 })
 
+router.get('/followed-projects', function(req, res, next){
+  res.render('followed_projects', {user: req.user});
+})
+
 module.exports = router;

@@ -20,6 +20,7 @@ exports.login = async function (email, pass) {
                     user_id: result.recordset[0].user_id,
                     email: result.recordset[0].email,
                     name: result.recordset[0].name,
+                    join_date: new Date(result.recordset[0].join_date).toISOString().substring(0,10),
                     is_guest: false,
                     is_admin: result.recordset[0].is_admin
                 };

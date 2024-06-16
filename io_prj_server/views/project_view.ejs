@@ -27,11 +27,12 @@
         <% if (user.is_guest) { %>
           <li> <a href="/user/login" class="blue-button">Zaloguj się</a></li>
           <li> <a href="/user/register" class="blue-button">Zarejestruj się</a></li>
-        <% } else { %>
-          <li><a href="/profil" class="blue-button">Profil</a></li>
-          <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
-          <li> <a href="#" onclick="toggleNotifications()"><img src="/images/bell.png" alt="bell" class="notification-bell"></a></li>
-        <% } %>
+          <% } else { %>
+            <li><a href="/profil" class="blue-button">Profil</a></li>
+            <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+            <li> <a href="#" onclick="toggleNotifications()"><img src="/images/bell.png" alt="bell"
+                  class="notification-bell"></a></li>
+            <% } %>
       </ul>
     </nav>
   </header>
@@ -58,48 +59,42 @@
         <h2 style="font-size: 24px;">Tagi</h2>
         <div class="tags">
           <h3>Języki Programowania</h3>
-          <% if (project.tags && project.tags.filter(tag => tag.category_id === 1).length > 0) { %>
+          <% if (project.tags && project.tags.filter(tag=> tag.category_id === 1).length > 0) { %>
             <span class="tag">
-              <%= project.tags.filter(tag => tag.category_id === 1).map(tag => tag.tag_name).join(', ') %>
+              <%= project.tags.filter(tag=> tag.category_id === 1).map(tag => tag.tag_name).join(', ') %>
             </span>
-          <% } else { %>
-            <p>Brak języków programowania</p>
-          <% } %>
-        
-          <h3>Technologie</h3>
-          <% if (project.tags && project.tags.filter(tag => tag.category_id === 2).length > 0) { %>
-            <span class="tag">
-              <%= project.tags.filter(tag => tag.category_id === 2).map(tag => tag.tag_name).join(', ') %>
-            </span>
-          <% } else { %>
-            <p>Brak technologii</p>
-          <% } %>
-        
-          <h3>Licencje</h3>
-          <% if (project.tags && project.tags.filter(tag => tag.category_id === 3).length > 0) { %>
-            <span class="tag">
-              <%= project.tags.filter(tag => tag.category_id === 3).map(tag => tag.tag_name).join(', ') %>
-            </span>
-          <% } else { %>
-            <p>Brak licencji</p>
-          <% } %>
-        </div>
-        
+            <% } else { %>
+              <p>Brak języków programowania</p>
+              <% } %>
 
-        <div id="authors">
-          <h2 style="font-size: 24px;">Autor</h2>
-          <div class="authors">
-            <img src="/images/placeholder.jpg">
-          </div>
+                <h3>Technologie</h3>
+                <% if (project.tags && project.tags.filter(tag=> tag.category_id === 2).length > 0) { %>
+                  <span class="tag">
+                    <%= project.tags.filter(tag=> tag.category_id === 2).map(tag => tag.tag_name).join(', ') %>
+                  </span>
+                  <% } else { %>
+                    <p>Brak technologii</p>
+                    <% } %>
+
+                      <h3>Licencje</h3>
+                      <% if (project.tags && project.tags.filter(tag=> tag.category_id === 3).length > 0) { %>
+                        <span class="tag">
+                          <%= project.tags.filter(tag=> tag.category_id === 3).map(tag => tag.tag_name).join(', ') %>
+                        </span>
+                        <% } else { %>
+                          <p>Brak licencji</p>
+                          <% } %>
         </div>
+
+
         <div id="members">
-          <h2 style="font-size: 24px;">Członkowie</h2>
-          <div class="members">
-            <img src="/images/placeholder.jpg">
-            <img src="/images/placeholder.jpg">
-          </div>
+          <% project.members.forEach(member=> { %>
+            <div class="member">
+              <%= member.name %>
+                <%= member.creator %>
+            </div>
+            <% }); %>
         </div>
-      </div>
     </section>
 
     <aside>
@@ -167,7 +162,7 @@
   </div>
 
   <div id="comment_section">
-    <% project.comments.forEach(comment => { %>
+    <% project.comments.forEach(comment=> { %>
       <div class="comment">
         <div class="user-photo">
           <img src="/images/placeholder.jpg" alt="User 1">
@@ -181,7 +176,7 @@
           </div>
         </div>
       </div>
-    <% }) %>
+      <% }) %>
   </div>
   <div id="notifications-container" style="display: none; position: fixed; top: 200px; right: 550px;"></div>
 </body>

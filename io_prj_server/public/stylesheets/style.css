@@ -1,4 +1,7 @@
-body, html {
+@import "notification.css";
+
+body,
+html {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -21,7 +24,7 @@ header {
   margin: 0;
 }
 
-#brand a{
+#brand a {
   text-decoration: none;
   color: inherit;
 }
@@ -72,10 +75,10 @@ main {
   margin-bottom: 20px;
   border: solid;
   border-color: #e6e6e6;
-  word-wrap: break-word; 
- overflow-wrap: break-word; 
-white-space: normal; 
- 
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+
 }
 
 .post-title {
@@ -100,7 +103,7 @@ footer {
   background-color: #f4f4f4;
 }
 
-.logged-buttons{
+.logged-buttons {
   padding: 10px;
   padding-left: 30px;
   margin-top: 10px;
@@ -111,7 +114,8 @@ nav ul li a:hover {
 }
 
 
-body, html {
+body,
+html {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -159,7 +163,7 @@ nav ul li a.blue-button {
   text-align: center;
 }
 
-a.blue-button{
+a.blue-button {
   padding: 10px;
   background-color: #007bff;
   color: white;
@@ -167,7 +171,7 @@ a.blue-button{
   text-align: center;
 }
 
-a.blue-button:hover{
+a.blue-button:hover {
   background-color: #0056b3;
 }
 
@@ -181,13 +185,13 @@ main {
   padding: 40px;
 }
 
-.faq{
+.faq {
   display: flex;
   flex-direction: column;
   padding: 40px;
 }
 
-.create_form{
+.create_form {
   display: flex;
   flex-direction: column;
   padding: 40px;
@@ -204,7 +208,7 @@ main {
   margin-bottom: 20px;
   border: solid;
   border-color: #e6e6e6;
- 
+
 }
 
 .post-title {
@@ -225,7 +229,7 @@ footer {
   background-color: #f4f4f4;
 }
 
-.logged-buttons{
+.logged-buttons {
   padding: 10px;
   padding-left: 30px;
   margin-top: 10px;
@@ -237,8 +241,8 @@ nav ul li a:hover {
 
 .question-title {
   font-weight: bold;
-  margin-bottom: 5px; 
-  position: relative; 
+  margin-bottom: 5px;
+  position: relative;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -247,15 +251,15 @@ nav ul li a:hover {
 }
 
 .question-title::after {
-  content: ''; 
-  position: absolute; 
-  bottom: -5px; 
-  left: 0; 
-  width: 100%; 
-  border-bottom: 1px solid #ccc; 
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
 }
 
-.p{
+.p {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -265,7 +269,7 @@ nav ul li a:hover {
 }
 
 
-#form h1{
+#form h1 {
   text-align: center;
   font-family: 'Inter';
   font-style: normal;
@@ -285,7 +289,7 @@ nav ul li a:hover {
 }
 
 #main_about h1 {
-  position: relative; 
+  position: relative;
   font-family: 'Newsreader';
   font-style: normal;
   font-weight: 400;
@@ -296,7 +300,7 @@ nav ul li a:hover {
   letter-spacing: -0.02em;
 }
 
-#about p{
+#about p {
   text-align: center;
   font-family: 'Inter';
   font-style: normal;
@@ -307,17 +311,17 @@ nav ul li a:hover {
 
 #main_about h1::after {
   content: '';
-  position: absolute; 
-  bottom: -10px; 
-  left: 0; 
-  width: 100%; 
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
   border-bottom: 1px solid #ccc;
 }
 
 .authors img,
 .members img {
   max-width: 100px;
-  height: auto; 
+  height: auto;
 }
 
 
@@ -394,8 +398,8 @@ hr {
 }
 
 
-#email, #topic
- {
+#email,
+#topic {
   background-color: #fafaf5;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -410,8 +414,7 @@ hr {
   resize: none;
 }
 
-#message
-{
+#message {
   background-color: #fafaf5;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -436,8 +439,7 @@ label {
 }
 
 .email-box,
-.topic-box
-{
+.topic-box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -446,8 +448,7 @@ label {
   height: fit-content;
 }
 
-.tresc-box
-{
+.tresc-box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -456,7 +457,7 @@ label {
   height: fit-content;
 }
 
-.notification-bell{
+.notification-bell {
   width: 24px;
   height: auto;
 }
