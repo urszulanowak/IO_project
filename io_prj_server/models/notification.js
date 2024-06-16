@@ -1,4 +1,4 @@
-var db = require('@utility/database');
+var db = require('../utility/database');
 
 exports.get_user_notifications = async function (user_id) {
     var seen_time = new Date().toISOString();

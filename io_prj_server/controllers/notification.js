@@ -1,4 +1,4 @@
-var notification_model = require('@models/notification');
+var notification_model = require('../models/notification');
 var ejs = require('ejs');
 
 exports.get_user_notifications = function (req, res) {
@@ -10,12 +10,12 @@ exports.get_user_notifications = function (req, res) {
     }
     notification_model.get_user_notifications(user.user_id)
         .then(notifications => {
-            ejs.renderFile('../views/notifications.ejs', { notifications: notifications }).then(html => {
+            ejs.renderFile('views/notifications.ejs', { notifications: notifications }).then(html => {
                 res.status(200).send(html);
             });
         })
         .catch(err => {
             console.log('Get notifications error: ', err);
-            res.status(500);
+            res.status(500).send('server error');
         });
 }

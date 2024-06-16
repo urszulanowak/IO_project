@@ -8,6 +8,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const { profile } = require('../controllers/user');
 
 const user_model = require('@models/user');
 const jwt = require('jsonwebtoken');
@@ -24,8 +25,9 @@ app.post('/login', authController.login);
 app.post('/register', authController.register);
 app.post('/logout', authController.logout);
 app.post('/refresh_jwt', authController.refresh_jwt);
+app.get('/profile', authController.profile);
 
-describe('Auth Controller Tests', () => {
+describe('User Controller Tests', () => {
     describe('login', () => {
         it('should login user successfully with valid data', async () => {
             user_model.login.mockResolvedValue({
@@ -198,6 +200,53 @@ describe('Auth Controller Tests', () => {
 
             expect(response.status).toBe(500);
             expect(response.text).toBe('server error');
+        });
+    });
+
+    describe('GET /profile', () => {
+        beforeEach(() => {
+            req = {
+                user: {
+                    name: 'Test User',
+                    join_date: '2021-01-01',
+                    ownProjects: ['Project1', 'Project2'],
+                    participatedProjects: ['Project3'],
+                    is_guest: false
+                }
+            };
+            res = {
+                render: jest.fn(),
+                redirect: jest.fn()
+            };
+            next = jest.fn();
+        });
+
+        it('should render profile when user is logged in and not a guest', async () => {
+            profile(req, res, next);
+            expect(res.render).toHaveBeenCalledWith('profile', {
+                user: {
+                    name: 'Test User',
+                    join_date: '2021-01-01',
+                    ownProjects: ['Project1', 'Project2'],
+                    participatedProjects: ['Project3']
+                }
+            });
+            expect(res.redirect).not.toHaveBeenCalled();
+
+
+        });
+
+        it('should redirect to login when user is not logged in', async () => {
+
+            const response = await request(app).get('/profile');
+            expect(response.status).toBe(302);
+            expect(response.header.location).toBe('/user/login');
+        });
+
+        it('should redirect to login when user is a guest', async () => {
+            const response = await request(app).get('/profile');
+            expect(response.status).toBe(302);
+            expect(response.header.location).toBe('/user/login');
         });
     });
 });

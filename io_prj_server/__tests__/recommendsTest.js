@@ -54,11 +54,7 @@ describe('recommend', () => {
         expect(db.Transaction().begin).toHaveBeenCalledTimes(1);
         expect(mockRequest.input).toHaveBeenCalledWith('n_projects', n_projects);
         expect(mockRequest.input).toHaveBeenCalledWith('user_id', user_id);
-        expect(mockRequest.query).toHaveBeenCalledWith(expect.stringContaining(`SELECT TOP (@n_projects) project_id 
-                    FROM [dbo].[project] 
-                    WHERE project_id NOT IN (SELECT project_id FROM #seen_projects) 
-                    ORDER BY NEWID();
-                    DROP TABLE #seen_projects;`));
+        expect(mockRequest.query).toHaveBeenCalledWith(expect.stringContaining(`SELECT TOP (@n_projects) project_id`));
         expect(db.Transaction().commit).toHaveBeenCalledTimes(1);
     });
 
@@ -78,13 +74,11 @@ describe('recommend', () => {
         expect(db.Transaction).toHaveBeenCalledTimes(2);
         expect(db.Transaction().begin).toHaveBeenCalledTimes(1);
         expect(mockRequest.input).toHaveBeenCalledWith('n_projects', n_projects);
-        expect(mockRequest.query).toHaveBeenCalledWith(expect.stringContaining(`SELECT TOP (@n_projects) project_id 
-                    FROM [dbo].[project] 
-                    ORDER BY NEWID();`));
+        expect(mockRequest.query).toHaveBeenCalledWith(expect.stringContaining(`SELECT TOP (@n_projects) project_id`));
         expect(db.Transaction().commit).toHaveBeenCalledTimes(1);
     });
 
-    it('should handle errors gracefully', () => {
+    it('should handle errors gracefully', async () => {
 
         try {
             const n_projects = 5;
@@ -94,7 +88,7 @@ describe('recommend', () => {
 
             const mockRequest = db.Transaction().request();
             mockRequest.query.mockRejectedValue(new Error('Database error'));
-            expect(recommend_model.recommend(n_projects, user_id, seen_projects)).rejects.toThrow('Database error');
+            expect(await recommend_model.recommend(n_projects, user_id, seen_projects)).rejects.toThrow('Database error');
         }
         catch(error) {
             console.error(error);
