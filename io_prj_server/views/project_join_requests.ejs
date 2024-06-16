@@ -3,51 +3,51 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Powiadomienia</title>
+  <title>Prośby o dołączenie</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <style>
-    .notification {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #F4F4F4;
-        border-radius: 21px;
-        padding: 15px;
-        margin-bottom: 10px;
+    .join_request {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #F4F4F4;
+      border-radius: 21px;
+      padding: 15px;
+      margin-bottom: 10px;
     }
 
-    .notification-text {
-        flex: 1;
-        margin-right: 10px;
+    .join_request-text {
+      flex: 1;
+      margin-right: 10px;
     }
 
-    .notification-actions {
-        display: flex;
-        gap: 10px;
+    .join_request-actions {
+      display: flex;
+      gap: 10px;
     }
 
-    .notification button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
+    .join_request button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
     }
 
-    .notification button svg {
-        width: 24px;
-        height: 24px;
-        transition: transform 0.2s;
+    .join_request button svg {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.2s;
     }
 
-    .notification button svg:hover {
-        transform: scale(1.2);
+    .join_request button svg:hover {
+      transform: scale(1.2);
     }
 
-    .notification-title {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 10px;
+    .join_request-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -65,46 +65,50 @@
         <% if (user.is_guest) { %>
           <li><a href="/user/login" class="blue-button">Zaloguj się</a></li>
           <li><a href="/user/register" class="blue-button">Zarejestruj się</a></li>
-        <% } else { %>
-          <li><a href="/profile" class="blue-button">Profil</a></li>
-          <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
-        <% } %>
+          <% } else { %>
+            <li><a href="/profile" class="blue-button">Profil</a></li>
+            <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
+            <% } %>
       </ul>
     </nav>
   </header>
 
   <main>
     <section id="content">
-      <h2>Powiadomienia Projektu</h2>
-      <div class="notification-title">Projekt: <%= project_title %></div>
-      <% if (notifications.length > 0) { %>
-        <ul class="notifications">
-          <% notifications.forEach(notification => { %>
-            <li class="notification">
-              <div class="notification-text">
-                <%= notification.message %>
+      <h2>Prośby o dołączenie</h2>
+      <div class="join_request-title">Projekt: <%= project.data.title %>
+      </div>
+      <% if (project.join_requests.length> 0) { %>
+        <ul class="join_requests">
+          <% project.join_requests.forEach(join_request=> { %>
+            <li class="join_request">
+              <div class="join_request-text">
+                <%= join_request.message %>
               </div>
-              <div class="notification-actions">
-                <button class="accept" onclick="handleJoinRequest(<%= notification.notification_id %>, <%= notification.project_id %>, <%= notification.from_user_id %>, true)">
+              <div class="join_request-actions">
+                <button class="accept"
+                  onclick="handleJoinRequest(<%= project.data.project_id %>, <%= join_request.user_id %>, true)">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px">
-                    <path fill="#4caf50" d="M34.586,14.586l-13.57,13.586l-5.602-5.586l-2.828,2.828l8.434,8.414l16.395-16.414L34.586,14.586z"/>
+                    <path fill="#4caf50"
+                      d="M34.586,14.586l-13.57,13.586l-5.602-5.586l-2.828,2.828l8.434,8.414l16.395-16.414L34.586,14.586z" />
                   </svg>
                 </button>
-                <button class="deny" onclick="handleJoinRequest(<%= notification.notification_id %>, <%= notification.project_id %>, <%= notification.from_user_id %>, false)">
+                <button class="deny"
+                  onclick="handleJoinRequest(<%= project.data.project_id %>, <%= join_request.user_id %>, false)">
                   <svg fill="#FA5252" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="24px" height="24px">
                     <path d="M25,2C12.319,2,2,12.319,2,25s10.319,23,23,23s23-10.319,23-23S37.681,2,25,2z M33.71,32.29c0.39,0.39,0.39,1.03,0,1.42
                         C33.51,33.9,33.26,34,33,34s-0.51-0.1-0.71-0.29L25,26.42l-7.29,7.29C17.51,33.9,17.26,34,17,34s-0.51-0.1-0.71-0.29
                         c-0.39-0.39-0.39-1.03,0-1.42L23.58,25l-7.29-7.29c-0.39-0.39-0.39-1.03,0-1.42c0.39-0.39,1.03-0.39,1.42,0L25,23.58l7.29-7.29
-                        c0.39-0.39,1.03-0.39,1.42,0c0.39,0.39,0.39,1.03,0,1.42L26.42,25L33.71,32.29z"/>
+                        c0.39-0.39,1.03-0.39,1.42,0c0.39,0.39,0.39,1.03,0,1.42L26.42,25L33.71,32.29z" />
                   </svg>
                 </button>
               </div>
             </li>
-          <% }); %>
+            <% }); %>
         </ul>
-      <% } else { %>
-        <p>Brak powiadomień.</p>
-      <% } %>
+        <% } else { %>
+          <p>Brak próśb o dołączenie.</p>
+          <% } %>
     </section>
   </main>
 

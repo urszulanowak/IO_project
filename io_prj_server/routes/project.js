@@ -13,7 +13,9 @@ router.get('/create', project_controller.project_create);
 
 router.post('/publish', project_controller.publish);
 
-router.get('/notifications/:project_id', project_controller.get_project_join_requests);
+router.get('/join_requests/:project_id', project_join_controller.get_project_join_requests);
+
+router.post('/join_requests/handle', project_join_controller.handle_join_request);
 
 router.get('/join/:id', project_join_controller.join_project);
 

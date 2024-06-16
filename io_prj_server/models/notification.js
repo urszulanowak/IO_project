@@ -11,8 +11,8 @@ exports.get_user_notifications = async function (user_id) {
                         n.message
                 FROM [dbo].[notification] n
                 JOIN [dbo].[notification_type] t ON n.notification_type_id = t.notification_type_id
-                JOIN [dbo].[user] u ON n.from_user_id = u.user_id
-                JOIN [dbo].[project] p ON n.from_project_id = p.project_id
+                LEFT JOIN [dbo].[user] u ON n.from_user_id = u.user_id
+                LEFT JOIN [dbo].[project] p ON n.from_project_id = p.project_id
                 WHERE n.user_id = @user_id 
                 ORDER BY n.create_date DESC`)
         .then(result => {
@@ -27,32 +27,3 @@ exports.get_user_notifications = async function (user_id) {
                 AND create_date <= @seen_time`);
     return notifications;
 }
-
-exports.get_project_join_requests = async function (project_id, user_id) {
-    var notifications = await db.Request()
-        .input('project_id', project_id)
-        .input('user_id', user_id)
-        .query(`SELECT n.notification_id, n.create_date, n.seen,
-                       t.name AS notification_type_name,
-                       u.user_id AS from_user_id, u.name AS from_user_name, u.is_admin AS from_user_is_admin,
-                       n.message,
-                       n.project_id
-                FROM [dbo].[notification] n
-                JOIN [dbo].[notification_type] t ON n.notification_type_id = t.notification_type_id
-                JOIN [dbo].[user] u ON n.from_user_id = u.user_id
-                WHERE n.project_id = @project_id AND n.user_id = @user_id
-                ORDER BY n.create_date DESC`)
-        .then(result => result.recordset);
-
-    var seen_time = new Date().toISOString();
-    await db.Request()
-        .input('project_id', project_id)
-        .input('user_id', user_id)
-        .input('seen_time', seen_time)
-        .query(`UPDATE [dbo].[notification]
-                SET seen = 1
-                WHERE project_id = @project_id AND user_id = @user_id
-                AND create_date <= @seen_time`);
-    
-    return notifications;
-};

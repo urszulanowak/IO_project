@@ -2,8 +2,6 @@ var project_model = require('@models/project');
 var recommend_model = require('@models/recommend');
 var project_tag_model = require('@models/project_tag');
 var ejs = require('ejs');
-const { get_project } = require('../models/project');
-
 
 exports.get_project = function (req, res) {
     var project_id = req.params.id;
@@ -117,24 +115,5 @@ exports.project_create = async function (req, res) {
     } catch (err) {
         console.log('Get all tags error: ', err);
         res.status(500).send('Server error.');
-    }
-};
-
-exports.get_project_join_requests = async function (req, res) {
-    try {
-        var project_id = req.params.project_id;
-        var user = req.user;
-
-        if (!user || user.is_guest) {
-            res.statusMessage = 'Unauthorized';
-            res.status(401).send();
-            return;
-        }
-
-        var notifications = await notification_model.get_project_join_requests(project_id, user.user_id);
-        res.render('project_join_requests', { user: user, project_id: project_id, notifications: notifications });
-    } catch (err) {
-        console.log('Get project notifications error: ', err);
-        res.status(500).send('Internal Server Error');
     }
 };
