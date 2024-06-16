@@ -39,3 +39,11 @@
 .notification button:hover {
     background-color: #0056b3;
 }
+
+.notification-text {
+    padding: 10px;
+    word-wrap: break-word; /* Allows long words to be broken and wrapped to the next line */
+    white-space: normal; /* Allows text to wrap to the next line */
+    max-width: 100%; /* Ensures the text stays within the parent div */
+    display: block; /* Ensures the block formatting context */
+}
