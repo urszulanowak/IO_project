@@ -140,7 +140,17 @@ exports.handle_join_request = async function (creator_id, project_id, user_id, a
                     tran.rollback();
                     throw err;
                 });
-            await message_model.add_user_to_room(tran, user_id, project_id)
+            var private_message_room_id = await tran.request()
+                .input('project_id', project_id)
+                .query(`SELECT private_message_room_id FROM [dbo].[project] WHERE project_id = @project_id`)
+                .then(result => {
+                    return result.recordset[0].private_message_room_id;
+                })
+                .catch(err => {
+                    tran.rollback();
+                    throw err;
+                });
+            await message_model.add_user_to_room(tran, user_id, private_message_room_id)
                 .catch(err => {
                     tran.rollback();
                     throw err;
