@@ -10,7 +10,7 @@ async function authorize(user_id, room_id) {
                 WHERE mr.message_room_id = @room_id
                 AND 
                 (
-                    mr.public = 1
+                    mr.[public] = 1
                     msa.user_id = @user_id
                 )
                 `)
@@ -22,8 +22,17 @@ async function authorize(user_id, room_id) {
 }
 exports.authorize = authorize;
 
+exports.create_room = async function (tran, is_public) {
+    return tran.request()
+        .input('public', is_public)
+        .query(`INSERT INTO [dbo].[message_room]([public]) OUTPUT INSERTED.message_room_id VALUES (@public)`)
+        .then(result => {
+            return result.recordset[0].message_room_id;
+        });
+}
+
 exports.add_user_to_room = async function (tran, user_id, room_id) {
-    return tran.Request()
+    return tran.request()
         .input('user_id', user_id)
         .input('room_id', room_id)
         .query(`INSERT INTO [dbo].[message_room_access](user_id, message_room_id) VALUES (@user_id, @room_id)`);

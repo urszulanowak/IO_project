@@ -8,6 +8,6 @@ router.post('/get_messages_before', message_controller.get_messages_before);
 
 router.post('/get_messages_after', message_controller.get_messages_after);
 
-router.post('/send_message', message_controller.send_message);
+router.post('/add_message', message_controller.add_message);
 
 module.exports = router;

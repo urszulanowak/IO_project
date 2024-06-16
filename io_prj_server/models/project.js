@@ -33,16 +33,10 @@ exports.get_project = async function (project_id) {
         .then(result => {
             project.members = result.recordset;
         });
-    var comments_promise = db.Request()
-        .input('project_id', project_id)
-        .query('SELECT * FROM [dbo].[project_comment] c JOIN [dbo].[user] u ON c.user_id = u.user_id WHERE project_id = @project_id ORDER BY c.create_date DESC')
-        .then(result => {
-            project.comments = result.recordset;
-        });
     var tags_promise = tag_model.get_project_tags([project_id]).then(tags => {
         project.tags = tags;
     });
-    await Promise.all([data_promise, members_promise, comments_promise, tags_promise]);
+    await Promise.all([data_promise, members_promise, tags_promise]);
     return project;
 }
 
@@ -106,17 +100,26 @@ exports.publish = async function (user_id, title, description, tags) {
     var tran = db.pool.transaction();
     return await tran.begin().then(async () => {
         var project_id;
+        var public_message_room_id;
         var private_message_room_id;
+        await message_model.create_room(tran, true).then(room_id => {
+            public_message_room_id = room_id;
+        });
+        await message_model.create_room(tran, false).then(room_id => {
+            private_message_room_id = room_id;
+        });
         await tran.request()
             .input('title', title)
             .input('description', description)
-            .query(`INSERT INTO [dbo].[project] (title, description, public_message_room_id, private_message_room_id) OUTPUT INSERTED.project_id VALUES (@title, @description,
-                (INSERT INTO [dbo].[room](public) OUTPUT INSERTED.message_room_id VALUES (@public)),
-                (INSERT INTO [dbo].[room](public) OUTPUT INSERTED.message_room_id VALUES (@public))
-                )`)
+            .input('public_message_room_id', public_message_room_id)
+            .input('private_message_room_id', private_message_room_id)
+            .query(`
+                INSERT INTO [dbo].[project] 
+                (title, description, public_message_room_id, private_message_room_id) 
+                OUTPUT INSERTED.project_id 
+                VALUES (@title, @description, @public_message_room_id, @private_message_room_id)`)
             .then(result => {
                 project_id = result.recordset[0].project_id;
-                private_message_room_id = result.recordset[0].message_room_id;
             })
             .catch(err => {
                 tran.rollback();
