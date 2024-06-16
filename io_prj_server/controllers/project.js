@@ -2,8 +2,6 @@ var project_model = require('@models/project');
 var recommend_model = require('@models/recommend');
 var project_tag_model = require('@models/project_tag');
 var ejs = require('ejs');
-const { get_project } = require('../models/project');
-
 
 exports.get_project = function (req, res) {
     var project_id = req.params.id;
@@ -119,4 +117,3 @@ exports.project_create = async function (req, res) {
         res.status(500).send('Server error.');
     }
 };
-

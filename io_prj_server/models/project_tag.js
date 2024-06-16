@@ -8,6 +8,7 @@ var db = require('@utility/database');
  * @returns {Promise<void>} - A promise that resolves when the operation is complete.
  */
 exports.add_project_tags = async function (tran, project_id, tags) {
+    if (tags.length == 0) return;
     var project_tag_tab = new db.sql.Table('project_tag');
     project_tag_tab.create = true;
     project_tag_tab.columns.add('project_id', db.sql.BigInt, { nullable: false });
