@@ -9,12 +9,13 @@
 </head>
 <body>
     <div class="form-container">
-        <h1>Dołączasz do projektu <%=project.data.title%></h1>
+        <h1>Dołączasz do projektu <%= project.data.title %></h1>
         <h2>Napisz coś o sobie!</h2>
         <div id="txt-container">
-            <textarea id="info" ></textarea>
+            <textarea id="info"></textarea>
         </div>
         <button type="button" class="submit-button">Wyślij</button>
+        <div class="error-message" id="error"></div>
     </div>
     <script>
         window.projectId = "<%= project.data.project_id %>";

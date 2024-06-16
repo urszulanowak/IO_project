@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Box</title>
+    <link rel="stylesheet" href="/stylesheets/chat_message.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+        </div>
+        <div class="input-container">
+            <input type="text" id="chat-input" placeholder="Napisz wiadomość...">
+            <button type="button" id="send-button">Wyślij</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('send-button').addEventListener('click', function() {
+            const message = document.getElementById('chat-input').value;
+            
+        });
+    </script>
+</body>
+</html>

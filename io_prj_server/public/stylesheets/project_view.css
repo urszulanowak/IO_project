@@ -1,3 +1,5 @@
+@import "notification.css";
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -206,3 +208,44 @@ body {
     justify-content: right;
     margin-bottom: 30px;
   }
+
+/* Styles for the author and member sections */
+.member, .creator {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.creator {
+  background-color: #e6f7ff;
+  font-weight: bold;
+  border-color: #b3d8ff;
+}
+
+.member img, .creator img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.member-info, .creator-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.member-info span, .creator-info span {
+  font-size: 12px;
+  color: #555;
+}
+
+.member-info .name, .creator-info .name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
