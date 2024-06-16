@@ -11,13 +11,26 @@ exports.get_project = async function (project_id) {
     var project = {}
     var data_promise = db.Request()
         .input('project_id', project_id)
-        .query('SELECT * FROM [dbo].[project] WHERE project_id = @project_id')
+        .query(`SELECT * FROM [dbo].[project] 
+                WHERE project_id = @project_id`)
         .then(result => {
             if (result.recordset.length == 0) {
                 throw new Error('project not found');
             } else {
                 project.data = result.recordset[0];
             }
+        });
+    var members_promise = db.Request()
+        .input('project_id', project_id)
+        .query(`SELECT u.user_id, u.name, u.email, u.picture,
+                m.join_date, m.creator, m.accepted, m.baned
+                FROM [dbo].[project_member] m 
+                JOIN [dbo].[user] u ON m.user_id = u.user_id
+                WHERE m.project_id = @project_id
+                AND (m.creator = 1 OR m.accepted = 1) AND m.baned = 0
+                ORDER BY m.join_date DESC`)
+        .then(result => {
+            project.members = result.recordset;
         });
     var comments_promise = db.Request()
         .input('project_id', project_id)
@@ -28,7 +41,7 @@ exports.get_project = async function (project_id) {
     var tags_promise = tag_model.get_project_tags([project_id]).then(tags => {
         project.tags = tags;
     });
-    await Promise.all([data_promise, comments_promise, tags_promise]);
+    await Promise.all([data_promise, members_promise, comments_promise, tags_promise]);
     return project;
 }
 
@@ -58,7 +71,7 @@ exports.get_project_previews_by_user_id = async function (user_id) {
     await db.Request()
         .input('user_id', user_id)
         .query(`SELECT p.project_id, p.title, SUBSTRING(p.description, 1, 256) AS description
-                FROM [dbo].[project] p JOIN [dbo].[project_member] m ON p.project_id = m.project_id
+                FROM[dbo].[project] p JOIN[dbo].[project_member] m ON p.project_id = m.project_id
                 WHERE m.user_id = @user_id AND m.creator = 1`)
         .then(result => {
             project_previews = result.recordset;
@@ -169,13 +182,13 @@ exports.join_request = async function (user_id, project_id, message) {
             .input('from_user_id', user_id)
             .input('from_project_id', project_id)
             .input('message', message)
-            .query(`INSERT INTO [dbo].[notification] (notification_type_id, user_id, from_user_id, from_project_id, message) 
-                    VALUES (
-                        (SELECT notification_type_id FROM [dbo].[notification_type]
+            .query(`INSERT INTO[dbo].[notification](notification_type_id, user_id, from_user_id, from_project_id, message) 
+                    VALUES(
+            (SELECT notification_type_id FROM[dbo].[notification_type]
                             WHERE name = 'join_request'),
-                        (SELECT user_id FROM [dbo].[project_member]
+            (SELECT user_id FROM[dbo].[project_member]
                             WHERE project_id = @from_project_id AND creator = 1),
-                        @from_user_id, @from_project_id, @message
+    @from_user_id, @from_project_id, @message
                     )`)
             .catch(err => {
                 tran.rollback();
