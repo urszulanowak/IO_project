@@ -9,7 +9,9 @@ exports.get_project = function (req, res) {
     var project_id = req.params.id;
     project_model.get_project(project_id).then(project => {
         res.render('project_view', { user: req.user, project: project, tags: project.tags });
-        res.status(200).send();
+        if (!res.headersSent) {
+            res.status(200).send();
+        }
     }).catch(err => {
         switch (err.message) {
             case 'project not found':
@@ -93,7 +95,9 @@ exports.publish = function (req, res) {
     var description = req.body.description;
     var tags = req.body.tags;
     project_model.publish(user.user_id, title, description, tags).then(id => {
-        res.status(200).send();
+        if (!res.headersSent) {
+            res.status(200).send(id.toString());
+        }
     }).catch(err => {
         switch (err.message) {
             case 'title too short':
@@ -171,7 +175,9 @@ exports.project_create = async function (req, res) {
         });
 
         res.render('project_create', { user: req.user, tags: categorizedTags });
-        res.status(200).send();
+        if (!res.headersSent) {
+            res.status(200).send();
+        }
     } catch (err) {
         console.log('Get all tags error: ', err);
         res.status(500).send('server error');

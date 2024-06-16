@@ -149,3 +149,8 @@ header {
     margin: 0;
     padding: 0;
   }
+
+  .notification-bell{
+    width: 24px;
+    height: auto;
+  }

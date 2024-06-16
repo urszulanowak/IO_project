@@ -1,12 +1,18 @@
-<% project_previews.forEach(project=> { %>
+<% project_previews.forEach(project => { %>
     <div class="project-container" onclick="window.location.href='/project/id/<%= project.project_id %>'">
-        <div class="project-title">
-            <%= project.title %>
+      <div class="project-title">
+        <%= project.title %>
+      </div>
+      <div class="post">
+        <p>
+          <%= project.description %>
+        </p>
+      </div>
+      <% if (project.tags && project.tags.length > 0) { %>
+        <div class="tags">
+          <%= project.tags.map(tag => tag.tag_name).join(', ') %>
         </div>
-        <div class="post">
-            <p>
-                <%= project.description %>
-            </p>
-        </div>
+      <% } %>
     </div>
-    <% }); %>
+  <% }); %>
+  

@@ -27,7 +27,7 @@
           <% } else { %>
             <li><a href="/profile" class="blue-button">Profil</a></li>
             <li><a href="/user/logout" class="blue-button">Wyloguj się</a></li>
-            <li> <a href="#" onclick="toggleNotifications()"><i class="fas fa-bell"></i></a></li>
+            <li> <a href="#" onclick="toggleNotifications()"><img src="/images/bell.png" alt="bell" class="notification-bell"></a></li>
             <% } %>
       </ul>
     </nav>
@@ -51,7 +51,7 @@
         </section>
         <aside>
         </aside>
-        <div id="notifications-container" style="display: none;"></div>
+        <div id="notifications-container" style="display: none; position: fixed; top: 200px; right: 550px;"></div>
       </main>
 </body>
 
