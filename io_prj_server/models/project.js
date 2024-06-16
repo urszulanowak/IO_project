@@ -1,5 +1,6 @@
 var db = require('@utility/database');
 var tag_model = require('@models/project_tag');
+var message_model = require('@models/message');
 
 /**
  * Retrieves a project by its ID.
@@ -92,12 +93,17 @@ exports.publish = async function (user_id, title, description, tags) {
     var tran = db.pool.transaction();
     return await tran.begin().then(async () => {
         var project_id;
+        var private_message_room_id;
         await tran.request()
             .input('title', title)
             .input('description', description)
-            .query('INSERT INTO [dbo].[project] (title, description) OUTPUT INSERTED.project_id VALUES (@title, @description)')
+            .query(`INSERT INTO [dbo].[project] (title, description, public_message_room_id, private_message_room_id) OUTPUT INSERTED.project_id VALUES (@title, @description,
+                (INSERT INTO [dbo].[room](public) OUTPUT INSERTED.message_room_id VALUES (@public)),
+                (INSERT INTO [dbo].[room](public) OUTPUT INSERTED.message_room_id VALUES (@public))
+                )`)
             .then(result => {
                 project_id = result.recordset[0].project_id;
+                private_message_room_id = result.recordset[0].message_room_id;
             })
             .catch(err => {
                 tran.rollback();
@@ -108,6 +114,11 @@ exports.publish = async function (user_id, title, description, tags) {
             .input('user_id', user_id)
             .input('project_id', project_id)
             .query('INSERT INTO [dbo].[project_member] (project_id, user_id, creator) VALUES (@project_id, @user_id, 1)')
+            .catch(err => {
+                tran.rollback();
+                throw err;
+            });
+        await message_model.add_user_to_room(tran, user_id, private_message_room_id)
             .catch(err => {
                 tran.rollback();
                 throw err;
