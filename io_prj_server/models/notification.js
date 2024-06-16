@@ -28,7 +28,7 @@ exports.get_user_notifications = async function (user_id) {
     return notifications;
 }
 
-exports.get_project_notifications = async function (project_id, user_id) {
+exports.get_project_join_requests = async function (project_id, user_id) {
     var notifications = await db.Request()
         .input('project_id', project_id)
         .input('user_id', user_id)

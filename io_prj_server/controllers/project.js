@@ -175,7 +175,7 @@ exports.project_create = async function (req, res) {
     }
 };
 
-exports.get_project_notifications = async function (req, res) {
+exports.get_project_join_requests = async function (req, res) {
     try {
         var project_id = req.params.project_id;
         var user = req.user;
@@ -186,8 +186,8 @@ exports.get_project_notifications = async function (req, res) {
             return;
         }
 
-        var notifications = await notification_model.get_project_notifications(project_id, user.user_id);
-        res.render('project_notifications', { user: user, project_id: project_id, notifications: notifications });
+        var notifications = await notification_model.get_project_join_requests(project_id, user.user_id);
+        res.render('project_join_requests', { user: user, project_id: project_id, notifications: notifications });
     } catch (err) {
         console.log('Get project notifications error: ', err);
         res.status(500).send('Internal Server Error');
