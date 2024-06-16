@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const db_cfg = require('@config/db_cfg.json');
+const db_cfg = require('../config/db_cfg.json');
 
 // database connection
 try {
