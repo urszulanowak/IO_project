@@ -11,8 +11,8 @@ exports.get_user_notifications = async function (user_id) {
                         n.message
                 FROM [dbo].[notification] n
                 JOIN [dbo].[notification_type] t ON n.notification_type_id = t.notification_type_id
-                JOIN [dbo].[user] u ON n.from_user_id = u.user_id
-                JOIN [dbo].[project] p ON n.from_project_id = p.project_id
+                LEFT JOIN [dbo].[user] u ON n.from_user_id = u.user_id
+                LEFT JOIN [dbo].[project] p ON n.from_project_id = p.project_id
                 WHERE n.user_id = @user_id 
                 ORDER BY n.create_date DESC`)
         .then(result => {

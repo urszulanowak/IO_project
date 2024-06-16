@@ -178,6 +178,7 @@ exports.refresh_jwt_fail = function (req, res) {
 }
 
 exports.profile = function (req, res, next) {
+    user.join_date = new Date(user.join_date).toISOString().substring(0,10);
     if (req.user && !req.user.is_guest) {
         res.render('profile', {
             user: {

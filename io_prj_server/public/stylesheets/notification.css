@@ -1,9 +1,11 @@
 .notification {
-    position: absolute;
+    position: relative;
     width: 500px;
-    height: 106px;
     background: #F4F4F4;
     border-radius: 21px;
+    margin: 10px 0;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .notification p {
@@ -38,4 +40,18 @@
 
 .notification button:hover {
     background-color: #0056b3;
+}
+
+.notification-text {
+    padding: 10px;
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.notification a {
+    color: white;
+    text-decoration: none;
 }

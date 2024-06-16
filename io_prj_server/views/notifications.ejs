@@ -4,11 +4,14 @@
         <div class="notification-text">
             <%= n.message %>
         </div>
+        <button class="more"><a href="/project/id/<%= p.project_id %>">Więcej...</a></button>
+        <button onclick="toggleNotifications()">Zamknij</button>
     </div>
     <% })} else { %>
         <div class="notification">
             <div class="notification-text">
                 Brak powiadomień
             </div>
+            <button onclick="toggleNotifications()">Zamknij</button>
         </div>
         <% } %>
