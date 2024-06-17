@@ -85,10 +85,18 @@
           <h1 class="project-title" style="font-size: 32px;">
             <%= project.data.title %>
           </h1>
-          <% if (!project.members.find(member=> member.creator && member.user_id === user.user_id)) { %>
-            <button class="blue-button" onclick="window.location.href='/project/join/<%= project.data.project_id %>'"
-              style="font-size: 20px; padding: 10px 20px;">Dołącz</button>
-            <% } %>
+          <% if(user.is_guest) { %>
+            <button class="blue-button" style="font-size: 20px; padding: 10px 20px;"
+              onclick="window.location.href='/user/login'">Zaloguj się, aby dołączyć</button>
+            <% } else if (!project.members.find(member=> member.creator && member.user_id === user.user_id)) { %>
+              <button class="blue-button" onclick="window.location.href='/project/join/<%= project.data.project_id %>'"
+                style="font-size: 20px; padding: 10px 20px;">Dołącz</button>
+              <% } %>
+                <% if(project.members.find(member=> member.creator && member.user_id === user.user_id)) { %>
+                  <button class="blue-button"
+                    onclick="window.location.href='/project/join_requests/<%= project.data.project_id %>'"
+                    style="font-size: 20px; padding: 10px 20px;">Prośby o dołączenie</button>
+                  <% } %>
         </div>
         <h2 style="font-size: 24px;">Opis</h2>
         <div class="description">
@@ -231,11 +239,15 @@
       </a>
     </div>
   </div>
-
+  Komentarze:
   <embed type="text/html" src="/message/room/<%= project.data.public_message_room_id %>" width="600" height="800">
 
-
-  <div id="notifications-container" style="display: none; position: fixed; top: 200px; right: 550px;"></div>
+  <% if(project.members.find(member=> member.creator || member.accepted && !member.baned && member.user_id ===
+    user.user_id)) { %>
+    Czat projektu:
+    <embed type="text/html" src="/message/room/<%= project.data.private_message_room_id %>" width="600" height="800">
+    <% } %>
+      <div id="notifications-container" style="display: none; position: fixed; top: 200px; right: 550px;"></div>
 </body>
 
 </html>
