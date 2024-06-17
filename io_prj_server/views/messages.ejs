@@ -1,0 +1,8 @@
+<% messages.forEach(function(message) { %>
+    <div>
+        <%= message.create_date.toLocaleString(); %>
+            <span style="color:rgb(6, 201, 136)">
+                <%= message.name %>
+            </span>: <%= message.text %>
+    </div>
+    <% }); %>

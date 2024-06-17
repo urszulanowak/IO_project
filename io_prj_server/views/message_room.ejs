@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Box</title>
+    <link rel="stylesheet" href="/stylesheets/chat_message.css">
+    <script type="module" src="/javascripts/message_room.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.message_room_init('<%= room_id %>');
+        });
+    </script>
+</head>
+
+<body>
+    <% if (authorized) { %>
+        <div class="chat-container">
+            <div class="chat-box" id="chat-box">
+            </div>
+            <div class="input-container">
+                <input type="text" id="chat-input" placeholder="Napisz wiadomość...">
+                <% if (!is_guest) { %>
+                    <button type="button" id="send-button" onclick="add_message()">Wyślij</button>
+                    <% } else {%>
+                        <button type="button" id="send-button" onclick="cant_add_message()">Wyślij</button>
+                        <% } %>
+            </div>
+        </div>
+        <% } else {%>
+            Nie masz dostępu do tego chatu.
+            <% } %>
+</body>
+
+</html>

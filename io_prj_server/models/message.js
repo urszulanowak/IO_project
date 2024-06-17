@@ -5,13 +5,13 @@ async function authorize(user_id, room_id) {
         .input('user_id', user_id)
         .input('room_id', room_id)
         .query(`SELECT 1 
-                FROM [dbo].[message_room] mr ON mra.message_room_id = mr.message_room_id
-                JOIN [dbo].[message_room_access] mra
+                FROM [dbo].[message_room] mr 
+                LEFT JOIN [dbo].[message_room_access] msa ON mr.message_room_id = msa.message_room_id
                 WHERE mr.message_room_id = @room_id
                 AND 
                 (
                     mr.[public] = 1
-                    msa.user_id = @user_id
+                    OR msa.user_id = @user_id
                 )
                 `)
         .then(result => {
@@ -54,10 +54,7 @@ exports.get_messages_before = async function (user_id, room_id, before_id, limit
                     ORDER BY m.create_date DESC
                     OFFSET 0 ROWS FETCH NEXT @limit ROWS ONLY`)
         .then(result => {
-            if (result.recordset.length == 0 && before_id != Number.MAX_SAFE_INTEGER) {
-                throw new Error('no messages left');
-            }
-            return result.recordset;
+            return result.recordset.reverse();
         });
 }
 
@@ -77,10 +74,7 @@ exports.get_messages_after = async function (user_id, room_id, after_id, limit) 
                     ORDER BY m.create_date DESC
                     OFFSET 0 ROWS FETCH NEXT @limit ROWS ONLY`)
         .then(result => {
-            if (result.recordset.length == 0 && after_id != 0) {
-                throw new Error('no messages left');
-            }
-            return result.recordset;
+            return result.recordset.reverse();
         });
 }
 

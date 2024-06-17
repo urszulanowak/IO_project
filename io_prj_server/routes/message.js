@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var message_controller = require('@controllers/message');
 
-router.get('/get_message_room/:room_id', message_controller.get_message_room);
+router.get('/room/:room_id', message_controller.get_message_room);
 
 router.post('/get_messages_before', message_controller.get_messages_before);
 
